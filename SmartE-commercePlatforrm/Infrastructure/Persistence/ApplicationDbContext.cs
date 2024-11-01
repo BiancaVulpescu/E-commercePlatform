@@ -29,6 +29,19 @@ namespace Infrastructure.Persistence
                 entity.Property(e => e.Title).IsRequired();
                 entity.Property(e => e.Location).IsRequired();
             });
+            modelBuilder.Entity<Client>(entity =>
+            {
+                entity.ToTable("todolist");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id)
+                .HasColumnType("uuid")
+                .HasDefaultValueSql("uuid_generate_v4()")
+                .ValueGeneratedOnAdd();
+                entity.Property(e => e.Email).IsRequired().HasMaxLength(30);
+                entity.Property(e => e.Username).IsRequired().HasMaxLength(30);
+                entity.Property(e => e.Password).IsRequired();
+                entity.Property(e => e.Location).IsRequired();
+            });
         }
     }
 }

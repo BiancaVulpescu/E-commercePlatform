@@ -1,6 +1,6 @@
 ﻿namespace Application.DTOs
 {
-    internal class ProductDto
+    public class ProductDto
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
