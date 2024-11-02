@@ -36,5 +36,14 @@ namespace SmartE_commercePlatforrm.Controllers
                 onFailure: error => BadRequest(error)
             );
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProduct([FromRoute] Guid id)
+        {
+            var resultObject = await mediator.Send(new DeleteProductCommand { Id = id });
+            return resultObject.Match<IActionResult>(
+                onSuccess: result => NoContent(),
+                onFailure: error => BadRequest(error)
+            );
+        }
     }
 }
