@@ -8,7 +8,6 @@
         public string Description { get; set; }
         public decimal Price { get; set; }
         public bool IsNegociable { get; set; }
-        public string Location { get; set; }
 
     }
 }
