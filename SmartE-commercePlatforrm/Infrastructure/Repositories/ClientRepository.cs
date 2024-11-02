@@ -12,27 +12,27 @@ namespace Infrastructure.Repositories
             this.context = context;
         }
 
-        public Task<Guid> AddAsync(Client client)
+        public async Task<Guid> AddAsync(Client client)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Client>> GetAllAsync()
+        public async Task<IEnumerable<Client>> GetAllAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Client> GetByIdAsync(Guid id)
+        public async Task<Client> GetByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(Client client)
+        public async Task UpdateAsync(Client client)
         {
             throw new NotImplementedException();
         }

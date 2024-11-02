@@ -16,7 +16,7 @@ namespace Infrastructure.Persistence
             modelBuilder.HasPostgresExtension("uuid-ossp");
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.ToTable("todolist");
+                entity.ToTable("Products");
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id)
                 .HasColumnType("uuid")
@@ -27,11 +27,10 @@ namespace Infrastructure.Persistence
                 entity.Property(e => e.IsNegociable).IsRequired();
                 entity.Property(e => e.Category).IsRequired();
                 entity.Property(e => e.Title).IsRequired();
-                entity.Property(e => e.Location).IsRequired();
             });
             modelBuilder.Entity<Client>(entity =>
             {
-                entity.ToTable("todolist");
+                entity.ToTable("Clients");
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id)
                 .HasColumnType("uuid")
