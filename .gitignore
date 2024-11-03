@@ -3,7 +3,7 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
-SmartE-commercePlatforrm/SmartE-commercePlatforrm/appsettings.json
+SmartE-commercePlatforrm/appsettings.json
 
 # User-specific files
 *.rsuser
