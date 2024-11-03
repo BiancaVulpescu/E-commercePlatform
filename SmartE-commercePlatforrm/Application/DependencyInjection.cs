@@ -1,4 +1,6 @@
-﻿using Application.Utils;
+﻿using Application.Use_Cases.CommandValidators;
+using Application.Utils;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -11,9 +13,10 @@ namespace Application
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             services.AddAutoMapper(typeof(MappingProfile));
-           /* services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddValidatorsFromAssemblyContaining<UpdateToDoListCommandValidator>();
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));*/
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssemblyContaining<CreateProductCommandValidator>();
+            services.AddValidatorsFromAssemblyContaining<UpdateProductCommandValidator>();
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
             return services;
         }

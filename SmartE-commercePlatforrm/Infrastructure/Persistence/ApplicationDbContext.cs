@@ -24,7 +24,7 @@ namespace Infrastructure.Persistence
                 .ValueGeneratedOnAdd();
                 entity.Property(e => e.Description).IsRequired().HasMaxLength(300);
                 entity.Property(e => e.Price).IsRequired();
-                entity.Property(e => e.IsNegociable).IsRequired();
+                entity.Property(e => e.IsNegotiable).IsRequired();
                 entity.Property(e => e.Category).IsRequired();
                 entity.Property(e => e.Title).IsRequired();
             });
