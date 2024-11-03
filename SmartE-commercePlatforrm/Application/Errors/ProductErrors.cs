@@ -12,5 +12,5 @@ public static class ProductErrors
     public static Error CreateProductFailed(string Description) => new Error("Product.CreateProductFailed", Description);
     public static Error GetProductFailed(string Description) => new Error("Product.GetProductFailed", Description);
     public static Error DeleteProductFailed(string Description) => new Error("Product.DeleteProductFailed", Description);
-    //public static Error UpdateProductFailed(string Description) => new Error("Product.UpdateProductFailed", Description);
+    public static Error UpdateProductFailed(string Description) => new Error("Product.UpdateProductFailed", Description);
 }

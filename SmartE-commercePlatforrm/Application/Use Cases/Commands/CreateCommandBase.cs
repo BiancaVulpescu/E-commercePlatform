@@ -1,8 +1,9 @@
-﻿namespace Application.DTOs
+﻿using MediatR;
+
+namespace Application.Use_Cases.Commands
 {
-    public class ProductDto
+    public class CreateCommandBase
     {
-        public Guid Id { get; set; }
         public string Title { get; set; }
         public string Category { get; set; }
         public string Description { get; set; }
