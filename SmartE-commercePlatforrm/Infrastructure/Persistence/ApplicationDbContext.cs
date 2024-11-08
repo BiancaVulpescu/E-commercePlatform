@@ -10,7 +10,8 @@ namespace Infrastructure.Persistence
         }
 
         public DbSet<Product> Products { get; set; }
-
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<ShoppingCartItems> ShoppingCartItems { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasPostgresExtension("uuid-ossp");
@@ -40,6 +41,23 @@ namespace Infrastructure.Persistence
                 entity.Property(e => e.Username).IsRequired().HasMaxLength(30);
                 entity.Property(e => e.Password).IsRequired();
                 entity.Property(e => e.Location).IsRequired();
+            });
+            modelBuilder.Entity<ShoppingCartItems>(entity =>
+            {
+                entity.ToTable("ShoppingCartItems");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id)
+                    .HasColumnType("uuid")
+                    .HasDefaultValueSql("uuid_generate_v4()")
+                    .ValueGeneratedOnAdd();
+                entity.Property(e => e.Cart_Id)
+                    .IsRequired()
+                    .HasColumnType("uuid");
+                entity.Property(e => e.Product_Id)
+                    .IsRequired()
+                    .HasColumnType("uuid");
+                entity.Property(e => e.Quantity)
+                    .IsRequired();
             });
         }
     }
