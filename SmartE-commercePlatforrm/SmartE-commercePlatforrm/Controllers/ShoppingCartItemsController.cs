@@ -28,7 +28,6 @@ namespace SmartE_commercePlatforrm.Controllers
             );
         }
 
-        // Get ShoppingCartItem by Id
         [HttpGet("{id}")]
         public async Task<IActionResult> GetShoppingCartItemById([FromRoute] Guid id)
         {
@@ -39,18 +38,14 @@ namespace SmartE_commercePlatforrm.Controllers
             );
         }
 
-        // Get all items in the cart by CartId
-        [HttpGet("cart/{cartId}")]
-        public async Task<IActionResult> GetAllShoppingCartItems([FromRoute] Guid cartId)
+        [HttpGet]
+        public async Task<IActionResult> GetAllShoppingCartItems()
         {
-            var resultObject = await mediator.Send(new GetAllShoppingCartItemsQuery { CartId = cartId });
-            return resultObject.Match<IActionResult>(
-                onSuccess: result => Ok(result),
-                onFailure: error => BadRequest(error)
-            );
+            var result = await mediator.Send(new GetAllShoppingCartItemsQuery());
+            return Ok(result);
         }
 
-        // Update ShoppingCartItem
+
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> UpdateShoppingCartItem([FromBody] UpdateShoppingCartItemCommand updateShoppingCartItemCommand, [FromRoute] Guid id)
         {
@@ -64,7 +59,6 @@ namespace SmartE_commercePlatforrm.Controllers
             );
         }
 
-        // Delete ShoppingCartItem
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteShoppingCartItem([FromRoute] Guid id)
         {
