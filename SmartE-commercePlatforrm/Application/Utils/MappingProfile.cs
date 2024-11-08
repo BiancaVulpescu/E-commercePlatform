@@ -14,6 +14,10 @@ namespace Application.Utils
             CreateMap<Product, ProductDto>().ReverseMap();
             CreateMap<CreateProductCommand, Product>().ReverseMap();
             CreateMap<UpdateProductCommand, Product>().ReverseMap();
+
+            CreateMap<WishlistItem, WishlistItemDto>().ReverseMap();
+            //CreateMap<CreateWishlistItemCommand, WishlistItem>().ReverseMap();
+            //CreateMap<UpdateWishlistItemCommand, WishlistItem>().ReverseMap();
         }
     }
 }

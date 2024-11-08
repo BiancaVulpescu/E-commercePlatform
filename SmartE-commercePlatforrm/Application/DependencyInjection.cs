@@ -18,6 +18,8 @@ namespace Application
             services.AddValidatorsFromAssemblyContaining<UpdateProductCommandValidator>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
+            //de facut pt Create/Update WishlistItemValidator, also do validators for them
+
             return services;
         }
     }

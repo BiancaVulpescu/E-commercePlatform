@@ -11,6 +11,8 @@ namespace Infrastructure.Persistence
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<WishlistItem> WishlistItems { get; set; }
+        //de facut tabel pentru WishlistItems
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasPostgresExtension("uuid-ossp");
