@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Use_Cases.Queries
 {
-    public class GetAllProductsQuery : IRequest<List<ProductDto>>
+    public class GetAllWishlistItemsQuery : IRequest<List<WishlistItemDto>>
     {
     }
 }

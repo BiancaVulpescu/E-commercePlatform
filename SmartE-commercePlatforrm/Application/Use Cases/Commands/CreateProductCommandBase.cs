@@ -2,7 +2,7 @@
 
 namespace Application.Use_Cases.Commands
 {
-    public class CreateCommandBase
+    public class CreateProductCommandBase
     {
         public string Title { get; set; }
         public string Category { get; set; }

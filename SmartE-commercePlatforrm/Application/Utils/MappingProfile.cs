@@ -15,7 +15,9 @@ namespace Application.Utils
             CreateMap<Product, ProductDto>().ReverseMap();
             CreateMap<CreateProductCommand, Product>().ReverseMap();
             CreateMap<UpdateProductCommand, Product>().ReverseMap();
-
+            CreateMap<WishlistItem, WishlistItemDto>().ReverseMap();
+            CreateMap<CreateWishlistItemCommand, WishlistItem>().ReverseMap();
+            CreateMap<UpdateWishlistItemCommand, WishlistItem>().ReverseMap();
             CreateMap<ShoppingCartItems, ShoppingCartItemsDto>().ReverseMap();
             CreateMap<GetShoppingCartItemByIdQuery, ShoppingCartItemsDto>().ReverseMap();
             CreateMap<GetAllShoppingCartItemsQuery, List<ShoppingCartItemsDto>>().ReverseMap();
