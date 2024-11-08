@@ -1,7 +1,6 @@
-﻿namespace Application.DTOs
-
+﻿namespace Domain.Entities 
 {
-    public class ShoppingCartItemsDto : CartListItemsBaseDto
+    public class ShoppingCartItem : CartListItemBase
     {
         public Guid Cart_Id { get; set; }
         public int Quantity { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace Application.DTOs
 {
-    public class CartListItemsBaseDto
+    public class CartListItemBaseDto
     {
         public Guid Id { get; set; }
         public Guid Product_Id { get; set; }

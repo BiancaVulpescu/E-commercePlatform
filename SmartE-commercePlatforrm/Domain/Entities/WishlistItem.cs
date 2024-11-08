@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    public class WishListItems : CartListItemsBase
+    public class WishlistItem : CartListItemBase
     {
         public Guid List_Id { get; set; }
 
