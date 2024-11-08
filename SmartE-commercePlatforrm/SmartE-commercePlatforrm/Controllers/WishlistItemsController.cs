@@ -18,53 +18,53 @@ namespace SmartE_commercePlatforrm.Controllers
             this.mediator = mediator;
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> CreateProduct(CreateProductCommand createProductCommand)
-        //{
-        //    var resultObject = await mediator.Send(createProductCommand);
-        //    return resultObject.Match<IActionResult>(
-        //        onSuccess: result => CreatedAtAction(nameof(GetProductById), new { id = result }, result),
-        //        onFailure: error => BadRequest(error)
-        //    );
-        //}
+        [HttpPost]
+        public async Task<IActionResult> CreateWishlistItem(CreateWishlistItemCommand createWishlistItemCommand)
+        {
+            var resultObject = await mediator.Send(createWishlistItemCommand);
+            return resultObject.Match<IActionResult>(
+                onSuccess: result => CreatedAtAction(nameof(GetWishlistItemById), new { id = result }, result),
+                onFailure: error => BadRequest(error)
+            );
+        }
 
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> GetProductById([FromRoute] Guid id)
-        //{
-        //    var resultObject = await mediator.Send(new GetProductByIdQuery { Id = id });
-        //    return resultObject.Match<IActionResult>(
-        //        onSuccess: result => Ok(result),
-        //        onFailure: error => BadRequest(error)
-        //    );
-        //}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetWishlistItemById([FromRoute] Guid id)
+        {
+            var resultObject = await mediator.Send(new GetWishlistItemByIdQuery { Id = id });
+            return resultObject.Match<IActionResult>(
+                onSuccess: result => Ok(result),
+                onFailure: error => BadRequest(error)
+            );
+        }
 
-        //[HttpGet]
-        //public async Task<IActionResult> GetAllProducts()
-        //{
-        //    var result = await mediator.Send(new GetAllProductsQuery());
-        //    return Ok(result);
-        //}
+        [HttpGet]
+        public async Task<IActionResult> GetAllWishlistItems()
+        {
+            var result = await mediator.Send(new GetAllWishlistItemsQuery());
+            return Ok(result);
+        }
 
-        //[HttpPut("{id:guid}")]
-        //public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductCommand updateProductCommand, [FromRoute] Guid id)
-        //{
-        //    if (updateProductCommand.Id != id)
-        //        return BadRequest();
-        //    var resultObject = await mediator.Send(updateProductCommand);
-        //    return resultObject.Match<IActionResult>(
-        //        onSuccess: result => NoContent(),
-        //        onFailure: error => BadRequest(error)
-        //    );
-        //}
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> UpdateWishlistItem([FromBody] UpdateWishlistItemCommand updateWishlistItemCommand, [FromRoute] Guid id)
+        {
+            if (updateWishlistItemCommand.Id != id)
+                return BadRequest();
+            var resultObject = await mediator.Send(updateWishlistItemCommand);
+            return resultObject.Match<IActionResult>(
+                onSuccess: result => NoContent(),
+                onFailure: error => BadRequest(error)
+            );
+        }
 
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteProduct([FromRoute] Guid id)
-        //{
-        //    var resultObject = await mediator.Send(new DeleteProductCommand { Id = id });
-        //    return resultObject.Match<IActionResult>(
-        //        onSuccess: result => NoContent(),
-        //        onFailure: error => BadRequest(error)
-        //    );
-        //}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteWishlistItem([FromRoute] Guid id)
+        {
+            var resultObject = await mediator.Send(new DeleteWishlistItemCommand { Id = id });
+            return resultObject.Match<IActionResult>(
+                onSuccess: result => NoContent(),
+                onFailure: error => BadRequest(error)
+            );
+        }
     }
 }

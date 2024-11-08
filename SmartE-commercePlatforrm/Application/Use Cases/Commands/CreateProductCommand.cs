@@ -2,7 +2,8 @@
 
 namespace Application.Use_Cases.Commands
 {
-    public class CreateProductCommand : CreateCommandBase, IRequest<Result<Guid>>
+    public class CreateProductCommand : CreateProductCommandBase, IRequest<Result<Guid>>
     {
+
     }
 }

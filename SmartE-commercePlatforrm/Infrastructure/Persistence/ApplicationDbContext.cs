@@ -12,7 +12,6 @@ namespace Infrastructure.Persistence
         public DbSet<Product> Products { get; set; }
 
         public DbSet<WishlistItem> WishlistItems { get; set; }
-        //de facut tabel pentru WishlistItems
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasPostgresExtension("uuid-ossp");
@@ -42,6 +41,21 @@ namespace Infrastructure.Persistence
                 entity.Property(e => e.Username).IsRequired().HasMaxLength(30);
                 entity.Property(e => e.Password).IsRequired();
                 entity.Property(e => e.Location).IsRequired();
+            });
+            modelBuilder.Entity<WishlistItem>(entity =>
+            {
+                entity.ToTable("WishlistItems");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id)
+                    .HasColumnType("uuid")
+                    .HasDefaultValueSql("uuid_generate_v4()")
+                    .ValueGeneratedOnAdd();
+                entity.HasOne(e => e.Product)
+                    .WithMany()
+                    .HasForeignKey(e => e.Product_Id)
+                    .IsRequired();
+                entity.Property(e => e.List_Id).IsRequired();
+                // If Wishlist is another entity you should establish the relationship here
             });
         }
     }

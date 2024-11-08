@@ -16,9 +16,9 @@ namespace Application
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssemblyContaining<CreateProductCommandValidator>();
             services.AddValidatorsFromAssemblyContaining<UpdateProductCommandValidator>();
+            services.AddValidatorsFromAssemblyContaining<CreateWishlistItemCommandValidator>();
+            services.AddValidatorsFromAssemblyContaining<UpdateWishlistItemCommandValidator>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-
-            //de facut pt Create/Update WishlistItemValidator, also do validators for them
 
             return services;
         }

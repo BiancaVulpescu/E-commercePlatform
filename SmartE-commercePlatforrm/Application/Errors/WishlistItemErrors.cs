@@ -1,6 +1,6 @@
 ﻿namespace Application.Errors;
 
-public static class WishlistItemsErrors
+public static class WishlistItemErrors
 {
     public static Error NotFound(Guid guid) =>
         new Error("WishlistItem.NotFound", $"The wishlist item with id: {guid} was not found.");

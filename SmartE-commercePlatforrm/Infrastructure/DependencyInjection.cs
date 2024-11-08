@@ -18,6 +18,7 @@ namespace Infrastructure
                         )
                 );
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IWishlistItemRepository, WishlistItemRepository>();
             return services;
         }
 
