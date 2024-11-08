@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Use_Cases.Commands
 {
-    public class CreateShoppingCartItemCommand : CartListItemsBaseDto, IRequest<Result<Guid>>
+    public class CreateShoppingCartItemCommand : CartListItemBaseDto, IRequest<Result<Guid>>
     {
         public Guid Cart_Id { get; set; }
         public int Quantity { get; set; }

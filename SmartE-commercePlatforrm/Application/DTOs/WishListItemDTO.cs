@@ -1,9 +1,8 @@
 ﻿namespace Application.DTOs
 
 {
-    public class WishListItemDTO : CartListItemsBaseDto
+    public class WishlistItemDto : CartListItemBaseDto
     {
         public Guid List_Id { get; set; }
-
     }
 }
