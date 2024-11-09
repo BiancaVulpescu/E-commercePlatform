@@ -1,4 +1,5 @@
-﻿using Application.Use_Cases.Commands;
+﻿using Application.Errors;
+using Application.Use_Cases.Commands;
 using AutoMapper;
 using Domain.Repositories;
 using MediatR;
@@ -24,7 +25,7 @@ namespace Application.Use_Cases.CommandHandlers
                 var cartItem = await shoppingCartRepository.GetItemByIdAsync(request.Id);
                 if (cartItem is null)
                 {
-                    return Result<Unit>.Failure(ShoppingCartErrors.NotFound(request.Id));
+                    return Result<Unit>.Failure(ShoppingCartItemErrors.NotFound(request.Id));
                 }
 
                 mapper.Map(request, cartItem);
@@ -34,7 +35,7 @@ namespace Application.Use_Cases.CommandHandlers
             }
             catch (Exception ex)
             {
-                return Result<Unit>.Failure(ShoppingCartErrors.UpdateItemFailed(ex.Message));
+                return Result<Unit>.Failure(ShoppingCartItemErrors.UpdateItemFailed(ex.Message));
             }
         }
     }

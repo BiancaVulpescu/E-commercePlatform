@@ -1,4 +1,5 @@
-﻿using Application.Use_Cases.Commands;
+﻿using Application.Errors;
+using Application.Use_Cases.Commands;
 using Domain.Repositories;
 using MediatR;
 using static Application.Error;
@@ -21,14 +22,14 @@ namespace Application.Use_Cases.CommandHandlers
                 var cartItem = await shoppingCartRepository.GetItemByIdAsync(request.Id);
                 if (cartItem is null)
                 {
-                    return Result<Unit>.Failure(ShoppingCartErrors.NotFound(request.Id));
+                    return Result<Unit>.Failure(ShoppingCartItemErrors.NotFound(request.Id));
                 }
                 await shoppingCartRepository.RemoveItemAsync(cartItem.Id);
                 return Result<Unit>.Success(Unit.Value);
             }
             catch (Exception e)
             {
-                return Result<Unit>.Failure(ShoppingCartErrors.DeleteItemFailed(e.Message));
+                return Result<Unit>.Failure(ShoppingCartItemErrors.DeleteItemFailed(e.Message));
             }
         }
     }

@@ -12,7 +12,7 @@ namespace Infrastructure.Persistence
         public DbSet<Product> Products { get; set; }
         public DbSet<WishlistItem> WishlistItems { get; set; }
         public DbSet<Client> Clients { get; set; }
-        public DbSet<ShoppingCartItems> ShoppingCartItems { get; set; }
+        public DbSet<ShoppingCartItem> ShoppingCartItem { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -59,7 +59,7 @@ namespace Infrastructure.Persistence
                 entity.Property(e => e.List_Id).IsRequired();
                 // If Wishlist is another entity you should establish the relationship here
             });
-            modelBuilder.Entity<ShoppingCartItems>(entity =>
+            modelBuilder.Entity<ShoppingCartItem>(entity =>
             {
                 entity.ToTable("ShoppingCartItems");
                 entity.HasKey(e => e.Id);

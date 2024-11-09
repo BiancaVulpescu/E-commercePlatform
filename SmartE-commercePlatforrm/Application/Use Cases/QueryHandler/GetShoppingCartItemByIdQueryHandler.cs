@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.Errors;
 using Application.Use_Cases.Queries;
 using AutoMapper;
 using Domain.Repositories;
@@ -7,7 +8,7 @@ using static Application.Error;
 
 namespace Application.Use_Cases.QueryHandler
 {
-    public class GetShoppingCartItemByIdQueryHandler : IRequestHandler<GetShoppingCartItemByIdQuery, Result<ShoppingCartItemsDto>>
+    public class GetShoppingCartItemByIdQueryHandler : IRequestHandler<GetShoppingCartItemByIdQuery, Result<ShoppingCartItemDto>>
     {
         private readonly IShoppingCartRepository repository;
         private readonly IMapper mapper;
@@ -18,7 +19,7 @@ namespace Application.Use_Cases.QueryHandler
             this.mapper = mapper;
         }
 
-        public async Task<Result<ShoppingCartItemsDto>> Handle(GetShoppingCartItemByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Result<ShoppingCartItemDto>> Handle(GetShoppingCartItemByIdQuery request, CancellationToken cancellationToken)
         {
             try
             {
@@ -26,15 +27,15 @@ namespace Application.Use_Cases.QueryHandler
 
                 if (cartItem == null)
                 {
-                    return Result<ShoppingCartItemsDto>.Failure(ShoppingCartErrors.NotFound(request.Id));
+                    return Result<ShoppingCartItemDto>.Failure(ShoppingCartItemErrors.NotFound(request.Id));
                 }
 
-                var cartItemDto = mapper.Map<ShoppingCartItemsDto>(cartItem);
-                return Result<ShoppingCartItemsDto>.Success(cartItemDto);
+                var cartItemDto = mapper.Map<ShoppingCartItemDto>(cartItem);
+                return Result<ShoppingCartItemDto>.Success(cartItemDto);
             }
             catch (Exception ex)
             {
-                return Result<ShoppingCartItemsDto>.Failure(ShoppingCartErrors.GetItemFailed(ex.Message));
+                return Result<ShoppingCartItemDto>.Failure(ShoppingCartItemErrors.GetItemFailed(ex.Message));
             }
         }
     }

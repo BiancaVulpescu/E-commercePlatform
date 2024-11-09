@@ -18,10 +18,9 @@ namespace Application.Utils
             CreateMap<WishlistItem, WishlistItemDto>().ReverseMap();
             CreateMap<CreateWishlistItemCommand, WishlistItem>().ReverseMap();
             CreateMap<UpdateWishlistItemCommand, WishlistItem>().ReverseMap();
-            CreateMap<ShoppingCartItems, ShoppingCartItemsDto>().ReverseMap();
-            CreateMap<GetShoppingCartItemByIdQuery, ShoppingCartItemsDto>().ReverseMap();
-            CreateMap<GetAllShoppingCartItemsQuery, List<ShoppingCartItemsDto>>().ReverseMap();
-            CreateMap<CreateShoppingCartItemCommand, ShoppingCartItems>();
+            CreateMap<ShoppingCartItem, ShoppingCartItemDto>().ReverseMap();
+            CreateMap<CreateShoppingCartItemCommand, ShoppingCartItem>().ReverseMap();
+            CreateMap<UpdateShoppingCartItemCommand, ShoppingCartItem>().ReverseMap();
         }
     }
 }

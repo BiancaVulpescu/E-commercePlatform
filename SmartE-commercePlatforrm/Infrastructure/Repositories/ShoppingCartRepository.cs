@@ -14,25 +14,25 @@ namespace Infrastructure.Repositories
             this.context = context;
         }
 
-        public async Task<IEnumerable<ShoppingCartItems>> GetAllItemsAsync()
+        public async Task<IEnumerable<ShoppingCartItem>> GetAllItemsAsync()
         {
-            return await context.ShoppingCartItems.ToListAsync();
+            return await context.ShoppingCartItem.ToListAsync();
         }
 
-        public async Task<ShoppingCartItems> GetItemByIdAsync(Guid id)
+        public async Task<ShoppingCartItem> GetItemByIdAsync(Guid id)
         {
-            return await context.ShoppingCartItems.FindAsync(id);
+            return await context.ShoppingCartItem.FindAsync(id);
         }
 
-        public async Task<Guid> AddItemAsync(ShoppingCartItems cartItem)
+        public async Task<Guid> AddItemAsync(ShoppingCartItem cartItem)
         {
-            await context.ShoppingCartItems.AddAsync(cartItem);
+            await context.ShoppingCartItem.AddAsync(cartItem);
             await context.SaveChangesAsync();
             return cartItem.Id; 
         }
 
 
-        public async Task UpdateItemAsync(ShoppingCartItems cartItem)
+        public async Task UpdateItemAsync(ShoppingCartItem cartItem)
         {
             context.Entry(cartItem).State = EntityState.Modified;
             await context.SaveChangesAsync();
@@ -43,7 +43,7 @@ namespace Infrastructure.Repositories
             var cartItem = await GetItemByIdAsync(id);
             if (cartItem != null)
             {
-                context.ShoppingCartItems.Remove(cartItem);
+                context.ShoppingCartItem.Remove(cartItem);
                 await context.SaveChangesAsync();
             }
         }

@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.Errors;
 using Application.Use_Cases.Queries;
 using AutoMapper;
 using Domain.Repositories;
@@ -7,7 +8,7 @@ using static Application.Error;
 
 namespace Application.Use_Cases.QueryHandler
 {
-    public class GetAllShoppingCartItemsQueryHandler : IRequestHandler<GetAllShoppingCartItemsQuery, Result<List<ShoppingCartItemsDto>>>
+    public class GetAllShoppingCartItemsQueryHandler : IRequestHandler<GetAllShoppingCartItemsQuery, Result<List<ShoppingCartItemDto>>>
     {
         private readonly IShoppingCartRepository repository;
         private readonly IMapper mapper;
@@ -18,7 +19,7 @@ namespace Application.Use_Cases.QueryHandler
             this.mapper = mapper;
         }
 
-        public async Task<Result<List<ShoppingCartItemsDto>>> Handle(GetAllShoppingCartItemsQuery request, CancellationToken cancellationToken)
+        public async Task<Result<List<ShoppingCartItemDto>>> Handle(GetAllShoppingCartItemsQuery request, CancellationToken cancellationToken)
         {
             try
             {
@@ -26,15 +27,15 @@ namespace Application.Use_Cases.QueryHandler
 
                 if (cartItems == null || !cartItems.Any())
                 {
-                    return Result<List<ShoppingCartItemsDto>>.Failure(ShoppingCartErrors.NotFound(request.CartId));
+                    return Result<List<ShoppingCartItemDto>>.Failure(ShoppingCartItemErrors.NotFound(request.CartId));
                 }
 
-                var cartItemsDto = mapper.Map<List<ShoppingCartItemsDto>>(cartItems);
-                return Result<List<ShoppingCartItemsDto>>.Success(cartItemsDto);
+                var cartItemsDto = mapper.Map<List<ShoppingCartItemDto>>(cartItems);
+                return Result<List<ShoppingCartItemDto>>.Success(cartItemsDto);
             }
             catch (Exception ex)
             {
-                return Result<List<ShoppingCartItemsDto>>.Failure(ShoppingCartErrors.GetItemsFailed(ex.Message));
+                return Result<List<ShoppingCartItemDto>>.Failure(ShoppingCartItemErrors.GetItemFailed(ex.Message));
             }
         }
     }

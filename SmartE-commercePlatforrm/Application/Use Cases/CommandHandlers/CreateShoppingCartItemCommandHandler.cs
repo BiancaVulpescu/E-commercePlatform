@@ -4,11 +4,6 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Repositories;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Use_Cases.CommandHandlers
 {
@@ -25,7 +20,7 @@ namespace Application.Use_Cases.CommandHandlers
 
         public async Task<Result<Guid>> Handle(CreateShoppingCartItemCommand request, CancellationToken cancellationToken)
         {
-            var cartItem = _mapper.Map<ShoppingCartItems>(request);
+            var cartItem = _mapper.Map<ShoppingCartItem>(request);
 
             try
             {
@@ -34,7 +29,7 @@ namespace Application.Use_Cases.CommandHandlers
             }
             catch (Exception e)
             {
-                return Result<Guid>.Failure(ProductErrors.CreateProductFailed(e.Message)); // You can adjust the error handling to be specific to cart items
+                return Result<Guid>.Failure(ProductErrors.CreateProductFailed(e.Message)); 
             }
         }
     }
