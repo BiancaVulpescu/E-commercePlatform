@@ -21,6 +21,7 @@ namespace Application.Utils
             CreateMap<ShoppingCartItems, ShoppingCartItemsDto>().ReverseMap();
             CreateMap<GetShoppingCartItemByIdQuery, ShoppingCartItemsDto>().ReverseMap();
             CreateMap<GetAllShoppingCartItemsQuery, List<ShoppingCartItemsDto>>().ReverseMap();
+            CreateMap<CreateShoppingCartItemCommand, ShoppingCartItems>();
         }
     }
 }
