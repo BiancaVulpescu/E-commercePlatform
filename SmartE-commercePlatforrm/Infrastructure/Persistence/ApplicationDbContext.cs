@@ -68,11 +68,11 @@ namespace Infrastructure.Persistence
                     .HasDefaultValueSql("uuid_generate_v4()")
                     .ValueGeneratedOnAdd();
                 entity.Property(e => e.Cart_Id)
-                    .IsRequired()
-                    .HasColumnType("uuid");
-                entity.Property(e => e.Product_Id)
-                    .IsRequired()
-                    .HasColumnType("uuid");
+                    .IsRequired();
+                entity.HasOne(e => e.Product)
+                    .WithMany()
+                    .HasForeignKey(e => e.Product_Id)
+                    .IsRequired();
                 entity.Property(e => e.Quantity)
                     .IsRequired();
              });

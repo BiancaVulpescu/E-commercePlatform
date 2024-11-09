@@ -29,7 +29,7 @@ namespace Application.Use_Cases.CommandHandlers
             }
             catch (Exception e)
             {
-                return Result<Guid>.Failure(ProductErrors.CreateProductFailed(e.Message)); 
+                return Result<Guid>.Failure(ShoppingCartItemErrors.CreateItemFailed(e.Message)); 
             }
         }
     }
