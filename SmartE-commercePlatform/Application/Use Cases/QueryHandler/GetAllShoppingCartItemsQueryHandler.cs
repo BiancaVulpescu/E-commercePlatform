@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Use_Cases.QueryHandler
 {
-    public class GetAllShoppingCartItemsQueryHandler : IRequestHandler<GetAllShoppingCartItemsQuery, Result<List<ShoppingCartItemDto>>>
+    public class GetAllShoppingCartItemsQueryHandler : IRequestHandler<GetAllShoppingCartItemsQuery, List<ShoppingCartItemDto>>
     {
         private readonly IShoppingCartRepository repository;
         private readonly IMapper mapper;
@@ -18,24 +18,12 @@ namespace Application.Use_Cases.QueryHandler
             this.mapper = mapper;
         }
 
-        public async Task<Result<List<ShoppingCartItemDto>>> Handle(GetAllShoppingCartItemsQuery request, CancellationToken cancellationToken)
+        public async Task<List<ShoppingCartItemDto>> Handle(GetAllShoppingCartItemsQuery request, CancellationToken cancellationToken)
         {
-            try
-            {
                 var cartItems = await repository.GetAllItemsAsync();
-
-                if (cartItems == null || !cartItems.Any())
-                {
-                    return Result<List<ShoppingCartItemDto>>.Failure(ShoppingCartItemErrors.NotFound(request.CartId));
-                }
-
-                var cartItemsDto = mapper.Map<List<ShoppingCartItemDto>>(cartItems);
-                return Result<List<ShoppingCartItemDto>>.Success(cartItemsDto);
-            }
-            catch (Exception ex)
-            {
-                return Result<List<ShoppingCartItemDto>>.Failure(ShoppingCartItemErrors.GetItemFailed(ex.Message));
-            }
+                return mapper.Map<List<ShoppingCartItemDto>>(cartItems);
+          
+           
         }
     }
 }
