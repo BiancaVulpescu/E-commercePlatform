@@ -1,17 +1,9 @@
-﻿using Application.DTOs;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
 namespace Application.Use_Cases.Commands
 {
-    public class CreateShoppingCartItemCommand : CartListItemBaseDto, IRequest<Result<Guid>>
+    public class CreateShoppingCartItemCommand : CreateShoppingCartItemBaseCommand, IRequest<Result<Guid>>
     {
-        public Guid Cart_Id { get; set; }
-        public int Quantity { get; set; }
     }
 
 }

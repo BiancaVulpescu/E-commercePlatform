@@ -14,11 +14,9 @@ namespace Infrastructure.Repositories
             this.context = context;
         }
 
-        public async Task<IEnumerable<ShoppingCartItems>> GetAllItemsAsync(Guid cartId)
+        public async Task<IEnumerable<ShoppingCartItems>> GetAllItemsAsync()
         {
-            return await context.ShoppingCartItems
-                .Where(item => item.Cart_Id == cartId)
-                .ToListAsync();
+            return await context.ShoppingCartItems.ToListAsync();
         }
 
         public async Task<ShoppingCartItems> GetItemByIdAsync(Guid id)

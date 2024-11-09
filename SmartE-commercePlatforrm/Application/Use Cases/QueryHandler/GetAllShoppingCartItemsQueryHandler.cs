@@ -22,7 +22,7 @@ namespace Application.Use_Cases.QueryHandler
         {
             try
             {
-                var cartItems = await repository.GetAllItemsAsync(request.CartId);
+                var cartItems = await repository.GetAllItemsAsync();
 
                 if (cartItems == null || !cartItems.Any())
                 {
