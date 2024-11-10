@@ -2,6 +2,8 @@
 
 public static class WishlistItemErrors
 {
+    public static Error ValidationFailed(string Description) => new Error("WishlistItem.ValidationFailed", Description);
+
     public static Error NotFound(Guid guid) =>
         new Error("WishlistItem.NotFound", $"The wishlist item with id: {guid} was not found.");
 
