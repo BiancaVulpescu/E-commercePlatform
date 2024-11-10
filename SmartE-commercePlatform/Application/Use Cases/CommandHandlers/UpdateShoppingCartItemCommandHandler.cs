@@ -1,6 +1,7 @@
 ﻿using Application.Errors;
 using Application.Use_Cases.Commands;
 using AutoMapper;
+using Domain.Entities;
 using Domain.Repositories;
 using MediatR;
 
@@ -21,15 +22,7 @@ namespace Application.Use_Cases.CommandHandlers
         {
             try
             {
-                var cartItem = await shoppingCartRepository.GetItemByIdAsync(request.Id);
-                if (cartItem is null)
-                {
-                    return Result<Unit>.Failure(ShoppingCartItemErrors.NotFound(request.Id));
-                }
-
-                mapper.Map(request, cartItem);
-
-                await shoppingCartRepository.UpdateItemAsync(cartItem);
+                await shoppingCartRepository.UpdateItemAsync(mapper.Map<ShoppingCartItem>(request));
                 return Result<Unit>.Success(Unit.Value);
             }
             catch (Exception ex)
