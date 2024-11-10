@@ -21,10 +21,10 @@ namespace Application.Use_Cases.CommandHandlers
         public async Task<Result<Guid>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             var product = _mapper.Map<Product>(request);
-            /*if (product is null)
+            if (product is null)
             {
-                return Result<Guid>.Failure(ProductErrors.ValidationFailed("Product is null"));
-            }*/
+                return Result<Guid>.Failure(ProductErrors.ValidationFailed("The product is null"));
+            }
 
             try
             {

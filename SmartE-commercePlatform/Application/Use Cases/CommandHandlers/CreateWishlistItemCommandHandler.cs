@@ -21,7 +21,10 @@ namespace Application.Use_Cases.CommandHandlers
         public async Task<Result<Guid>> Handle(CreateWishlistItemCommand request, CancellationToken cancellationToken)
         {
             var wishlistItem = _mapper.Map<WishlistItem>(request);
-
+            if (wishlistItem is null)
+            {
+                return Result<Guid>.Failure(WishlistItemErrors.ValidationFailed("The wishlist item is null"));
+            }
             try
             {
                 var returnedId = await repository.AddAsync(wishlistItem);
