@@ -1,7 +1,6 @@
 ﻿using Application.Errors;
 using Application.Use_Cases.Commands;
 using AutoMapper;
-using Domain.Entities;
 using Domain.Repositories;
 using MediatR;
 
