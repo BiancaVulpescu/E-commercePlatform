@@ -22,7 +22,15 @@ namespace Application.Use_Cases.CommandHandlers
         {
             try
             {
-                await shoppingCartRepository.UpdateItemAsync(mapper.Map<ShoppingCartItem>(request));
+                var cartItem = await shoppingCartRepository.GetItemByIdAsync(request.Id);
+                if (cartItem is null)
+                {
+                    return Result<Unit>.Failure(ShoppingCartItemErrors.NotFound(request.Id));
+                }
+
+                mapper.Map(request, cartItem);
+
+                await shoppingCartRepository.UpdateItemAsync(cartItem);
                 return Result<Unit>.Success(Unit.Value);
             }
             catch (Exception ex)
