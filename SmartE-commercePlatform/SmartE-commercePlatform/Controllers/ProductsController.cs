@@ -18,11 +18,18 @@ namespace SmartE_commercePlatform.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProduct(CreateProductCommand createProductCommand)
         {
-            var resultObject = await mediator.Send(createProductCommand);
-            return resultObject.Match<IActionResult>(
-                onSuccess: result => CreatedAtAction(nameof(GetProductById), new { id = result }, result),
-                onFailure: error => BadRequest(error)
-            );
+            try
+            {
+                var resultObject = await mediator.Send(createProductCommand);
+                return resultObject.Match<IActionResult>(
+                    onSuccess: result => CreatedAtAction(nameof(GetProductById), new { id = result }, result),
+                    onFailure: error => BadRequest(error)
+                );
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
@@ -47,11 +54,18 @@ namespace SmartE_commercePlatform.Controllers
         {
             if (updateProductCommand.Id != id)
                 return BadRequest();
-            var resultObject = await mediator.Send(updateProductCommand);
-            return resultObject.Match<IActionResult>(
-                onSuccess: result => NoContent(),
-                onFailure: error => BadRequest(error)
-            );
+            try
+            {
+                var resultObject = await mediator.Send(updateProductCommand);
+                return resultObject.Match<IActionResult>(
+                    onSuccess: result => NoContent(),
+                    onFailure: error => BadRequest(error)
+                );
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]

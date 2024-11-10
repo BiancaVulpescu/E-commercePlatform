@@ -1,5 +1,4 @@
 ﻿using Application.DTOs;
-using Application.Errors;
 using Application.Use_Cases.Queries;
 using AutoMapper;
 using Domain.Repositories;
