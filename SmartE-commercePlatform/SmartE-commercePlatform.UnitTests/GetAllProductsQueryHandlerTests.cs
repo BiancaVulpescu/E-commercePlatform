@@ -9,11 +9,11 @@ using NSubstitute;
 
 namespace SmartE_commercePlatform.UnitTests
 {
-    public class GetProductsQueryHandlerTests
+    public class GetAllProductsQueryHandlerTests
     {
         private readonly IProductRepository repository;
         private readonly IMapper mapper;
-        public GetProductsQueryHandlerTests()
+        public GetAllProductsQueryHandlerTests()
         {
             repository = Substitute.For<IProductRepository>();
             mapper = Substitute.For<IMapper>();
