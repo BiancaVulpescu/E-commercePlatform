@@ -20,9 +20,14 @@ namespace Application.Use_Cases.CommandHandlers
 
         public async Task<Result<Unit>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
+            var product = mapper.Map<Product>(request);
             try
             {
-                await repository.UpdateAsync(mapper.Map<Product>(request));
+                if  (product is null)
+                {
+                    return Result<Unit>.Failure(ProductErrors.ValidationFailed("The request is null"));
+                }
+                await repository.UpdateAsync(product);
                 return Result<Unit>.Success(Unit.Value);
             }
             catch (Exception ex)

@@ -2,7 +2,7 @@ namespace Application.Errors;
 
 public static class ProductErrors
 {
-    //public static Error ValidationFailed(string Description) => new Error("Product.ValidationFailed", Description);
+    public static Error ValidationFailed(string Description) => new Error("Product.ValidationFailed", Description);
     public static Error NotFound(Guid guid) =>
         new Error("Product.NotFound", $"The product with id: {guid} was not found.");
    
