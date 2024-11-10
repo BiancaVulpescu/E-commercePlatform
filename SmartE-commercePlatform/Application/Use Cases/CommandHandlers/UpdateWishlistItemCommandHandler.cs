@@ -20,9 +20,14 @@ namespace Application.Use_Cases.CommandHandlers
 
         public async Task<Result<Unit>> Handle(UpdateWishlistItemCommand request, CancellationToken cancellationToken)
         {
+            var wishlistItem = mapper.Map<WishlistItem>(request);
             try
             {
-                await repository.UpdateAsync(mapper.Map<WishlistItem>(request));
+                if (wishlistItem is null)
+                {
+                    return Result<Unit>.Failure(WishlistItemErrors.ValidationFailed("The request is null"));
+                }
+                await repository.UpdateAsync(wishlistItem);
                 return Result<Unit>.Success(Unit.Value);
             }
             catch (Exception ex)

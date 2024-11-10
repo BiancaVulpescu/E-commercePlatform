@@ -1,6 +1,8 @@
 ﻿namespace Application.Errors;
     public static class ShoppingCartItemErrors
     {
+        public static Error ValidationFailed(string Description) => new Error("ShoppingCartItem.ValidationFailed", Description);
+
         public static Error NotFound(Guid id)
         {
             return new Error("ShoppingCartItemNotFound", $"Shopping cart item with id {id} not found.");

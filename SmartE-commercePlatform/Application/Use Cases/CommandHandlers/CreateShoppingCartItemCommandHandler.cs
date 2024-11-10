@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Use_Cases.CommandHandlers
 {
-    internal class CreateShoppingCartItemCommandHandler : IRequestHandler<CreateShoppingCartItemCommand, Result<Guid>>
+    public class CreateShoppingCartItemCommandHandler : IRequestHandler<CreateShoppingCartItemCommand, Result<Guid>>
     {
         private readonly IShoppingCartRepository repository;
         private readonly IMapper _mapper;
@@ -21,7 +21,10 @@ namespace Application.Use_Cases.CommandHandlers
         public async Task<Result<Guid>> Handle(CreateShoppingCartItemCommand request, CancellationToken cancellationToken)
         {
             var cartItem = _mapper.Map<ShoppingCartItem>(request);
-
+            if (cartItem is null)
+            {
+                return Result<Guid>.Failure(ShoppingCartItemErrors.ValidationFailed("The cart item is null"));
+            }
             try
             {
                 var returnedId = await repository.AddItemAsync(cartItem);
