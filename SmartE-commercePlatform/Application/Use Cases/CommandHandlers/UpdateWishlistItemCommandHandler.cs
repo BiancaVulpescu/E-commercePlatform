@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Use_Cases.CommandHandlers
 {
-    public class UpdateWishlistItemCommandHandler : IRequestHandler<UpdateWishlistItemCommand, Result<Unit>>
+    public class UpdateWishlistItemCommandHandler : IRequestHandler<UpdateWishlistItemCommand, Result<Unit, WishlistItemError>>
     {
         private readonly IWishlistItemRepository repository;
         private readonly IMapper mapper;
@@ -18,21 +18,21 @@ namespace Application.Use_Cases.CommandHandlers
             this.mapper = mapper;
         }
 
-        public async Task<Result<Unit>> Handle(UpdateWishlistItemCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit, WishlistItemError>> Handle(UpdateWishlistItemCommand request, CancellationToken cancellationToken)
         {
             var wishlistItem = mapper.Map<WishlistItem>(request);
             try
             {
                 if (wishlistItem is null)
                 {
-                    return Result<Unit>.Failure(WishlistItemErrors.ValidationFailed("The request is null"));
+                    return Result<Unit, WishlistItemError>.Err(WishlistItemError.ValidationFailed("The request is null"));
                 }
                 await repository.UpdateAsync(wishlistItem);
-                return Result<Unit>.Success(Unit.Value);
+                return Result<Unit, WishlistItemError>.Ok(Unit.Value);
             }
             catch (Exception ex)
             {
-                return Result<Unit>.Failure(WishlistItemErrors.UpdateWishlistItemFailed(ex.Message));
+                return Result<Unit, WishlistItemError>.Err(WishlistItemError.UpdateWishlistItemFailed(ex.Message));
             }
         }
     }

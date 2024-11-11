@@ -39,8 +39,8 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.IsSuccess.Should().BeTrue();
-            result.Value.Should().Be(Unit.Value);
+            result.IsOk.Should().BeTrue();
+            result.Unwrap().Should().Be(Unit.Value);
             await repository.Received(1).RemoveItemAsync(command.Id);
         }
         [Fact]
@@ -64,8 +64,8 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.IsSuccess.Should().BeFalse();
-            result.Error!.Description.Should().Be("Failed to delete shopping cart item. Exception thrown");
+            result.IsOk.Should().BeFalse();
+            result.UnwrapErr().Description.Should().Be("Failed to delete shopping cart item. Exception thrown");
         }
 
         [Fact]
@@ -85,8 +85,8 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.IsSuccess.Should().BeFalse();
-            result.Error!.Description.Should().Be($"Shopping cart item with id {command.Id} not found.");
+            result.IsOk.Should().BeFalse();
+            result.UnwrapErr().Description.Should().Be($"Shopping cart item with id {command.Id} not found.");
         }
         private static ShoppingCartItem GenerateShoppingCartItem(Guid id)
         {

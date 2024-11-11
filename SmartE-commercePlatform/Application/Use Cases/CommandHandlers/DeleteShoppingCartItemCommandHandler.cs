@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.Use_Cases.CommandHandlers
 {
-    public class DeleteShoppingCartItemCommandHandler : IRequestHandler<DeleteShoppingCartItemCommand, Result<Unit>>
+    public class DeleteShoppingCartItemCommandHandler : IRequestHandler<DeleteShoppingCartItemCommand, Result<Unit, ShoppingCartItemError>>
     {
         private readonly IShoppingCartRepository shoppingCartRepository;
 
@@ -14,21 +14,21 @@ namespace Application.Use_Cases.CommandHandlers
             this.shoppingCartRepository = shoppingCartRepository;
         }
 
-        public async Task<Result<Unit>> Handle(DeleteShoppingCartItemCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit, ShoppingCartItemError>> Handle(DeleteShoppingCartItemCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 var cartItem = await shoppingCartRepository.GetItemByIdAsync(request.Id);
                 if (cartItem is null)
                 {
-                    return Result<Unit>.Failure(ShoppingCartItemErrors.NotFound(request.Id));
+                    return Result<Unit, ShoppingCartItemError>.Err(ShoppingCartItemError.NotFound(request.Id));
                 }
                 await shoppingCartRepository.RemoveItemAsync(cartItem.Id);
-                return Result<Unit>.Success(Unit.Value);
+                return Result<Unit, ShoppingCartItemError>.Ok(Unit.Value);
             }
             catch (Exception e)
             {
-                return Result<Unit>.Failure(ShoppingCartItemErrors.DeleteItemFailed(e.Message));
+                return Result<Unit, ShoppingCartItemError>.Err(ShoppingCartItemError.DeleteItemFailed(e.Message));
             }
         }
     }

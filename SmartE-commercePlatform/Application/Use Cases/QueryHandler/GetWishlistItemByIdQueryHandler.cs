@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Use_Cases.QueryHandlers;
 
-public class GetWishlistItemByIdQueryHandler : IRequestHandler<GetWishlistItemByIdQuery, Result<WishlistItemDto>>
+public class GetWishlistItemByIdQueryHandler : IRequestHandler<GetWishlistItemByIdQuery, Result<WishlistItemDto, WishlistItemError>>
 {
     private readonly IWishlistItemRepository _wishlistItemRepository;
     private readonly IMapper _mapper;
@@ -18,18 +18,18 @@ public class GetWishlistItemByIdQueryHandler : IRequestHandler<GetWishlistItemBy
         _mapper = mapper;
     }
 
-    public async Task<Result<WishlistItemDto>> Handle(GetWishlistItemByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<WishlistItemDto, WishlistItemError>> Handle(GetWishlistItemByIdQuery request, CancellationToken cancellationToken)
     {
         try
         {
             var product = await _wishlistItemRepository.GetByIdAsync(request.Id);
             return product is null
-                ? Result<WishlistItemDto>.Failure(WishlistItemErrors.NotFound(request.Id))
-                : Result<WishlistItemDto>.Success(_mapper.Map<WishlistItemDto>(product));
+                ? Result<WishlistItemDto, WishlistItemError>.Err(WishlistItemError.NotFound(request.Id))
+                : Result<WishlistItemDto, WishlistItemError>.Ok(_mapper.Map<WishlistItemDto>(product));
         }
         catch (Exception e)
         {
-            return Result<WishlistItemDto>.Failure(WishlistItemErrors.GetWishlistItemFailed(e.Message));
+            return Result<WishlistItemDto, WishlistItemError>.Err(WishlistItemError.GetWishlistItemFailed(e.Message));
         }
     }
 }

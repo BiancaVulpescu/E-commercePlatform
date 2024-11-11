@@ -21,7 +21,7 @@ namespace SmartE_commercePlatform.Controllers
         public async Task<IActionResult> CreateShoppingCartItem([FromBody] CreateShoppingCartItemCommand createShoppingCartItemCommand)
         {
             var resultObject = await mediator.Send(createShoppingCartItemCommand);
-            return resultObject.Match<IActionResult>(
+            return resultObject.MapOrElse<IActionResult>(
                 onSuccess: result => CreatedAtAction(nameof(GetShoppingCartItemById), new { id = result }, result),
                 onFailure: error => BadRequest(error)
             );
@@ -31,7 +31,7 @@ namespace SmartE_commercePlatform.Controllers
         public async Task<IActionResult> GetShoppingCartItemById([FromRoute] Guid id)
         {
             var resultObject = await mediator.Send(new GetShoppingCartItemByIdQuery { Id = id });
-            return resultObject.Match<IActionResult>(
+            return resultObject.MapOrElse<IActionResult>(
                 onSuccess: result => Ok(result),
                 onFailure: error => BadRequest(error)
             );
@@ -52,7 +52,7 @@ namespace SmartE_commercePlatform.Controllers
                 return BadRequest("Id mismatch.");
 
             var resultObject = await mediator.Send(updateShoppingCartItemCommand);
-            return resultObject.Match<IActionResult>(
+            return resultObject.MapOrElse<IActionResult>(
                 onSuccess: result => NoContent(),
                 onFailure: error => BadRequest(error)
             );
@@ -62,7 +62,7 @@ namespace SmartE_commercePlatform.Controllers
         public async Task<IActionResult> DeleteShoppingCartItem([FromRoute] Guid id)
         {
             var resultObject = await mediator.Send(new DeleteShoppingCartItemCommand { Id = id });
-            return resultObject.Match<IActionResult>(
+            return resultObject.MapOrElse<IActionResult>(
                 onSuccess: result => NoContent(),
                 onFailure: error => BadRequest(error)
             );
