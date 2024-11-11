@@ -70,7 +70,7 @@ namespace SmartE_commercePlatform.UnitTests
             //Assert
             result.Should().NotBeNull();
             result.IsSuccess.Should().BeFalse();
-            result.Error.Description.Should().Be($"Shopping cart item with id {command.Id} not found.");
+            result.Error!.Description.Should().Be($"Shopping cart item with id {command.Id} not found.");
         }
         [Fact]
         public async void Given_NullCommand_When_HandleIsCalled_Then_Given_NullCommand_When_HandleIsCalled_Then_ShouldThrowTheRequestIsNullFailure()
@@ -83,7 +83,7 @@ namespace SmartE_commercePlatform.UnitTests
                 Cart_Id = Guid.NewGuid(),
                 Quantity = 2,
             };
-            mapper.Map<ShoppingCartItem>(command).Returns((ShoppingCartItem)null);
+            mapper.Map<ShoppingCartItem>(command).Returns((ShoppingCartItem?)null);
             var handler = new UpdateShoppingCartItemCommandHandler(repository, mapper);
 
             //Act 
@@ -91,9 +91,9 @@ namespace SmartE_commercePlatform.UnitTests
             //Assert
             result.Should().NotBeNull();
             result.IsSuccess.Should().BeFalse();
-            result.Error.Description.Should().Be($"Shopping cart item with id {command.Id} not found.");
+            result.Error!.Description.Should().Be($"Shopping cart item with id {command.Id} not found.");
         }
-        private ShoppingCartItem GenerateShoppingCartItem(UpdateShoppingCartItemCommand command)
+        private static ShoppingCartItem GenerateShoppingCartItem(UpdateShoppingCartItemCommand command)
         {
             var shoppingCartItem = new ShoppingCartItem
             {

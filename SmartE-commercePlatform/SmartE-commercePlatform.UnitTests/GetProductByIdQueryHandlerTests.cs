@@ -39,9 +39,9 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.Value.Id.ToString().Should().Be(query.Id.ToString());
+            result.Value!.Id.ToString().Should().Be(query.Id.ToString());
         }
-        private Product GenerateProduct(Guid guid)
+        private static Product GenerateProduct(Guid guid)
         {
             return new Product
             {

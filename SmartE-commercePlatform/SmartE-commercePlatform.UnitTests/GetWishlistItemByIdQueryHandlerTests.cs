@@ -43,9 +43,9 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.Value.Id.ToString().Should().Be(query.Id.ToString());
+            result.Value!.Id.ToString().Should().Be(query.Id.ToString());
         }
-        private WishlistItem GenerateWishlistItem(Guid guid)
+        private static WishlistItem GenerateWishlistItem(Guid guid)
         {
             return new WishlistItem
             {

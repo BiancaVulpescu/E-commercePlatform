@@ -35,9 +35,9 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.Count().Should().Be(wishlistItems.Count());
+            result.Count.Should().Be(wishlistItems.Count);
         }
-        private List<WishlistItem> GenerateWishlistItems()
+        private static List<WishlistItem> GenerateWishlistItems()
         {
             return new List<WishlistItem>
             {

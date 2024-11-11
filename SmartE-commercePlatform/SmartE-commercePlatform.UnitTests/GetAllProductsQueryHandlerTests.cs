@@ -35,10 +35,10 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.Count().Should().Be(products.Count());
+            result.Count.Should().Be(products.Count);
         }
 
-        private List<Product> GenerateProducts()
+        private static List<Product> GenerateProducts()
         {
             return new List<Product>
             {

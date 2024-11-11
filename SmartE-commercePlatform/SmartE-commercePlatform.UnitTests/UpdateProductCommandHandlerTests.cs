@@ -77,7 +77,7 @@ namespace SmartE_commercePlatform.UnitTests
             //Assert
             result.Should().NotBeNull();
             result.IsSuccess.Should().BeFalse();
-            result.Error.Description.Should().Be("Exception thrown");
+            result.Error!.Description.Should().Be("Exception thrown");
         }
         [Fact]
         public async void Given_NullCommand_When_HandleIsCalled_Then_Given_NullCommand_When_HandleIsCalled_Then_ShouldThrowTheRequestIsNullFailure()
@@ -92,7 +92,7 @@ namespace SmartE_commercePlatform.UnitTests
                 Price = 100,
                 IsNegotiable = true
             };
-            mapper.Map<Product>(command).Returns((Product)null);
+            mapper.Map<Product>(command).Returns((Product?)null);
             var handler = new UpdateProductCommandHandler(repository, mapper);
 
             //Act 
@@ -100,10 +100,10 @@ namespace SmartE_commercePlatform.UnitTests
             //Assert
             result.Should().NotBeNull();
             result.IsSuccess.Should().BeFalse();
-            result.Error.Description.Should().Be("The request is null");
+            result.Error!.Description.Should().Be("The request is null");
         }
 
-        private Product GenerateProduct(UpdateProductCommand command)
+        private static Product GenerateProduct(UpdateProductCommand command)
         {
             var product = new Product
             {

@@ -34,7 +34,7 @@ namespace Infrastructure.Repositories
             return await context.WishlistItems.ToListAsync();
         }
 
-        public async Task<WishlistItem> GetByIdAsync(Guid id)
+        public async Task<WishlistItem?> GetByIdAsync(Guid id)
         {
             return await context.WishlistItems.FindAsync(id);
         }

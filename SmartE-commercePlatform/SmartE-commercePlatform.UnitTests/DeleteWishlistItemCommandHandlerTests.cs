@@ -65,7 +65,7 @@ namespace SmartE_commercePlatform.UnitTests
             // Assert 
             result.Should().NotBeNull();
             result.IsSuccess.Should().BeFalse();
-            result.Error.Description.Should().Be("Exception thrown");
+            result.Error!.Description.Should().Be("Exception thrown");
         }
 
         [Fact]
@@ -77,7 +77,7 @@ namespace SmartE_commercePlatform.UnitTests
                 Id = Guid.NewGuid()
             };
 
-            repository.GetByIdAsync(command.Id).Returns((WishlistItem)null);
+            repository.GetByIdAsync(command.Id).Returns((WishlistItem?)null);
             var handler = new DeleteWishlistItemCommandHandler(repository);
 
             //Act
@@ -86,10 +86,10 @@ namespace SmartE_commercePlatform.UnitTests
             // Assert 
             result.Should().NotBeNull();
             result.IsSuccess.Should().BeFalse();
-            result.Error.Description.Should().Be($"The wishlist item with id: {command.Id} was not found.");
+            result.Error!.Description.Should().Be($"The wishlist item with id: {command.Id} was not found.");
         }
 
-        private WishlistItem GenerateWishlistItem(Guid id)
+        private static WishlistItem GenerateWishlistItem(Guid id)
         {
             return new WishlistItem
             {

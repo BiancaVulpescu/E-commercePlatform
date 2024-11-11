@@ -413,6 +413,7 @@ namespace SmartE_commercePlatform.IntegrationTests
         {
             dbContext.Database.EnsureDeleted();
             dbContext.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

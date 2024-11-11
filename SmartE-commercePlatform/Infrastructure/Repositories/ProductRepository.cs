@@ -34,7 +34,7 @@ namespace Infrastructure.Repositories
             return await context.Products.ToListAsync();
         }
 
-        public async Task<Product> GetByIdAsync(Guid id)
+        public async Task<Product?> GetByIdAsync(Guid id)
         {
             return await context.Products.FindAsync(id);
         }

@@ -8,6 +8,7 @@ namespace Infrastructure.Persistence
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
+        private const string UuidGenerationFunction = "uuid_generate_v4()";
 
         public DbSet<Product> Products { get; set; }
         public DbSet<WishlistItem> WishlistItems { get; set; }
@@ -23,7 +24,7 @@ namespace Infrastructure.Persistence
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id)
                 .HasColumnType("uuid")
-                .HasDefaultValueSql("uuid_generate_v4()")
+                .HasDefaultValueSql(UuidGenerationFunction)
                 .ValueGeneratedOnAdd();
                 entity.Property(e => e.Description).IsRequired().HasMaxLength(300);
                 entity.Property(e => e.Price).IsRequired();
@@ -37,7 +38,7 @@ namespace Infrastructure.Persistence
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id)
                 .HasColumnType("uuid")
-                .HasDefaultValueSql("uuid_generate_v4()")
+                .HasDefaultValueSql(UuidGenerationFunction)
                 .ValueGeneratedOnAdd();
                 entity.Property(e => e.Email).IsRequired().HasMaxLength(30);
                 entity.Property(e => e.Username).IsRequired().HasMaxLength(30);
@@ -50,7 +51,7 @@ namespace Infrastructure.Persistence
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id)
                     .HasColumnType("uuid")
-                    .HasDefaultValueSql("uuid_generate_v4()")
+                    .HasDefaultValueSql(UuidGenerationFunction)
                     .ValueGeneratedOnAdd();
                 entity.HasOne(e => e.Product)
                     .WithMany()
@@ -65,7 +66,7 @@ namespace Infrastructure.Persistence
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id)
                     .HasColumnType("uuid")
-                    .HasDefaultValueSql("uuid_generate_v4()")
+                    .HasDefaultValueSql(UuidGenerationFunction)
                     .ValueGeneratedOnAdd();
                 entity.Property(e => e.Cart_Id)
                     .IsRequired();

@@ -66,7 +66,7 @@ namespace SmartE_commercePlatform.UnitTests
             // Assert 
             result.Should().NotBeNull();
             result.IsSuccess.Should().BeFalse();
-            result.Error.Description.Should().Be("Exception thrown");
+            result.Error!.Description.Should().Be("Exception thrown");
         }
         [Fact]
         public async void Given_NullCommand_When_HandleIsCalled_Then_ShouldThrowTheWishlistItemIsNullFailure()
@@ -77,7 +77,7 @@ namespace SmartE_commercePlatform.UnitTests
                 Product_Id = Guid.NewGuid(),
                 List_Id = Guid.NewGuid(),
             };
-            mapper.Map<WishlistItem>(command).Returns((WishlistItem)null);
+            mapper.Map<WishlistItem>(command).Returns((WishlistItem?)null);
             var handler = new CreateWishlistItemCommandHandler(repository, mapper);
 
             //Act 
@@ -85,10 +85,10 @@ namespace SmartE_commercePlatform.UnitTests
             //Assert
             result.Should().NotBeNull();
             result.IsSuccess.Should().BeFalse();
-            result.Error.Description.Should().Be("The wishlist item is null");
+            result.Error!.Description.Should().Be("The wishlist item is null");
         }
 
-        private WishlistItem GenerateWishlistItem(CreateWishlistItemCommand command)
+        private static WishlistItem GenerateWishlistItem(CreateWishlistItemCommand command)
         {
             return new WishlistItem
             {

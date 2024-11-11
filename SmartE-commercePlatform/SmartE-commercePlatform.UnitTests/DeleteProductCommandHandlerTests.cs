@@ -66,7 +66,7 @@ namespace SmartE_commercePlatform.UnitTests
             // Assert 
             result.Should().NotBeNull();
             result.IsSuccess.Should().BeFalse();
-            result.Error.Description.Should().Be("Exception thrown");
+            result.Error!.Description.Should().Be("Exception thrown");
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace SmartE_commercePlatform.UnitTests
                 Id = Guid.NewGuid()
             };
 
-            repository.GetByIdAsync(command.Id).Returns((Product)null);
+            repository.GetByIdAsync(command.Id).Returns((Product?)null);
             var handler = new DeleteProductCommandHandler(repository);
 
             //Act
@@ -87,10 +87,10 @@ namespace SmartE_commercePlatform.UnitTests
             // Assert 
             result.Should().NotBeNull();
             result.IsSuccess.Should().BeFalse();
-            result.Error.Description.Should().Be($"The product with id: {command.Id} was not found.");
+            result.Error!.Description.Should().Be($"The product with id: {command.Id} was not found.");
         }
 
-        private Product GenerateProduct(Guid id)
+        private static Product GenerateProduct(Guid id)
         {
             return new Product
             {

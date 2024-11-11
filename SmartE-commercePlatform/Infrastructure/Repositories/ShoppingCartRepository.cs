@@ -19,7 +19,7 @@ namespace Infrastructure.Repositories
             return await context.ShoppingCartItem.ToListAsync();
         }
 
-        public async Task<ShoppingCartItem> GetItemByIdAsync(Guid id)
+        public async Task<ShoppingCartItem?> GetItemByIdAsync(Guid id)
         {
             return await context.ShoppingCartItem.FindAsync(id);
         }
