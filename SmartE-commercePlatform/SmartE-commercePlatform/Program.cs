@@ -1,8 +1,11 @@
 using Infrastructure;
 using Application;
-     
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.EntityFrameworkCore.Query;
 
+var builder = WebApplication.CreateBuilder(args);
+var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
+var defaultConnection = builder.Configuration.GetConnectionString("DefaultConnection") + dbPassword;
+builder.Configuration["ConnectionStrings:DefaultConnection"] = defaultConnection;
 // Add services to the container.
 
 builder.Services.AddApplication();
