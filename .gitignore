@@ -32,6 +32,14 @@ bld/
 [Ll]og/
 [Ll]ogs/
 
+#Sonar 
+sonar-project.properties
+.scannerwork/
+*sonar*
+.sonarqube/
+coverage.xml
+
+
 # Visual Studio 2015/2017 cache/options directory
 .vs/
 Migrations/

@@ -1,9 +1,0 @@
-﻿C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\Entities\CartListItemBase.cs
-C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\Entities\Client.cs
-C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\Entities\Product.cs
-C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\Entities\ShoppingCartItem.cs
-C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\Entities\WishlistItem.cs
-C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\Repositories\IClientRepository.cs
-C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\Repositories\IProductRepository.cs
-C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\Repositories\IShoppingCartRepository.cs
-C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\Repositories\IWishlistItemRepository.cs
