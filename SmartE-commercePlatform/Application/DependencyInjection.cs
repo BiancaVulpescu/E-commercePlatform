@@ -1,5 +1,4 @@
-﻿using Application.Use_Cases.CommandValidators;
-using Application.Utils;
+﻿using Application.Utils;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

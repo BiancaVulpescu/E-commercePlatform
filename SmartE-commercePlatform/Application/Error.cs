@@ -1,10 +1,21 @@
 namespace Application;
 
-public sealed record Error(string Code, string? Description = null)
+public class Error
 {
+    private readonly string code;
+    private readonly string? description;
+    protected Error(string code, string? description = null)
+    {
+        this.code = code;
+        this.description = description;
+    }
+
+    public string Code { get { return code; } }
+    public string? Description { get { return description; } }
+
     public static readonly Error None = new(string.Empty);
     public override string ToString()
     {
-        return $"Error {Code} occured. Details: {Description}";
+        return $"Error {code} occured. Details: {description}";
     }
 }

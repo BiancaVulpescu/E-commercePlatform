@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Use_Cases.CommandHandlers
 {
-    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Result<Unit>>
+    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Result<Unit, ProductError>>
     {
         private readonly IProductRepository repository;
         private readonly IMapper mapper;
@@ -18,21 +18,21 @@ namespace Application.Use_Cases.CommandHandlers
             this.mapper = mapper;
         }
 
-        public async Task<Result<Unit>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit, ProductError>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             var product = mapper.Map<Product>(request);
             try
             {
                 if  (product is null)
                 {
-                    return Result<Unit>.Failure(ProductErrors.ValidationFailed("The request is null"));
+                    return Result<Unit, ProductError>.Err(ProductError.ValidationFailed("The request is null"));
                 }
                 await repository.UpdateAsync(product);
-                return Result<Unit>.Success(Unit.Value);
+                return Result<Unit, ProductError>.Ok(Unit.Value);
             }
             catch (Exception ex)
             {
-                return Result<Unit>.Failure(ProductErrors.UpdateProductFailed(ex.Message));
+                return Result<Unit, ProductError>.Err(ProductError.UpdateProductFailed(ex.Message));
             }
         }
     }

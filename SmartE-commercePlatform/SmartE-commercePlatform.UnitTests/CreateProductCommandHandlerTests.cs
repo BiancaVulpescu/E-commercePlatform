@@ -6,7 +6,6 @@ using Domain.Entities;
 using Domain.Repositories;
 using NSubstitute;
 using FluentAssertions;
-using Application.Use_Cases.CommandValidators;
 
 namespace SmartE_commercePlatform.UnitTests
 {
@@ -44,8 +43,8 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.IsSuccess.Should().BeTrue();
-            result.Value.Should().Be(product.Id);
+            result.IsOk.Should().BeTrue();
+            result.Unwrap().Should().Be(product.Id);
         }
 
         [Fact]
@@ -72,8 +71,8 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.IsSuccess.Should().BeFalse();
-            result.Error!.Description.Should().Be("Exception thrown");
+            result.IsOk.Should().BeFalse();
+            result.UnwrapErr().Description.Should().Be("Exception thrown");
         }
         //
         [Fact]
@@ -95,8 +94,8 @@ namespace SmartE_commercePlatform.UnitTests
             var result = await handler.Handle(command, CancellationToken.None);
             //Assert
             result.Should().NotBeNull();
-            result.IsSuccess.Should().BeFalse();
-            result.Error!.Description.Should().Be("The product is null");
+            result.IsOk.Should().BeFalse();
+            result.UnwrapErr().Description.Should().Be("The product is null");
         }
 
         private static Product GenerateProduct(CreateProductCommand command)

@@ -1,19 +1,13 @@
-﻿using Application;
-using Application.DTOs;
+﻿using Application.DTOs;
 using Application.Use_Cases.Commands;
-using Application.Use_Cases.CommandValidators;
-using Application.Utils;
 using Domain.Entities;
 using FluentAssertions;
-using FluentValidation;
 using Infrastructure.Persistence;
-using MediatR;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 using System.Net.Http.Json;
-using System.Reflection;
 
 namespace SmartE_commercePlatform.IntegrationTests
 {

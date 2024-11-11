@@ -41,8 +41,8 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.IsSuccess.Should().BeTrue();
-            result.Value.Should().Be(shoppingCartItem.Id);
+            result.IsOk.Should().BeTrue();
+            result.Unwrap().Should().Be(shoppingCartItem.Id);
         }
 
         [Fact]
@@ -67,8 +67,8 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.IsSuccess.Should().BeFalse();
-            result.Error!.Description.Should().Be("Failed to create shopping cart item. Exception thrown");
+            result.IsOk.Should().BeFalse();
+            result.UnwrapErr().Description.Should().Be("Failed to create shopping cart item. Exception thrown");
         }
         [Fact]
         public async void Given_NullCommand_When_HandleIsCalled_Then_ShouldThrowTheCartItemIsNullFailure()
@@ -87,8 +87,8 @@ namespace SmartE_commercePlatform.UnitTests
             var result = await handler.Handle(command, CancellationToken.None);
             //Assert
             result.Should().NotBeNull();
-            result.IsSuccess.Should().BeFalse();
-            result.Error!.Description.Should().Be("The cart item is null");
+            result.IsOk.Should().BeFalse();
+            result.UnwrapErr().Description.Should().Be("The cart item is null");
         }
 
         private static ShoppingCartItem GenerateShoppingCartItem(CreateShoppingCartItemCommand command)
