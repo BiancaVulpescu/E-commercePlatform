@@ -40,8 +40,8 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.IsSuccess.Should().BeTrue();
-            result.Value.Should().Be(wishlistItem.Id);
+            result.IsOk.Should().BeTrue();
+            result.Unwrap().Should().Be(wishlistItem.Id);
         }
 
         [Fact]
@@ -65,8 +65,8 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.IsSuccess.Should().BeFalse();
-            result.Error!.Description.Should().Be("Exception thrown");
+            result.IsOk.Should().BeFalse();
+            result.UnwrapErr().Description.Should().Be("Exception thrown");
         }
         [Fact]
         public async void Given_NullCommand_When_HandleIsCalled_Then_ShouldThrowTheWishlistItemIsNullFailure()
@@ -84,8 +84,8 @@ namespace SmartE_commercePlatform.UnitTests
             var result = await handler.Handle(command, CancellationToken.None);
             //Assert
             result.Should().NotBeNull();
-            result.IsSuccess.Should().BeFalse();
-            result.Error!.Description.Should().Be("The wishlist item is null");
+            result.IsOk.Should().BeFalse();
+            result.UnwrapErr().Description.Should().Be("The wishlist item is null");
         }
 
         private static WishlistItem GenerateWishlistItem(CreateWishlistItemCommand command)

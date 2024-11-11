@@ -39,8 +39,8 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.IsSuccess.Should().BeTrue();
-            result.Value.Should().Be(Unit.Value);
+            result.IsOk.Should().BeTrue();
+            result.Unwrap().Should().Be(Unit.Value);
             await repository.Received(1).DeleteAsync(command.Id);
         }
 
@@ -65,8 +65,8 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.IsSuccess.Should().BeFalse();
-            result.Error!.Description.Should().Be("Exception thrown");
+            result.IsOk.Should().BeFalse();
+            result.UnwrapErr().Description.Should().Be("Exception thrown");
         }
 
         [Fact]
@@ -86,8 +86,8 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.IsSuccess.Should().BeFalse();
-            result.Error!.Description.Should().Be($"The product with id: {command.Id} was not found.");
+            result.IsOk.Should().BeFalse();
+            result.UnwrapErr().Description.Should().Be($"The product with id: {command.Id} was not found.");
         }
 
         private static Product GenerateProduct(Guid id)

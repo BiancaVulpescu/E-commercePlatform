@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Use_Cases.CommandHandlers
 {
-    public class CreateShoppingCartItemCommandHandler : IRequestHandler<CreateShoppingCartItemCommand, Result<Guid>>
+    public class CreateShoppingCartItemCommandHandler : IRequestHandler<CreateShoppingCartItemCommand, Result<Guid, ShoppingCartItemError>>
     {
         private readonly IShoppingCartRepository repository;
         private readonly IMapper _mapper;
@@ -18,21 +18,21 @@ namespace Application.Use_Cases.CommandHandlers
             _mapper = mapper;
         }
 
-        public async Task<Result<Guid>> Handle(CreateShoppingCartItemCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Guid, ShoppingCartItemError>> Handle(CreateShoppingCartItemCommand request, CancellationToken cancellationToken)
         {
             var cartItem = _mapper.Map<ShoppingCartItem>(request);
             if (cartItem is null)
             {
-                return Result<Guid>.Failure(ShoppingCartItemErrors.ValidationFailed("The cart item is null"));
+                return Result<Guid, ShoppingCartItemError>.Err(ShoppingCartItemError.ValidationFailed("The cart item is null"));
             }
             try
             {
                 var returnedId = await repository.AddItemAsync(cartItem);
-                return Result<Guid>.Success(returnedId);
+                return Result<Guid, ShoppingCartItemError>.Ok(returnedId);
             }
             catch (Exception e)
             {
-                return Result<Guid>.Failure(ShoppingCartItemErrors.CreateItemFailed(e.Message)); 
+                return Result<Guid, ShoppingCartItemError>.Err(ShoppingCartItemError.CreateItemFailed(e.Message)); 
             }
         }
     }

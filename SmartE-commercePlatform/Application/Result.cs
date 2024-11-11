@@ -1,27 +1,43 @@
 namespace Application;
-public class Result<T>
+public class Result<T, E>
 {
-    private Result(T value)
+    private readonly bool isOk;
+    private readonly T? value;
+    private readonly E? error;
+
+    protected Result(bool isOk, T? value, E? error)
     {
-        Value = value;
-        Error = null;
+        this.isOk = isOk;
+        this.value = value;
+        this.error = error;
     }
-
-    private Result(Error error)
+    public static Result<T, E> Ok(T value)
     {
-        Error = error;
-        Value = default;
+        return new Result<T, E>(true, value, default);
     }
-
-    public T? Value;
-    public Error? Error;
-    public bool IsSuccess => Error is null;
-
-    public static Result<T> Success(T value) => new(value);
-    public static Result<T> Failure(Error error) => new(error);
-
-    public TResult Match<TResult>(Func<T, TResult> onSuccess, Func<Error, TResult> onFailure)
+    public static Result<T, E> Err(E error)
     {
-        return IsSuccess ? onSuccess(Value!) : onFailure(Error!);
+        return new Result<T, E>(false, default, error);
+    }
+    public bool IsOk { get { return isOk; } }
+    public T Unwrap()
+    {
+        if (!isOk)
+        {
+            throw new InvalidCastException("Result is not ok!");
+        }
+        return value!;
+    }
+    public E UnwrapErr()
+    {
+        if (isOk)
+        {
+            throw new InvalidCastException("Result is not err!");
+        }
+        return error!;
+    }
+    public U MapOrElse<U>(Func<T, U> onSuccess, Func<E, U> onFailure)
+    {
+        return isOk ? onSuccess(value!) : onFailure(error!);
     }
 }

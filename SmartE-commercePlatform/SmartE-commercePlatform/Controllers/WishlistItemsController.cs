@@ -19,7 +19,7 @@ namespace SmartE_commercePlatform.Controllers
         public async Task<IActionResult> CreateWishlistItem(CreateWishlistItemCommand createWishlistItemCommand)
         {
             var resultObject = await mediator.Send(createWishlistItemCommand);
-            return resultObject.Match<IActionResult>(
+            return resultObject.MapOrElse<IActionResult>(
                 onSuccess: result => CreatedAtAction(nameof(GetWishlistItemById), new { id = result }, result),
                 onFailure: error => BadRequest(error)
             );
@@ -29,7 +29,7 @@ namespace SmartE_commercePlatform.Controllers
         public async Task<IActionResult> GetWishlistItemById([FromRoute] Guid id)
         {
             var resultObject = await mediator.Send(new GetWishlistItemByIdQuery { Id = id });
-            return resultObject.Match<IActionResult>(
+            return resultObject.MapOrElse<IActionResult>(
                 onSuccess: result => Ok(result),
                 onFailure: error => BadRequest(error)
             );
@@ -48,7 +48,7 @@ namespace SmartE_commercePlatform.Controllers
             if (updateWishlistItemCommand.Id != id)
                 return BadRequest();
             var resultObject = await mediator.Send(updateWishlistItemCommand);
-            return resultObject.Match<IActionResult>(
+            return resultObject.MapOrElse<IActionResult>(
                 onSuccess: result => NoContent(),
                 onFailure: error => BadRequest(error)
             );
@@ -58,7 +58,7 @@ namespace SmartE_commercePlatform.Controllers
         public async Task<IActionResult> DeleteWishlistItem([FromRoute] Guid id)
         {
             var resultObject = await mediator.Send(new DeleteWishlistItemCommand { Id = id });
-            return resultObject.Match<IActionResult>(
+            return resultObject.MapOrElse<IActionResult>(
                 onSuccess: result => NoContent(),
                 onFailure: error => BadRequest(error)
             );

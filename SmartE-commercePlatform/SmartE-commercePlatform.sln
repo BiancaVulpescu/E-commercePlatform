@@ -27,9 +27,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SmartE-commercePlatform.Int
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SmartE-commercePlatform.UnitTests", "SmartE-commercePlatform.UnitTests", "{D366F8CD-9348-4772-9981-98FD6FE02F1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartE-commercePlatform.IntegrationTests", "SmartE-commercePlatform.IntegrationTests\SmartE-commercePlatform.IntegrationTests.csproj", "{67BD5CD6-6FDF-4F9D-B3F3-77D8435A6CDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartE-commercePlatform.IntegrationTests", "SmartE-commercePlatform.IntegrationTests\SmartE-commercePlatform.IntegrationTests.csproj", "{67BD5CD6-6FDF-4F9D-B3F3-77D8435A6CDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartE-commercePlatform.UnitTests", "SmartE-commercePlatform.UnitTests\SmartE-commercePlatform.UnitTests.csproj", "{CEFE9D54-A0E6-42FC-BB24-50D8D0D423C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartE-commercePlatform.UnitTests", "SmartE-commercePlatform.UnitTests\SmartE-commercePlatform.UnitTests.csproj", "{CEFE9D54-A0E6-42FC-BB24-50D8D0D423C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

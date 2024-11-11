@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Use_Cases.CommandHandlers
 {
-    public class CreateWishlistItemCommandHandler : IRequestHandler<CreateWishlistItemCommand, Result<Guid>>
+    public class CreateWishlistItemCommandHandler : IRequestHandler<CreateWishlistItemCommand, Result<Guid, WishlistItemError>>
     {
         private readonly IWishlistItemRepository repository;
         private readonly IMapper _mapper;
@@ -18,21 +18,21 @@ namespace Application.Use_Cases.CommandHandlers
             _mapper = mapper;
         }
 
-        public async Task<Result<Guid>> Handle(CreateWishlistItemCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Guid, WishlistItemError>> Handle(CreateWishlistItemCommand request, CancellationToken cancellationToken)
         {
             var wishlistItem = _mapper.Map<WishlistItem>(request);
             if (wishlistItem is null)
             {
-                return Result<Guid>.Failure(WishlistItemErrors.ValidationFailed("The wishlist item is null"));
+                return Result<Guid, WishlistItemError>.Err(WishlistItemError.ValidationFailed("The wishlist item is null"));
             }
             try
             {
                 var returnedId = await repository.AddAsync(wishlistItem);
-                return Result<Guid>.Success(returnedId);
+                return Result<Guid, WishlistItemError>.Ok(returnedId);
             }
             catch (Exception e)
             {
-                return Result<Guid>.Failure(WishlistItemErrors.CreateWishlistItemFailed(e.Message));
+                return Result<Guid, WishlistItemError>.Err(WishlistItemError.CreateWishlistItemFailed(e.Message));
             }
         }
     }

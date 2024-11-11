@@ -6,11 +6,6 @@ using Domain.Entities;
 using Domain.Repositories;
 using FluentAssertions;
 using NSubstitute;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartE_commercePlatform.UnitTests
 {
@@ -43,7 +38,7 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.Value!.Id.ToString().Should().Be(query.Id.ToString());
+            result.Unwrap().Id.ToString().Should().Be(query.Id.ToString());
         }
         private static WishlistItem GenerateWishlistItem(Guid guid)
         {
