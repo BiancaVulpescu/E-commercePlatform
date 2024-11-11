@@ -1,0 +1,13 @@
+…
+zC:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\obj\Debug\net8.0\Domain.AssemblyInfo.csutf-8ž
+’C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\obj\Debug\net8.0\.NETCoreApp,Version=v8.0.AssemblyAttributes.csutf-8‡
+|C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\obj\Debug\net8.0\Domain.GlobalUsings.g.csutf-8~
+uC:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\Repositories\IProductRepository.csutf-8x
+oC:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\Entities\ShoppingCartItem.csutf-8ƒ
+zC:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\Repositories\IWishlistItemRepository.csutf-8ƒ
+zC:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\Repositories\IShoppingCartRepository.csutf-8}
+tC:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\Repositories\IClientRepository.csutf-8t
+kC:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\Entities\WishlistItem.csutf-8o
+fC:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\Entities\Product.csutf-8n
+eC:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\Entities\Client.csutf-8x
+oC:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Domain\Entities\CartListItemBase.csutf-8

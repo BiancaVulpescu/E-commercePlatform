@@ -1,0 +1,53 @@
+﻿C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\DependencyInjection.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\DTOs\CartListItemBaseDto.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\DTOs\ClientDto.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\DTOs\ProductDto.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\DTOs\ShoppingCartItemDto.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\DTOs\WishlistItemDTO.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Error.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Errors\ProductErrors.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Errors\ShoppingCartItemErrors.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Errors\WishlistItemErrors.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Result.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\CommandHandlers\CreateProductCommandHandler.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\CommandHandlers\CreateShoppingCartItemCommandHandler.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\CommandHandlers\CreateWishlistItemCommandHandler.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\CommandHandlers\DeleteProductCommandHandler.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\CommandHandlers\DeleteShoppingCartItemCommandHandler.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\CommandHandlers\DeleteWishlistItemCommandHandler.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\CommandHandlers\UpdateProductCommandHandler.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\CommandHandlers\UpdateShoppingCartItemCommandHandler.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\CommandHandlers\UpdateWishlistItemCommandHandler.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Commands\CreateProductCommand.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Commands\CreateProductCommandBase.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Commands\CreateShoppingCartItemBaseCommand.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Commands\CreateShoppingCartItemCommand.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Commands\CreateWishlistItemBaseCommand.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Commands\CreateWishlistItemCommand.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Commands\DeleteProductCommand.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Commands\DeleteShoppingCartItemCommand.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Commands\DeleteWishlistItemCommand.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Commands\IdCommand.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Commands\UpdateProductCommand.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Commands\UpdateShoppingCartItemCommand.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Commands\UpdateWishlistItemCommand.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\CommandValidators\CreateProductCommandValidator.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\CommandValidators\CreateShoppingCartItemCommandValidator.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\CommandValidators\CreateWishlistItemCommandValidator.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\CommandValidators\UpdateProductCommandValidator.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\CommandValidators\UpdateShoppingCartItemCommandValidator.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\CommandValidators\UpdateWishlistItemValidator.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Queries\GetAllProductsQuery.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Queries\GetAllShoppingCartItemsQuery.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Queries\GetAllWishlistItemsQuery.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Queries\GetProductByIdQuery.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Queries\GetShoppingCartItemByIdQuery.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\Queries\GetWishlistItemByIdQuery.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\QueryHandler\GetAllProductQueryHandler.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\QueryHandler\GetAllShoppingCartItemsQueryHandler.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\QueryHandler\GetAllWishlistItemsQueryHandler.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\QueryHandler\GetProductByIdQueryHandler.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\QueryHandler\GetShoppingCartItemByIdQueryHandler.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Use Cases\QueryHandler\GetWishlistItemByIdQueryHandler.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Utils\MappingProfile.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Application\Utils\ValidationBehavior.cs

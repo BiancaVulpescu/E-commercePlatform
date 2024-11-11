@@ -1,0 +1,13 @@
+﻿C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\SmartE-commercePlatform\Controllers\ClientsController.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\SmartE-commercePlatform\Controllers\ProductsController.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\SmartE-commercePlatform\Controllers\ShoppingCartItemsController.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\SmartE-commercePlatform\Controllers\WishlistItemsController.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\SmartE-commercePlatform\Program.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\SmartE-commercePlatform\obj\Debug\net8.0\SmartE-commercePlatform.GlobalUsings.g.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\SmartE-commercePlatform\obj\Debug\net8.0\.NETCoreApp,Version=v8.0.AssemblyAttributes.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\SmartE-commercePlatform\obj\Debug\net8.0\SmartE-commercePlatform.AssemblyInfo.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\SmartE-commercePlatform\obj\Debug\net8.0\SmartE-commercePlatform.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\SmartE-commercePlatform\appsettings.Development.json
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\SmartE-commercePlatform\appsettings.json
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\SmartE-commercePlatform\SmartE-commercePlatform.http
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\SmartE-commercePlatform\Properties\launchSettings.json

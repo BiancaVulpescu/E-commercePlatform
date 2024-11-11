@@ -1,0 +1,9 @@
+﻿C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Infrastructure\DependencyInjection.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Infrastructure\Migrations\20241110171644_InitialCreate.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Infrastructure\Migrations\20241110171644_InitialCreate.Designer.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Infrastructure\Migrations\ApplicationDbContextModelSnapshot.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Infrastructure\Persistence\ApplicationDbContext.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Infrastructure\Repositories\ClientRepository.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Infrastructure\Repositories\ProductRepository.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Infrastructure\Repositories\ShoppingCartRepository.cs
+C:\Users\Admin\Desktop\facultate\E-commercePlatform\SmartE-commercePlatform\Infrastructure\Repositories\WishlistItemRepository.cs
