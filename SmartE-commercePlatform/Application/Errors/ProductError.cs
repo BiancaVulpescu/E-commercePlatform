@@ -1,3 +1,5 @@
+using Common;
+
 namespace Application.Errors;
 
 public class ProductError : Error

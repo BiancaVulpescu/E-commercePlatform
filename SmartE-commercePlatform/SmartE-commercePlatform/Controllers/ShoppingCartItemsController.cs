@@ -22,8 +22,8 @@ namespace SmartE_commercePlatform.Controllers
         {
             var resultObject = await mediator.Send(createShoppingCartItemCommand);
             return resultObject.MapOrElse<IActionResult>(
-                onSuccess: result => CreatedAtAction(nameof(GetShoppingCartItemById), new { id = result }, result),
-                onFailure: error => BadRequest(error)
+                result => CreatedAtAction(nameof(GetShoppingCartItemById), new { id = result }, result),
+                error => BadRequest(error)
             );
         }
 
@@ -32,8 +32,8 @@ namespace SmartE_commercePlatform.Controllers
         {
             var resultObject = await mediator.Send(new GetShoppingCartItemByIdQuery { Id = id });
             return resultObject.MapOrElse<IActionResult>(
-                onSuccess: result => Ok(result),
-                onFailure: error => BadRequest(error)
+                result => Ok(result),
+                error => BadRequest(error)
             );
         }
 
@@ -53,8 +53,8 @@ namespace SmartE_commercePlatform.Controllers
 
             var resultObject = await mediator.Send(updateShoppingCartItemCommand);
             return resultObject.MapOrElse<IActionResult>(
-                onSuccess: result => NoContent(),
-                onFailure: error => BadRequest(error)
+                result => NoContent(),
+                error => BadRequest(error)
             );
         }
 
@@ -63,8 +63,8 @@ namespace SmartE_commercePlatform.Controllers
         {
             var resultObject = await mediator.Send(new DeleteShoppingCartItemCommand { Id = id });
             return resultObject.MapOrElse<IActionResult>(
-                onSuccess: result => NoContent(),
-                onFailure: error => BadRequest(error)
+                result => NoContent(),
+                error => BadRequest(error)
             );
         }
     }
