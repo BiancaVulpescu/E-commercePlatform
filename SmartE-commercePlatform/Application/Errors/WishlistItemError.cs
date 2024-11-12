@@ -1,4 +1,6 @@
-﻿namespace Application.Errors;
+﻿using Common;
+
+namespace Application.Errors;
 
 public class WishlistItemError : Error
 {

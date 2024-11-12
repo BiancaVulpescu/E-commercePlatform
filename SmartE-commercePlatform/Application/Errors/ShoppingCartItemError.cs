@@ -1,4 +1,6 @@
-﻿namespace Application.Errors;
+﻿using Common;
+
+namespace Application.Errors;
 public class ShoppingCartItemError : Error
 {
     protected ShoppingCartItemError(string code, string? description = null) : base(code, description) 
