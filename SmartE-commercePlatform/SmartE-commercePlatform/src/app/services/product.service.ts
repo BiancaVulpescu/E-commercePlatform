@@ -6,7 +6,7 @@ import {Product} from '../models/product.model';
   providedIn: 'root'
 })
 export class ProductService {
-  private apiURL = 'http://localhost:...'; //trebuie luat path-ul de la get products
+  private apiURL = 'http://localhost:5293/api/v1/Products'; //trebuie luat path-ul de la get products
 
   constructor(private http: HttpClient) { 
     
