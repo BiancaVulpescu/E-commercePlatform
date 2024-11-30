@@ -1,31 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
 import { Product } from '../../models/product.model';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-product-create',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './product-create.component.html',
   styleUrl: './product-create.component.css'
 })
-export class ProductCreateComponent {
+export class ProductCreateComponent implements OnInit {
 
-  product: Product = {
-    title: '',
-    category: '',
-    description: '',
-    price: 0
-  };
-
-  constructor(private productService: ProductService, private router: Router) { }
-
-  createProduct() {
-    this.productService.createProduct(this.product).subscribe(() => {
-      this.router.navigate(['/products']);
+  productForm: FormGroup;
+  constructor(
+    private fb: FormBuilder,
+    private productService: ProductService,
+    private router: Router
+  ) {
+    this.productForm = this.fb.group({
+      title: ['', Validators.required],
+      category: ['', Validators.required],
+      description: ['', [Validators.required, Validators.maxLength(300)]],
+      price: ['', Validators.required],
+      isnegociable: ['', Validators.required]
     });
+  }
+
+
+  ngOnInit(): void {}
+
+  onSubmit(): void {
+    if (this.productForm.valid) {
+      this.productService.createProduct(this.productForm.value).subscribe(() => {
+        this.router.navigate(['/products']);
+      });
+    }
   }
 }

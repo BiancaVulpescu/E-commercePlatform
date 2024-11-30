@@ -1,22 +1,50 @@
-<div class="product-create-container">
-    <h2>Create Product</h2>
-    <form (ngSubmit)="createProduct()">
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" id="title" [(ngModel)]="product.title" name="title" required>
+<div class="product-create">
+  <h1>Create New Product</h1>
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input id="title" formControlName="title" />
+      <div class="error" *ngIf="productForm.get('title')?.hasError('required')">
+        Title is required
       </div>
-      <div class="form-group">
-        <label for="category">Category</label>
-        <input type="text" id="category" [(ngModel)]="product.category" name="category" required>
+      <div class="error" *ngIf="productForm.get('title')?.hasError('maxlength')">
+        Title cannot be longer than 100 characters
       </div>
-      <div class="form-group">
-        <label for="description">Description</label>
-        <textarea id="description" [(ngModel)]="product.description" name="description" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="category">Category</label>
+      <input id="category" formControlName="category" />
+      <div class="error" *ngIf="productForm.get('category')?.hasError('required')">
+        Category is required
       </div>
-      <div class="form-group">
-        <label for="price">Price</label>
-        <input type="number" id="price" [(ngModel)]="product.price" name="price" required>
+      <div class="error" *ngIf="productForm.get('category')?.hasError('maxlength')">
+        Category cannot be longer than 50 characters
       </div>
-      <button type="submit">Create Product</button>
-    </form>
-  </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input id="description" formControlName="description" />
+      <div class="error" *ngIf="productForm.get('description')?.hasError('required')">
+        Description is required
+      </div>
+      <!-- <div class="error" *ngIf="productForm.get('isbn')?.hasError('pattern')">
+        ISBN must be in the format XXXXXXXXXXXXX
+      </div> -->
+    </div>
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input id="price" formControlName="price"  />
+      <div class="error" *ngIf="productForm.get('price')?.hasError('required')">
+        Price is required
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="isnegociable">IsNegociable</label>
+      <input id="isnegociable" formControlName="isnegociable"  />
+      <div class="error" *ngIf="productForm.get('isnegociable')?.hasError('required')">
+        IsNegociable is required
+      </div>
+    </div>
+    <button type="submit" [disabled]="productForm.invalid">Create Product</button>
+  </form>
+</div>
