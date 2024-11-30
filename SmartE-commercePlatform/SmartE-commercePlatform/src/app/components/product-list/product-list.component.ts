@@ -22,7 +22,7 @@ export class ProductListComponent implements OnInit {
     });
   }
   navigateToCreate() {
-    throw new Error('Method not implemented.');
+    this.router.navigate(['products/create']);
     }
     
 }
