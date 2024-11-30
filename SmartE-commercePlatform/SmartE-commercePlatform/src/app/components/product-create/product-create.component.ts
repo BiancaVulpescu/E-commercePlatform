@@ -24,8 +24,8 @@ export class ProductCreateComponent implements OnInit {
       title: ['', Validators.required],
       category: ['', Validators.required],
       description: ['', [Validators.required, Validators.maxLength(300)]],
-      price: ['', Validators.required],
-      isnegociable: ['', Validators.required]
+      price: ['', Validators.required, Validators.pattern('^[0-9]*$')],
+      isnegociable: ['', Validators.required, Validators.pattern('true|false')],
     });
   }
 
