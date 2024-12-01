@@ -4,13 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 // import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-product-update',
   templateUrl: './product-update.component.html',
   styleUrl: './product-update.component.css',
-  imports: [ReactiveFormsModule]
+  imports: [ReactiveFormsModule, CommonModule]
 })
 export class ProductUpdateComponent implements OnInit {
   productForm: FormGroup;
@@ -24,10 +25,10 @@ export class ProductUpdateComponent implements OnInit {
   ) {
     this.productForm = this.fb.group({
       id: [{ value: '', disabled: true }],
-      title: ['', Validators.required],
-      category: ['', Validators.required],
-      description: ['', Validators.required],
-      price: ['', [Validators.required, Validators.min(0)]],
+      title: ['', [Validators.required, Validators.maxLength(100)]],
+      category: ['', [Validators.required, Validators.maxLength(200)]],
+      description: ['', [Validators.required, Validators.maxLength(200)]],
+      price: ['', [Validators.required, , Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
       isNegotiable: ['', Validators.required]
     });
   }
