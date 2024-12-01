@@ -23,7 +23,7 @@ namespace SmartE_commercePlatform.UnitTests
         public async void Given_UpdateShoppingCartItemCommandHandler_When_HandleIsCalled_Then_ShoppingCartItemShouldBeUpdatedAndShouldReturnNoContentAkaUnitValue()
         {
             //Arrange 
-            var command = new UpdateShoppingCartItemCommand
+            var command = new UpdateShoppingCartCommand
             {
                 Id = Guid.NewGuid(),
                 Product_Id = Guid.NewGuid(),
@@ -35,7 +35,7 @@ namespace SmartE_commercePlatform.UnitTests
             GenerateShoppingCartItemDto(shoppingCartItem);
 
             repository.GetItemByIdAsync(command.Id).Returns(shoppingCartItem);
-            var handler = new UpdateShoppingCartItemCommandHandler(repository, mapper);
+            var handler = new UpdateShoppingCartCommandHandler(repository, mapper);
 
             //Act
             var result = await handler.Handle(command, CancellationToken.None);
@@ -50,7 +50,7 @@ namespace SmartE_commercePlatform.UnitTests
         public async void Given_UpdateShoppingCartItemCommandHandlerWithExceptionThrownWithinTheFunction_When_HandleIsCalled_Then_ResultShouldBeFailureMessage()
         {
             //Arrange 
-            var command = new UpdateShoppingCartItemCommand
+            var command = new UpdateShoppingCartCommand
             {
                 Id = Guid.NewGuid(),
                 Product_Id = Guid.NewGuid(),
@@ -62,7 +62,7 @@ namespace SmartE_commercePlatform.UnitTests
             GenerateShoppingCartItemDto(shoppingCartItem);
 
             repository.UpdateItemAsync(shoppingCartItem).Returns(Task.FromException<Unit>(new Exception()));
-            var handler = new UpdateShoppingCartItemCommandHandler(repository, mapper);
+            var handler = new UpdateShoppingCartCommandHandler(repository, mapper);
 
             //Act
             var result = await handler.Handle(command, CancellationToken.None);
@@ -76,15 +76,15 @@ namespace SmartE_commercePlatform.UnitTests
         public async void Given_NullCommand_When_HandleIsCalled_Then_Given_NullCommand_When_HandleIsCalled_Then_ShouldThrowTheRequestIsNullFailure()
         {
             //Arrange 
-            var command = new UpdateShoppingCartItemCommand
+            var command = new UpdateShoppingCartCommand
             {
                 Id = Guid.NewGuid(),
                 Product_Id = Guid.NewGuid(),
                 Cart_Id = Guid.NewGuid(),
                 Quantity = 2,
             };
-            mapper.Map<ShoppingCartItem>(command).Returns((ShoppingCartItem?)null);
-            var handler = new UpdateShoppingCartItemCommandHandler(repository, mapper);
+            mapper.Map<ShoppingCartProduct>(command).Returns((ShoppingCartProduct?)null);
+            var handler = new UpdateShoppingCartCommandHandler(repository, mapper);
 
             //Act 
             var result = await handler.Handle(command, CancellationToken.None);
@@ -93,9 +93,9 @@ namespace SmartE_commercePlatform.UnitTests
             result.IsOk.Should().BeFalse();
             result.UnwrapErr().Description.Should().Be($"Shopping cart item with id {command.Id} not found.");
         }
-        private static ShoppingCartItem GenerateShoppingCartItem(UpdateShoppingCartItemCommand command)
+        private static ShoppingCartProduct GenerateShoppingCartItem(UpdateShoppingCartCommand command)
         {
-            var shoppingCartItem = new ShoppingCartItem
+            var shoppingCartItem = new ShoppingCartProduct
             {
                 Id = Guid.NewGuid(),
                 Product_Id = Guid.NewGuid(),
@@ -104,11 +104,11 @@ namespace SmartE_commercePlatform.UnitTests
             };
             return shoppingCartItem;
         }
-        private void GenerateShoppingCartItemDto(ShoppingCartItem shoppingCartItem)
+        private void GenerateShoppingCartItemDto(ShoppingCartProduct shoppingCartItem)
         {
-            mapper.Map<ShoppingCartItem>(Arg.Any<UpdateShoppingCartItemCommand>()).Returns(shoppingCartItem);
+            mapper.Map<ShoppingCartProduct>(Arg.Any<UpdateShoppingCartCommand>()).Returns(shoppingCartItem);
 
-            mapper.Map<ShoppingCartItemDto>(shoppingCartItem).Returns(new ShoppingCartItemDto
+            mapper.Map<ShoppingCartDto>(shoppingCartItem).Returns(new ShoppingCartDto
             {
                 Id = Guid.NewGuid(),
                 Product_Id = Guid.NewGuid(),

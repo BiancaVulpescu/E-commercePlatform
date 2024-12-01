@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Application.Use_Cases.CommandValidators
 {
-    public class CreateShoppingCartItemCommandValidator : AbstractValidator<CreateShoppingCartItemCommand>
+    public class CreateShoppingCartItemCommandValidator : AbstractValidator<CreateShoppingCartCommand>
     {
         public CreateShoppingCartItemCommandValidator()
         {

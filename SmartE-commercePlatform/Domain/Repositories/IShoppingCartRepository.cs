@@ -1,13 +1,12 @@
 ﻿using Domain.Entities;
+using ErrorOr;
 
 namespace Domain.Repositories
 {
-    public interface IShoppingCartRepository
+    public interface IShoppingCartRepository : IRepository<ShoppingCart, Guid>
     {
-        Task<IEnumerable<ShoppingCartItem>> GetAllItemsAsync();
-        Task<ShoppingCartItem?> GetItemByIdAsync(Guid id);
-        Task<Guid> AddItemAsync(ShoppingCartItem cartItem);
-        Task UpdateItemAsync(ShoppingCartItem cartItem);
-        Task RemoveItemAsync(Guid id);
+        Task<ErrorOr<IEnumerable<Product>>> GetAllProductsByShoppingCartIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<ErrorOr<Updated>> AddProductToShoppingCartAsync(Guid shoppingCartId, Guid productId, CancellationToken cancellationToken);
+        Task<ErrorOr<Deleted>> DeleteProductFromShoppingCartAsync(Guid shoppingCartId, Guid productId, CancellationToken cancellationToken);
     }
 }

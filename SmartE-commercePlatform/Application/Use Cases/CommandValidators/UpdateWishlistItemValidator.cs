@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Application.Use_Cases.CommandValidators
 {
-    public class UpdateWishlistItemCommandValidator : AbstractValidator<UpdateWishlistItemCommand>
+    public class UpdateWishlistItemCommandValidator : AbstractValidator<UpdateWishlistCommand>
     {
         public UpdateWishlistItemCommandValidator()
         {

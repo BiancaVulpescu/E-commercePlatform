@@ -1,11 +1,9 @@
-﻿using Application.Errors;
-using Common;
+﻿using ErrorOr;
 using MediatR;
 
 namespace Application.Use_Cases.Commands
 {
-    public class CreateProductCommand : CreateProductCommandBase, IRequest<Result<Guid, ProductError>>
+    public class CreateProductCommand : CreateProductCommandBase, IRequest<ErrorOr<Guid>>
     {
-
     }
 }

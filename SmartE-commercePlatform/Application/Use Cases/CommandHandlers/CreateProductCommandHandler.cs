@@ -1,41 +1,20 @@
-﻿using Application.Errors;
-using Application.Use_Cases.Commands;
+﻿using Application.Use_Cases.Commands;
 using AutoMapper;
-using Common;
 using Domain.Entities;
 using Domain.Repositories;
+using ErrorOr;
 using MediatR;
 
 namespace Application.Use_Cases.CommandHandlers
 {
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Result<Guid, ProductError>>
+    public class CreateProductCommandHandler(IProductRepository repository, IMapper mapper) : IRequestHandler<CreateProductCommand, ErrorOr<Guid>>
     {
-        private readonly IProductRepository repository;
-        private readonly IMapper _mapper;
+        private readonly IProductRepository repository = repository;
+        private readonly IMapper mapper = mapper;
 
-        public CreateProductCommandHandler(IProductRepository repository, IMapper mapper)
+        public async Task<ErrorOr<Guid>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
-            this.repository = repository;
-            _mapper = mapper;
-        }
-
-        public async Task<Result<Guid, ProductError>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
-        {
-            var product = _mapper.Map<Product>(request);
-            if (product is null)
-            {
-                return Result<Guid, ProductError>.Err(ProductError.ValidationFailed("The product is null"));
-            }
-
-            try
-            {
-                var returnedId = await repository.AddAsync(product);
-                return Result<Guid, ProductError>.Ok(returnedId);
-            }
-            catch (Exception e)
-            {
-                return Result<Guid, ProductError>.Err(ProductError.CreateProductFailed(e.Message));
-            }
+            return await repository.AddAsync(mapper.Map<Product>(request), cancellationToken);
         }
     }
 }
