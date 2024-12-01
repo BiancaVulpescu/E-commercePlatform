@@ -1,6 +1,5 @@
 using Infrastructure;
 using Application;
-using Microsoft.EntityFrameworkCore.Query;
 
 var builder = WebApplication.CreateBuilder(args);
 var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");

@@ -12,19 +12,19 @@ namespace SmartE_commercePlatform.UnitTests
 {
     public class UpdateWishlistItemCommandHandlerTests
     {
-        private readonly IWishlistItemRepository repository;
+        private readonly IWishlistRepository repository;
         private readonly IMapper mapper;
 
         public UpdateWishlistItemCommandHandlerTests()
         {
-            repository = Substitute.For<IWishlistItemRepository>();
+            repository = Substitute.For<IWishlistRepository>();
             mapper = Substitute.For<IMapper>();
         }
         [Fact]
         public async void Given_UpdateWishlistItemCommandHandler_When_HandleIsCalled_Then_WishlistItemShouldBeUpdatedAndShouldReturnNoContentAkaUnitValue()
         {
             //Arrange 
-            var command = new UpdateWishlistItemCommand
+            var command = new UpdateWishlistCommand
             {
                 Id = Guid.NewGuid(),
                 Product_Id = Guid.NewGuid(),
@@ -35,7 +35,7 @@ namespace SmartE_commercePlatform.UnitTests
             GenerateWishlistItemDto(wishlistItem);
 
             repository.GetByIdAsync(command.Id).Returns(wishlistItem);
-            var handler = new UpdateWishlistItemCommandHandler(repository, mapper);
+            var handler = new UpdateWishlistCommandHandler(repository, mapper);
 
             //Act
             var result = await handler.Handle(command, CancellationToken.None);
@@ -51,7 +51,7 @@ namespace SmartE_commercePlatform.UnitTests
         public async void Given_UpdateWishlistItemCommandHandlerWithExceptionThrownWithinTheFunction_When_HandleIsCalled_Then_ResultShouldBeFailureMessage()
         {
             //Arrange 
-            var command = new UpdateWishlistItemCommand
+            var command = new UpdateWishlistCommand
             {
                 Id = Guid.NewGuid(),
                 Product_Id = Guid.NewGuid(),
@@ -62,7 +62,7 @@ namespace SmartE_commercePlatform.UnitTests
             GenerateWishlistItemDto(wishlistItem);
 
             repository.UpdateAsync(wishlistItem).Returns(Task.FromException<Unit>(new Exception("Exception thrown")));
-            var handler = new UpdateWishlistItemCommandHandler(repository, mapper);
+            var handler = new UpdateWishlistCommandHandler(repository, mapper);
 
             //Act
             var result = await handler.Handle(command, CancellationToken.None);
@@ -76,14 +76,14 @@ namespace SmartE_commercePlatform.UnitTests
         public async void Given_NullCommand_When_HandleIsCalled_Then_Given_NullCommand_When_HandleIsCalled_Then_ShouldThrowTheRequestIsNullFailure()
         {
             //Arrange 
-            var command = new UpdateWishlistItemCommand
+            var command = new UpdateWishlistCommand
             {
                 Id = Guid.NewGuid(),
                 Product_Id = Guid.NewGuid(),
                 List_Id = Guid.NewGuid(),
             };
-            mapper.Map<WishlistItem>(command).Returns((WishlistItem?)null);
-            var handler = new UpdateWishlistItemCommandHandler(repository, mapper);
+            mapper.Map<Wishlist>(command).Returns((Wishlist?)null);
+            var handler = new UpdateWishlistCommandHandler(repository, mapper);
 
             //Act 
             var result = await handler.Handle(command, CancellationToken.None);
@@ -93,9 +93,9 @@ namespace SmartE_commercePlatform.UnitTests
             result.UnwrapErr().Description.Should().Be("The request is null");
         }
 
-        private static WishlistItem GenerateWishlistItem(UpdateWishlistItemCommand command)
+        private static Wishlist GenerateWishlistItem(UpdateWishlistCommand command)
         {
-            var wishlistItem = new WishlistItem
+            var wishlistItem = new Wishlist
             {
                 Id = command.Id,
                 Product_Id = command.Product_Id,
@@ -103,11 +103,11 @@ namespace SmartE_commercePlatform.UnitTests
             };
             return wishlistItem;
         }
-        private void GenerateWishlistItemDto(WishlistItem wishlistItem)
+        private void GenerateWishlistItemDto(Wishlist wishlistItem)
         {
-            mapper.Map<WishlistItem>(Arg.Any<UpdateWishlistItemCommand>()).Returns(wishlistItem);
+            mapper.Map<Wishlist>(Arg.Any<UpdateWishlistCommand>()).Returns(wishlistItem);
 
-            mapper.Map<WishlistItemDto>(wishlistItem).Returns(new WishlistItemDto
+            mapper.Map<WishlistDto>(wishlistItem).Returns(new WishlistDto
             {
                 Id = Guid.NewGuid(),
                 Product_Id = wishlistItem.Product_Id,

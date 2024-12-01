@@ -1,34 +1,17 @@
-﻿using Application.Errors;
-using Application.Use_Cases.Commands;
-using Common;
+﻿using Application.Use_Cases.Commands;
 using Domain.Repositories;
+using ErrorOr;
 using MediatR;
 
 namespace Application.Use_Cases.CommandHandlers
 {
-    public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, Result<Unit, ProductError>>
+    public class DeleteProductCommandHandler(IProductRepository repository) : IRequestHandler<DeleteProductCommand, ErrorOr<Deleted>>
     {
-        private readonly IProductRepository productRepository;
-        public DeleteProductCommandHandler(IProductRepository productRepository)
+        private readonly IProductRepository repository = repository;
+
+        public async Task<ErrorOr<Deleted>> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
-            this.productRepository = productRepository;
-        }
-        public async Task<Result<Unit, ProductError>> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
-        {
-            try
-            {
-                var product = await productRepository.GetByIdAsync(request.Id);
-                if (product is null)
-                {
-                    return Result<Unit, ProductError>.Err(ProductError.NotFound(request.Id));
-                }
-                await productRepository.DeleteAsync(product.Id);
-                return Result<Unit, ProductError>.Ok(Unit.Value);
-            }
-            catch (Exception e)
-            {
-                return Result<Unit, ProductError>.Err(ProductError.DeleteProductFailed(e.Message));
-            }
+            return await repository.DeleteAsync(request.Id, cancellationToken);
         }
     }
 }

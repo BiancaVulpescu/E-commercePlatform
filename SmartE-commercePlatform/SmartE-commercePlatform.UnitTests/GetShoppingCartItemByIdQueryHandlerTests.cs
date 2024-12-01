@@ -24,7 +24,7 @@ namespace SmartE_commercePlatform.UnitTests
         public async Task Given_GetShoppingCartItemByIdQueryHandler_When_HandleIsCalled_Then_ShouldReturnShoppingCartItemDto()
         {
             //Arrange 
-            var query = new GetShoppingCartItemByIdQuery
+            var query = new GetShoppingCartByIdQuery
             {
                 Id = Guid.NewGuid()
             };
@@ -33,7 +33,7 @@ namespace SmartE_commercePlatform.UnitTests
             GenerateShoppingCartItemDto(shoppingCartItem);
 
             repository.GetItemByIdAsync(query.Id).Returns(shoppingCartItem);
-            var handler = new GetShoppingCartItemByIdQueryHandler(repository, mapper);
+            var handler = new GetShoppingCartByIdQueryHandler(repository, mapper);
 
             //Act
             var result = await handler.Handle(query, CancellationToken.None);
@@ -42,9 +42,9 @@ namespace SmartE_commercePlatform.UnitTests
             result.Should().NotBeNull();
             result.Unwrap().Id.ToString().Should().Be(query.Id.ToString());
         }
-        private static ShoppingCartItem GenerateShoppingCartItem(Guid guid)
+        private static ShoppingCartProduct GenerateShoppingCartItem(Guid guid)
         {
-            return new ShoppingCartItem
+            return new ShoppingCartProduct
             {
                 Id = guid,
                 Product_Id = Guid.NewGuid(),
@@ -53,9 +53,9 @@ namespace SmartE_commercePlatform.UnitTests
             };
         }
 
-        private void GenerateShoppingCartItemDto(ShoppingCartItem shoppingCartItem)
+        private void GenerateShoppingCartItemDto(ShoppingCartProduct shoppingCartItem)
         {
-            mapper.Map<ShoppingCartItemDto>(shoppingCartItem).Returns(new ShoppingCartItemDto
+            mapper.Map<ShoppingCartDto>(shoppingCartItem).Returns(new ShoppingCartDto
             {
                 Id = shoppingCartItem.Id,
                 Product_Id = shoppingCartItem.Product_Id,
