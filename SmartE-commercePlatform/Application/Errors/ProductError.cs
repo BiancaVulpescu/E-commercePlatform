@@ -23,4 +23,6 @@ public class ProductError : Error
     
     public static ProductError UpdateProductFailed(string Description) =>
         new ProductError("Product.UpdateProductFailed", Description);
+    public static ProductError FilterNotFound(string Description) =>
+        new ProductError("Product.ProductError", Description);
 }

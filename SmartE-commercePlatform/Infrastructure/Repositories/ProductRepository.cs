@@ -38,6 +38,14 @@ namespace Infrastructure.Repositories
         {
             return await context.Products.FindAsync(id);
         }
+        public async Task<IEnumerable<Product>> GetProductsByTitleAsync(string title)
+        {
+            return await context.Products.Where(p => p.Title.Contains(title)).ToListAsync();
+        }
+        public async Task<IEnumerable<Product>> GetProductsByCategoryAsync(string category)
+        {
+            return await context.Products.Where(p => p.Category.Contains(category)).ToListAsync();
+        }
 
         public async Task UpdateAsync(Product product)
         {
