@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-product-update',
   templateUrl: './product-update.component.html',
   styleUrl: './product-update.component.css',
+  standalone: true,
   imports: [ReactiveFormsModule, CommonModule]
 })
 export class ProductUpdateComponent implements OnInit {
