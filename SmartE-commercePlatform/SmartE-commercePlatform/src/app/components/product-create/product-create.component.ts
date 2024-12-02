@@ -25,7 +25,7 @@ export class ProductCreateComponent implements OnInit {
       category: ['', [Validators.required, Validators.maxLength(200)]],
       description: ['', [Validators.required, Validators.maxLength(200)]],
       price: ['', [Validators.required, , Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
-      isnegociable: ['', Validators.required]
+      isnegociable: [false]
     });
   }
 
@@ -34,7 +34,8 @@ export class ProductCreateComponent implements OnInit {
 
   createProduct(): void {
     if (this.productForm.valid) {
-      this.productService.createProduct(this.productForm.value).subscribe(() => {
+      const newProduct: Product = this.productForm.value;
+      this.productService.createProduct(newProduct).subscribe(() => {
         this.router.navigate(['/products']);
       });
     }

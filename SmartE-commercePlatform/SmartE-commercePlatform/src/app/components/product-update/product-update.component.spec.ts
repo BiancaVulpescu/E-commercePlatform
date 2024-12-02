@@ -33,7 +33,7 @@ describe('ProductUpdateComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, RouterTestingModule, CommonModule, ProductUpdateComponent],
-      declarations: [ProductUpdateComponent],
+      // declarations: [ProductUpdateComponent],
       providers: [
         { provide: ProductService, useClass: MockProductService },
         {
