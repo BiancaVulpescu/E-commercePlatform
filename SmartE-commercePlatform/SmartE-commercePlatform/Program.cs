@@ -1,6 +1,5 @@
 using Infrastructure;
 using Application;
-using Microsoft.EntityFrameworkCore.Query;
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "MyAllowSpecificOrigins";

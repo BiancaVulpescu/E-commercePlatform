@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -11,13 +11,50 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="13.0.1" />
-    <PackageReference Include="coverlet.collector" Version="6.0.0" />
-    <PackageReference Include="FluentAssertions" Version="6.12.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-    <PackageReference Include="NSubstitute" Version="5.3.0" />
-    <PackageReference Include="xunit" Version="2.5.3" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
+    <Compile Remove="CreateProductCommandHandlerTests.cs" />
+    <Compile Remove="CreateShoppingCartItemCommandHandlerTests.cs" />
+    <Compile Remove="CreateWishlistItemCommandHandlerTests.cs" />
+    <Compile Remove="DeleteProductCommandHandlerTests.cs" />
+    <Compile Remove="DeleteShoppingCartItemCommandHandlerTests.cs" />
+    <Compile Remove="DeleteWishlistItemCommandHandlerTests.cs" />
+    <Compile Remove="GetAllProductsQueryHandlerTests.cs" />
+    <Compile Remove="GetAllShoppingCartItemsQueryHandlerTests.cs" />
+    <Compile Remove="GetAllWishlistItemsQueryHandlerTests.cs" />
+    <Compile Remove="GetProductByIdQueryHandlerTests.cs" />
+    <Compile Remove="GetShoppingCartItemByIdQueryHandlerTests.cs" />
+    <Compile Remove="GetWishlistItemByIdQueryHandlerTests.cs" />
+    <Compile Remove="UpdateProductCommandHandlerTests.cs" />
+    <Compile Remove="UpdateShoppingCartItemCommandHandlerTests.cs" />
+    <Compile Remove="UpdateWishlistItemCommandHandlerTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="CreateProductCommandHandlerTests.cs" />
+    <None Include="CreateShoppingCartItemCommandHandlerTests.cs" />
+    <None Include="CreateWishlistItemCommandHandlerTests.cs" />
+    <None Include="DeleteProductCommandHandlerTests.cs" />
+    <None Include="DeleteShoppingCartItemCommandHandlerTests.cs" />
+    <None Include="DeleteWishlistItemCommandHandlerTests.cs" />
+    <None Include="GetAllProductsQueryHandlerTests.cs" />
+    <None Include="GetAllShoppingCartItemsQueryHandlerTests.cs" />
+    <None Include="GetAllWishlistItemsQueryHandlerTests.cs" />
+    <None Include="GetProductByIdQueryHandlerTests.cs" />
+    <None Include="GetShoppingCartItemByIdQueryHandlerTests.cs" />
+    <None Include="GetWishlistItemByIdQueryHandlerTests.cs" />
+    <None Include="UpdateProductCommandHandlerTests.cs" />
+    <None Include="UpdateShoppingCartItemCommandHandlerTests.cs" />
+    <None Include="UpdateWishlistItemCommandHandlerTests.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+	  <PackageReference Include="AutoMapper" Version="13.0.1" />
+	  <PackageReference Include="coverlet.collector" Version="6.0.0" />
+	  <PackageReference Include="FluentAssertions" Version="6.12.2" />
+	  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+	  <PackageReference Include="NSubstitute" Version="5.3.0" />
+	  <PackageReference Include="xunit" Version="2.5.3" />
+	  <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
   </ItemGroup>
 
   <ItemGroup>

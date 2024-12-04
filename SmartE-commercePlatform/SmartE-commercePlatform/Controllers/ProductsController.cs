@@ -1,4 +1,5 @@
-﻿using Application.Use_Cases.Commands;
+﻿using Application.DTOs;
+using Application.Use_Cases.Commands;
 using Application.Use_Cases.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -7,75 +8,78 @@ namespace SmartE_commercePlatform.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class ProductsController(IMediator mediator) : ControllerBase
     {
-        private readonly IMediator mediator;
-        public ProductsController(IMediator mediator)
+        private readonly IMediator mediator = mediator;
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ProductDtoMinimal>>> GetAllProducts()
         {
-            this.mediator = mediator;
+            return (await mediator.Send(new GetAllProductsQuery { }))
+                .Match<ActionResult<IEnumerable<ProductDtoMinimal>>>(
+                    productDtos => Ok(productDtos),
+                    error => BadRequest(error)
+                );
+        }
+
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<ProductDto>> GetProductById([FromRoute] Guid id)
+        {
+            return (await mediator.Send(new GetProductByIdQuery { Id = id }))
+                .Match<ActionResult<ProductDto>>(
+                    productDto => Ok(productDto),
+                    error => BadRequest(error)
+                );
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProduct(CreateProductCommand createProductCommand)
+        public async Task<ActionResult<Guid>> CreateProduct([FromBody] CreateProductCommand command)
         {
-            try
-            {
-                var resultObject = await mediator.Send(createProductCommand);
-                return resultObject.MapOrElse<IActionResult>(
-                    onSuccess: result => CreatedAtAction(nameof(GetProductById), new { id = result }, result),
-                    onFailure: error => BadRequest(error)
+            return (await mediator.Send(command))
+                .Match<ActionResult<Guid>>(
+                    id => CreatedAtAction(nameof(CreateProduct), new { id }, id),
+                    error => BadRequest(error)
                 );
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetProductById([FromRoute] Guid id)
-        {
-            var resultObject = await mediator.Send(new GetProductByIdQuery { Id = id });
-            return resultObject.MapOrElse<IActionResult>(
-                onSuccess: result => Ok(result),
-                onFailure: error => BadRequest(error)
-            );
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAllProducts()
-        {
-            var result = await mediator.Send(new GetAllProductsQuery());
-            return Ok(result);
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductCommand updateProductCommand, [FromRoute] Guid id)
+        public async Task<ActionResult> UpdateProduct([FromBody] UpdateProductCommand command, [FromRoute] Guid id)
         {
-            if (updateProductCommand.Id != id)
-                return BadRequest();
-            try
-            {
-                var resultObject = await mediator.Send(updateProductCommand);
-                return resultObject.MapOrElse<IActionResult>(
-                    onSuccess: result => NoContent(),
-                    onFailure: error => BadRequest(error)
-                );
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return command.Id == id ? (await mediator.Send(command))
+                .Match<ActionResult>(
+                    _ => NoContent(),
+                    error => BadRequest(error)
+                ) : BadRequest();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct([FromRoute] Guid id)
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult> DeleteProduct([FromRoute] Guid id)
         {
-            var resultObject = await mediator.Send(new DeleteProductCommand { Id = id });
-            return resultObject.MapOrElse<IActionResult>(
-                onSuccess: result => NoContent(),
-                onFailure: error => BadRequest(error)
-            );
+            return (await mediator.Send(new DeleteProductCommand { Id = id }))
+                .Match<ActionResult>(
+                    _ => NoContent(),
+                    error => BadRequest(error)
+                );
+        }
+
+        [HttpGet("{id:guid}/shoppingcarts")]
+        public async Task<ActionResult<IEnumerable<ShoppingCartDtoMinimal>>> GetAllShoppingCartsByProductId([FromRoute] Guid id)
+        {
+            return (await mediator.Send(new GetAllShoppingCartsByProductIdQuery { Id = id }))
+                .Match<ActionResult<IEnumerable<ShoppingCartDtoMinimal>>>(
+                    shoppingCartDtos => Ok(shoppingCartDtos),
+                    error => BadRequest(error)
+                );
+        }
+
+        [HttpGet("{id:guid}/wishlists")]
+        public async Task<ActionResult<IEnumerable<WishlistDtoMinimal>>> GetAllWishlistsByProductId([FromRoute] Guid id)
+        {
+            return (await mediator.Send(new GetAllShoppingCartsByProductIdQuery { Id = id }))
+                .Match<ActionResult<IEnumerable<WishlistDtoMinimal>>>(
+                    shoppingCartDtos => Ok(shoppingCartDtos),
+                    error => BadRequest(error)
+                );
         }
     }
 }

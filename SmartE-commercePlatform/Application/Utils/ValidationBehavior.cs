@@ -1,16 +1,15 @@
-﻿using FluentValidation;
+﻿using ErrorOr;
+using FluentValidation;
 using MediatR;
 
 namespace Application.Utils
 {
-    public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
+    public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators) : IPipelineBehavior<TRequest, TResponse> 
+        where TRequest : IRequest<TResponse>
+        where TResponse : IErrorOr
     {
-        private readonly IEnumerable<IValidator<TRequest>> validators;
+        private readonly IEnumerable<IValidator<TRequest>> validators = validators;
 
-        public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
-        {
-            this.validators = validators;
-        }
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             var context = new ValidationContext<TRequest>(request);
@@ -21,7 +20,13 @@ namespace Application.Utils
                 .ToList();
             if (failures.Count != 0)
             {
-                throw new ValidationException(failures);
+                var errors = failures.ConvertAll(
+                    error => Error.Validation(
+                        code: error.PropertyName,
+                        description: error.ErrorMessage
+                        )
+                    );
+                return (dynamic)errors;
             }
 
             return await next();

@@ -11,24 +11,24 @@ namespace SmartE_commercePlatform.UnitTests
 {
     public class GetAllWishlistItemsQueryHandlerTests
     {
-        private readonly IWishlistItemRepository repository;
+        private readonly IWishlistRepository repository;
         private readonly IMapper mapper;
         public GetAllWishlistItemsQueryHandlerTests()
         {
-            repository = Substitute.For<IWishlistItemRepository>();
+            repository = Substitute.For<IWishlistRepository>();
             mapper = Substitute.For<IMapper>();
         }
         [Fact]
         public async Task Given_GetAllWishlistItemsQueryHandler_When_HandleIsCalled_Then_ShouldReturnWishlistItemDtoList()
         {
             //Arrange 
-            var query = new GetAllWishlistItemsQuery();
+            var query = new GetAllWishlistsQuery();
 
             var wishlistItems = GenerateWishlistItems();
             GenerateWishlistItemDtos(wishlistItems);
 
             repository.GetAllAsync().Returns(wishlistItems);
-            var handler = new GetAllWishlistItemsQueryHandler(repository, mapper);
+            var handler = new GetAllWishlistsQueryHandler(repository, mapper);
 
             //Act
             var result = await handler.Handle(query, CancellationToken.None);
@@ -37,17 +37,17 @@ namespace SmartE_commercePlatform.UnitTests
             result.Should().NotBeNull();
             result.Count.Should().Be(wishlistItems.Count);
         }
-        private static List<WishlistItem> GenerateWishlistItems()
+        private static List<Wishlist> GenerateWishlistItems()
         {
-            return new List<WishlistItem>
+            return new List<Wishlist>
             {
-                new WishlistItem
+                new Wishlist
                 {
                     Id = Guid.NewGuid(),
                     Product_Id = Guid.NewGuid(),
                     List_Id = Guid.NewGuid()
                 },
-                new WishlistItem
+                new Wishlist
                 {
                     Id = Guid.NewGuid(),
                     Product_Id = Guid.NewGuid(),
@@ -55,16 +55,16 @@ namespace SmartE_commercePlatform.UnitTests
                 }
             };
         }
-        private void GenerateWishlistItemDtos(List<WishlistItem> wishlistItems)
+        private void GenerateWishlistItemDtos(List<Wishlist> wishlistItems)
         {
-            var wishlistItemDtos = wishlistItems.Select(item => new WishlistItemDto
+            var wishlistItemDtos = wishlistItems.Select(item => new WishlistDto
             {
                 Id = item.Id,
                 Product_Id = item.Product_Id,
                 List_Id = item.List_Id
             }).ToList();
 
-            mapper.Map<List<WishlistItemDto>>(wishlistItems).Returns(wishlistItemDtos);
+            mapper.Map<List<WishlistDto>>(wishlistItems).Returns(wishlistItemDtos);
         }
 
     }

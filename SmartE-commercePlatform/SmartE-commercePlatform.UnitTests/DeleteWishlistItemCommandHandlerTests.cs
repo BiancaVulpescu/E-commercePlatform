@@ -12,18 +12,18 @@ namespace SmartE_commercePlatform.UnitTests
 {
     public class DeleteWishlistItemCommandHandlerTests
     {
-        private readonly IWishlistItemRepository repository;
+        private readonly IWishlistRepository repository;
         private readonly IMapper mapper;
         public DeleteWishlistItemCommandHandlerTests()
         {
-            repository = Substitute.For<IWishlistItemRepository>();
+            repository = Substitute.For<IWishlistRepository>();
             mapper = Substitute.For<IMapper>();
         }
         [Fact]
         public async Task Given_DeleteWishlistItemCommandHandler_When_HandleIsCalled_Then_WishlistItemShouldBeDeletedAndShouldReturnNoContentAkaUnitValue()
         {
             //Arrange 
-            var command = new DeleteWishlistItemCommand
+            var command = new DeleteWishlistCommand
             {
                 Id = Guid.NewGuid()
             };
@@ -32,7 +32,7 @@ namespace SmartE_commercePlatform.UnitTests
             GenerateWishlistItemDto(wishlistItem);
 
             repository.GetByIdAsync(command.Id).Returns(wishlistItem);
-            var handler = new DeleteWishlistItemCommandHandler(repository);
+            var handler = new DeleteWishlistCommandHandler(repository);
 
             //Act
             var result = await handler.Handle(command, CancellationToken.None);
@@ -47,7 +47,7 @@ namespace SmartE_commercePlatform.UnitTests
         public async Task Given_DeleteWishlistItemCommandHandlerWithExceptionThrownWithinTheFunction_When_HandleIsCalled_Then_ResultShouldBeFailureMessage()
         {
             //Arrange 
-            var command = new DeleteWishlistItemCommand
+            var command = new DeleteWishlistCommand
             {
                 Id = Guid.NewGuid()
             };
@@ -57,7 +57,7 @@ namespace SmartE_commercePlatform.UnitTests
 
             repository.GetByIdAsync(command.Id).Returns(wishlistItem);
             repository.When(x => x.DeleteAsync(command.Id)).Throw(new Exception("Exception thrown"));
-            var handler = new DeleteWishlistItemCommandHandler(repository);
+            var handler = new DeleteWishlistCommandHandler(repository);
 
             //Act
             var result = await handler.Handle(command, CancellationToken.None);
@@ -72,13 +72,13 @@ namespace SmartE_commercePlatform.UnitTests
         public async Task Given_DeleteWishlistItemIdNotFound_When_HandleIsCalled_Then_ResultShouldBeFailureMessage()
         {
             //Arrange 
-            var command = new DeleteWishlistItemCommand
+            var command = new DeleteWishlistCommand
             {
                 Id = Guid.NewGuid()
             };
 
-            repository.GetByIdAsync(command.Id).Returns((WishlistItem?)null);
-            var handler = new DeleteWishlistItemCommandHandler(repository);
+            repository.GetByIdAsync(command.Id).Returns((Wishlist?)null);
+            var handler = new DeleteWishlistCommandHandler(repository);
 
             //Act
             var result = await handler.Handle(command, CancellationToken.None);
@@ -89,18 +89,18 @@ namespace SmartE_commercePlatform.UnitTests
             result.UnwrapErr().Description.Should().Be($"The wishlist item with id: {command.Id} was not found.");
         }
 
-        private static WishlistItem GenerateWishlistItem(Guid id)
+        private static Wishlist GenerateWishlistItem(Guid id)
         {
-            return new WishlistItem
+            return new Wishlist
             {
                 Id = id,
                 Product_Id = Guid.NewGuid(),
                 List_Id = Guid.NewGuid(),
             };
         }
-        private void GenerateWishlistItemDto(WishlistItem wishlistItem)
+        private void GenerateWishlistItemDto(Wishlist wishlistItem)
         {
-            mapper.Map<WishlistItemDto>(wishlistItem).Returns(new WishlistItemDto
+            mapper.Map<WishlistDto>(wishlistItem).Returns(new WishlistDto
             {
                 Id = wishlistItem.Id,
                 Product_Id = wishlistItem.Product_Id,

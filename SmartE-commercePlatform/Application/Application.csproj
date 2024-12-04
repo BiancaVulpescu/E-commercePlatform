@@ -7,6 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Use Cases\CommandValidators\CreateProductCommandValidator.cs" />
+    <Compile Remove="Use Cases\CommandValidators\CreateShoppingCartItemCommandValidator.cs" />
+    <Compile Remove="Use Cases\CommandValidators\CreateWishlistItemCommandValidator.cs" />
+    <Compile Remove="Use Cases\CommandValidators\UpdateProductCommandValidator.cs" />
+    <Compile Remove="Use Cases\CommandValidators\UpdateShoppingCartItemCommandValidator.cs" />
+    <Compile Remove="Use Cases\CommandValidators\UpdateWishlistItemValidator.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Use Cases\CommandValidators\CreateProductCommandValidator.cs" />
+    <None Include="Use Cases\CommandValidators\CreateShoppingCartItemCommandValidator.cs" />
+    <None Include="Use Cases\CommandValidators\CreateWishlistItemCommandValidator.cs" />
+    <None Include="Use Cases\CommandValidators\UpdateProductCommandValidator.cs" />
+    <None Include="Use Cases\CommandValidators\UpdateShoppingCartItemCommandValidator.cs" />
+    <None Include="Use Cases\CommandValidators\UpdateWishlistItemValidator.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="FluentValidation" Version="11.10.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.10.0" />

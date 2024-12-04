@@ -102,8 +102,6 @@ namespace SmartE_commercePlatform.IntegrationTests
             {
                 Title = "title2",
                 Description = "desc2",
-                Category = "cat2",
-                IsNegotiable = true,
                 Price = 2.99m
             };
 
@@ -125,8 +123,6 @@ namespace SmartE_commercePlatform.IntegrationTests
             {
                 Title = "",
                 Description = "desc2",
-                Category = "cat2",
-                IsNegotiable = true,
                 Price = 2.99m
             };
 
@@ -166,8 +162,6 @@ namespace SmartE_commercePlatform.IntegrationTests
             {
                 Title = "title2",
                 Description = "",
-                Category = "cat2",
-                IsNegotiable = true,
                 Price = 2.99m
             };
 
@@ -209,8 +203,6 @@ namespace SmartE_commercePlatform.IntegrationTests
                 Id = product.Id,
                 Title = "title2",
                 Description = "desc2",
-                Category = "cat2",
-                IsNegotiable = true,
                 Price = 2.99m
             };
 
@@ -237,8 +229,6 @@ namespace SmartE_commercePlatform.IntegrationTests
                 Id = product.Id,
                 Title = "title2",
                 Description = "desc2",
-                Category = "cat2",
-                IsNegotiable = true,
                 Price = 2.99m
             };
 
@@ -259,8 +249,6 @@ namespace SmartE_commercePlatform.IntegrationTests
                 Id = Guid.Empty,
                 Title = "title2",
                 Description = "desc2",
-                Category = "cat2",
-                IsNegotiable = true,
                 Price = 2.99m
             };
 
@@ -281,8 +269,6 @@ namespace SmartE_commercePlatform.IntegrationTests
                 Id = product.Id,
                 Title = "",
                 Description = "desc2",
-                Category = "cat2",
-                IsNegotiable = true,
                 Price = 2.99m
             };
 
@@ -292,29 +278,6 @@ namespace SmartE_commercePlatform.IntegrationTests
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
-        //[Fact]
-        //public async Task UpdateProduct_ReturnsBadRequestStatusCode_WhenTitleIsMoreThan100Chars()
-        //{
-        //    // Arrange
-        //    var client = factory.CreateClient();
-        //    var product = await AddTestProductAsync();
-        //    string bigString = Enumerable.Repeat('a', 101).ToString()!;
-        //    var command = new UpdateProductCommand
-        //    {
-        //        Id = product.Id,
-        //        Title = bigString,
-        //        Description = "desc2",
-        //        Category = "cat2",
-        //        IsNegotiable = true,
-        //        Price = 2.99m
-        //    };
-
-        //    // Act
-        //    var response = await client.PutAsJsonAsync($"/api/v1/products/{product.Id}", command);
-
-        //    // Assert
-        //    response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        //}
         [Fact]
         public async Task UpdateProduct_ReturnsBadRequestStatusCode_WhenDescriptionIsEmpty()
         {
@@ -326,8 +289,6 @@ namespace SmartE_commercePlatform.IntegrationTests
                 Id = product.Id,
                 Title = "title2",
                 Description = "",
-                Category = "cat2",
-                IsNegotiable = true,
                 Price = 2.99m
             };
 
@@ -337,29 +298,6 @@ namespace SmartE_commercePlatform.IntegrationTests
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
-        //[Fact]
-        //public async Task UpdateProduct_ReturnsBadRequestStatusCode_WhenDescriptionIsMoreThan200Chars()
-        //{
-        //    // Arrange
-        //    var client = factory.CreateClient();
-        //    var product = await AddTestProductAsync();
-        //    string bigString = Enumerable.Repeat('a', 201).ToString()!;
-        //    var command = new UpdateProductCommand
-        //    {
-        //        Id = product.Id,
-        //        Title = "title2",
-        //        Description = bigString,
-        //        Category = "cat2",
-        //        IsNegotiable = true,
-        //        Price = 2.99m
-        //    };
-
-        //    // Act
-        //    var response = await client.PutAsJsonAsync($"/api/v1/products/{product.Id}", command);
-
-        //    // Assert
-        //    response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        //}
         [Fact]
         public async Task DeleteProduct_ReturnsNoContentStatusCodeAndProductIsDeleted()
         {
@@ -395,8 +333,6 @@ namespace SmartE_commercePlatform.IntegrationTests
             {
                 Title = "title1",
                 Description = "desc1",
-                Category = "cat1",
-                IsNegotiable = true,
                 Price = 1.99m
             });
             await dbContext.SaveChangesAsync();

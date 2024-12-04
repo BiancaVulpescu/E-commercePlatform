@@ -11,18 +11,18 @@ namespace SmartE_commercePlatform.UnitTests
 {
     public class GetWishlistItemByIdQueryHandlerTests
     {
-        private readonly IWishlistItemRepository repository;
+        private readonly IWishlistRepository repository;
         private readonly IMapper mapper;
         public GetWishlistItemByIdQueryHandlerTests()
         {
-            repository = Substitute.For<IWishlistItemRepository>();
+            repository = Substitute.For<IWishlistRepository>();
             mapper = Substitute.For<IMapper>();
         }
         [Fact]
         public async Task Given_GetWishlistItemByIdQueryHandler_When_HandleIsCalled_Then_ShouldReturnWishlistItemDto()
         {
             //Arrange 
-            var query = new GetWishlistItemByIdQuery
+            var query = new GetWishlistByIdQuery
             {
                 Id = Guid.NewGuid()
             };
@@ -31,7 +31,7 @@ namespace SmartE_commercePlatform.UnitTests
             GenerateWishlistItemDto(wishlistItem);
 
             repository.GetByIdAsync(query.Id).Returns(wishlistItem);
-            var handler = new GetWishlistItemByIdQueryHandler(repository, mapper);
+            var handler = new GetWishlistByIdQueryHandler(repository, mapper);
 
             //Act
             var result = await handler.Handle(query, CancellationToken.None);
@@ -40,18 +40,18 @@ namespace SmartE_commercePlatform.UnitTests
             result.Should().NotBeNull();
             result.Unwrap().Id.ToString().Should().Be(query.Id.ToString());
         }
-        private static WishlistItem GenerateWishlistItem(Guid guid)
+        private static Wishlist GenerateWishlistItem(Guid guid)
         {
-            return new WishlistItem
+            return new Wishlist
             {
                 Id = guid,
                 Product_Id = Guid.NewGuid(),
                 List_Id = Guid.NewGuid()
             };
         }
-        private void GenerateWishlistItemDto(WishlistItem wishlistItem)
+        private void GenerateWishlistItemDto(Wishlist wishlistItem)
         {
-            mapper.Map<WishlistItemDto>(wishlistItem).Returns(new WishlistItemDto
+            mapper.Map<WishlistDto>(wishlistItem).Returns(new WishlistDto
             {
                 Id = wishlistItem.Id,
                 Product_Id = wishlistItem.Product_Id,

@@ -23,7 +23,7 @@ namespace SmartE_commercePlatform.UnitTests
         public async Task Given_DeleteProductCommandHandler_When_HandleIsCalled_Then_ShoppingListItemShouldBeDeletedAndShouldReturnNoContentAkaUnitValue()
         {
             //Arrange 
-            var command = new DeleteShoppingCartItemCommand
+            var command = new DeleteShoppingCartCommand
             {
                 Id = Guid.NewGuid()
             };
@@ -32,7 +32,7 @@ namespace SmartE_commercePlatform.UnitTests
             GenerateShoppingCartItemDto(shoppingCartItem);
 
             repository.GetItemByIdAsync(command.Id).Returns(shoppingCartItem);
-            var handler = new DeleteShoppingCartItemCommandHandler(repository);
+            var handler = new DeleteShoppingCartCommandHandler(repository);
 
             //Act
             var result = await handler.Handle(command, CancellationToken.None);
@@ -47,7 +47,7 @@ namespace SmartE_commercePlatform.UnitTests
         public async Task Given_DeleteShoppingCartItemCommandHandlerWithExceptionThrownWithinTheFunction_When_HandleIsCalled_Then_ResultShouldBeFailureMessage()
         {
             //Arrange 
-            var command = new DeleteShoppingCartItemCommand
+            var command = new DeleteShoppingCartCommand
             {
                 Id = Guid.NewGuid()
             };
@@ -57,7 +57,7 @@ namespace SmartE_commercePlatform.UnitTests
 
             repository.GetItemByIdAsync(command.Id).Returns(shoppingCartItem);
             repository.When(x => x.RemoveItemAsync(command.Id)).Throw(new Exception("Exception thrown"));
-            var handler = new DeleteShoppingCartItemCommandHandler(repository);
+            var handler = new DeleteShoppingCartCommandHandler(repository);
 
             //Act
             var result = await handler.Handle(command, CancellationToken.None);
@@ -72,13 +72,13 @@ namespace SmartE_commercePlatform.UnitTests
         public async Task Given_ShoppingCartItemIdNotFound_When_HandleIsCalled_Then_ResultShouldBeFailureMessage()
         {
             //Arrange 
-            var command = new DeleteShoppingCartItemCommand
+            var command = new DeleteShoppingCartCommand
             {
                 Id = Guid.NewGuid()
             };
 
-            repository.GetItemByIdAsync(command.Id).Returns((ShoppingCartItem?)null);
-            var handler = new DeleteShoppingCartItemCommandHandler(repository);
+            repository.GetItemByIdAsync(command.Id).Returns((ShoppingCartProduct?)null);
+            var handler = new DeleteShoppingCartCommandHandler(repository);
 
             //Act
             var result = await handler.Handle(command, CancellationToken.None);
@@ -88,18 +88,18 @@ namespace SmartE_commercePlatform.UnitTests
             result.IsOk.Should().BeFalse();
             result.UnwrapErr().Description.Should().Be($"Shopping cart item with id {command.Id} not found.");
         }
-        private static ShoppingCartItem GenerateShoppingCartItem(Guid id)
+        private static ShoppingCartProduct GenerateShoppingCartItem(Guid id)
         {
-            return new ShoppingCartItem
+            return new ShoppingCartProduct
             {
                 Id = id,
                 Product_Id = Guid.NewGuid(),
                 Cart_Id = Guid.NewGuid(),
             };
         }
-        private void GenerateShoppingCartItemDto(ShoppingCartItem shoppingCartItem)
+        private void GenerateShoppingCartItemDto(ShoppingCartProduct shoppingCartItem)
         {
-            mapper.Map<ShoppingCartItemDto>(shoppingCartItem).Returns(new ShoppingCartItemDto
+            mapper.Map<ShoppingCartDto>(shoppingCartItem).Returns(new ShoppingCartDto
             {
                 Id = shoppingCartItem.Id,
                 Product_Id = shoppingCartItem.Product_Id,

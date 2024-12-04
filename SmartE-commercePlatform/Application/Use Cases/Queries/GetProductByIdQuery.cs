@@ -1,10 +1,11 @@
 ﻿using Application.DTOs;
-using Application.Errors;
-using Application.Use_Cases.Commands;
+using ErrorOr;
 using MediatR;
 
-namespace Application.Use_Cases.Queries;
-
-public class GetProductByIdQuery : IdCommand, IRequest<Result<ProductDto, ProductError>>
+namespace Application.Use_Cases.Queries
 {
+    public class GetProductByIdQuery : IRequest<ErrorOr<ProductDto>>
+    {
+        public Guid Id { get; set; }
+    }
 }
