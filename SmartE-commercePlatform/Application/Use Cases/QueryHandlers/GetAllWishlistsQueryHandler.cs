@@ -5,16 +5,15 @@ using Domain.Repositories;
 using ErrorOr;
 using MediatR;
 
-namespace Application.Use_Cases.QueryHandler
-{
-    public class GetAllWishlistsQueryHandler(IWishlistRepository repository, IMapper mapper) : IRequestHandler<GetAllWishlistsQuery, ErrorOr<IEnumerable<WishlistDtoMinimal>>>
-    {
-        private readonly IWishlistRepository repository = repository;
-        private readonly IMapper mapper = mapper;
+namespace Application.Use_Cases.QueryHandlers;
 
-        public async Task<ErrorOr<IEnumerable<WishlistDtoMinimal>>> Handle(GetAllWishlistsQuery request, CancellationToken cancellationToken)
-        {
-            return (await repository.GetAllAsync(cancellationToken)).Then(mapper.Map<IEnumerable<WishlistDtoMinimal>>);
-        }
+public class GetAllWishlistsQueryHandler(IWishlistRepository repository, IMapper mapper) : IRequestHandler<GetAllWishlistsQuery, ErrorOr<IEnumerable<WishlistDtoMinimal>>>
+{
+    private readonly IWishlistRepository repository = repository;
+    private readonly IMapper mapper = mapper;
+
+    public async Task<ErrorOr<IEnumerable<WishlistDtoMinimal>>> Handle(GetAllWishlistsQuery request, CancellationToken cancellationToken)
+    {
+        return (await repository.GetAllAsync(cancellationToken)).Then(mapper.Map<IEnumerable<WishlistDtoMinimal>>);
     }
 }

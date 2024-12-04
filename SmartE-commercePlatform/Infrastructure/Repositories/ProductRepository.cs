@@ -57,13 +57,35 @@ namespace Infrastructure.Repositories
             catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
             catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
-        public async Task<IEnumerable<Product>> GetProductsByTitleAsync(string title)
+
+        //de modificat ce returneaza
+
+        public async Task<ErrorOr<IEnumerable<Product>>> GetAllProductsPaginatedAsync(int page, CancellationToken cancellationToken)
         {
-            return await context.Products.Where(p => p.Title.Contains(title)).ToListAsync();
+            try
+            {
+                var products = await context.Products
+                    .Skip((page - 1) * 10)
+                    .Take(10)
+                    .ToListAsync(cancellationToken);
+
+                return products.Any() ? products : RepositoryErrors.NotFound.ToErrorOr<IEnumerable<Product>>();
+            }
+            catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
+            catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
-        public async Task<IEnumerable<Product>> GetProductsByCategoryAsync(string category)
+        public async Task<ErrorOr<IEnumerable<Product>>> GetProductsByTitleAsync(string title, CancellationToken cancellationToken)
         {
-            return await context.Products.Where(p => p.Category.Contains(category)).ToListAsync();
+            try
+            {
+                var products = await context.Products
+                    .Where(e => e.Title == title)
+                    .ToListAsync(cancellationToken);
+
+                return products.Any() ? products : RepositoryErrors.NotFound.ToErrorOr<IEnumerable<Product>>();
+            }
+            catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
+            catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
 
         public async Task<ErrorOr<Deleted>> DeleteAsync(Guid id, CancellationToken cancellationToken)

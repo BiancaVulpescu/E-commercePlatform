@@ -1,7 +1,7 @@
 using Application.DTOs;
 using Application.Use_Cases.Commands;
 using Application.Use_Cases.Queries;
-using Application.Use_Cases.Queries.ProductsQueries;
+using Application.Use_Cases.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,31 +53,22 @@ namespace SmartE_commercePlatform.Controllers
                 ) : BadRequest();
         }
         [HttpGet("paginated")]
-        public async Task<IActionResult> GetAllProductsPaginated([FromQuery] int page = 1, [FromQuery] int pageSize = 5)
+        public async Task<ActionResult> GetAllProductsPaginated([FromQuery] int page = 1, [FromQuery] int pageSize = 5)
         {
-          var resultObject = await mediator.Send(new GetAllProductsPaginatedQuery { Page = page, PageSize = pageSize });
-          return resultObject.MapOrElse<IActionResult>(
-              onSuccess: result => Ok(result),
-              onFailure: error => BadRequest(error)
-          );
+            return (await mediator.Send(new GetAllProductsPaginatedQuery { Page = page, PageSize = pageSize }))
+                      .Match<ActionResult>(
+                          productDtos => Ok(productDtos),
+                          error => BadRequest(error)
+                      );
         }
         [HttpGet("by-title/{title}")]
         public async Task<IActionResult> GetProductsByTitle([FromRoute] string title, [FromQuery] int page = 1, [FromQuery] int pageSize = 5)
         {
-          var resultObject = await mediator.Send(new GetProductsByTitleQuery { Title = title, Page = page, PageSize = pageSize });
-          return resultObject.MapOrElse<IActionResult>(
-                onSuccess: result => Ok(result),
-                onFailure: error => BadRequest(error)
-          );
-        }
-        [HttpGet("by-category/{category}")]
-        public async Task<IActionResult> GetProductsByCategory([FromRoute] string category, [FromQuery] int page = 1, [FromQuery] int pageSize = 5)
-        {
-          var resultObject = await mediator.Send(new GetProductsByCategoryQuery { Category = category, Page = page, PageSize = pageSize });
-          return resultObject.MapOrElse<IActionResult>(
-                onSuccess: result => Ok(result),
-                onFailure: error => BadRequest(error)
-          );
+            return (await mediator.Send(new GetProductsByTitleQuery { Title = title, Page = page, PageSize = pageSize }))
+                      .Match<ActionResult>(
+                          productDtos => Ok(productDtos),
+                          error => BadRequest(error)
+                      );
         }
 
         [HttpDelete("{id:guid}")]

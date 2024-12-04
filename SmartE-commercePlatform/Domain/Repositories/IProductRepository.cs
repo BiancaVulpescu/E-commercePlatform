@@ -7,13 +7,8 @@ namespace Domain.Repositories
     {
         Task<ErrorOr<IEnumerable<ShoppingCart>>> GetAllShoppingCartsByProductIdAsync(Guid id, CancellationToken cancellationToken);
         Task<ErrorOr<IEnumerable<Wishlist>>> GetAllWishlistsByProductIdAsync(Guid id, CancellationToken cancellationToken);
-        Task<IEnumerable<Product>> GetAllAsync();
-        Task<Product?> GetByIdAsync(Guid id);
-        Task<IEnumerable<Product>> GetProductsByTitleAsync(string title);
-        Task<IEnumerable<Product>> GetProductsByCategoryAsync(string title);
-
-        Task<Guid> AddAsync(Product product);
-        Task UpdateAsync(Product product);
-        Task DeleteAsync(Guid id);
+        Task<ErrorOr<IEnumerable<Product>>> GetAllProductsPaginatedAsync(int page, CancellationToken cancellationToken);
+        Task<ErrorOr<IEnumerable<Product>>> GetProductsByTitleAsync(string title, CancellationToken cancellationToken);
+        
     }
 }
