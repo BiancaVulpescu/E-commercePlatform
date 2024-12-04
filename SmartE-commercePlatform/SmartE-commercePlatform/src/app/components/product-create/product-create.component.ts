@@ -21,20 +21,21 @@ export class ProductCreateComponent implements OnInit {
     private router: Router
   ) {
     this.productForm = this.fb.group({
-      title: ['', Validators.required],
-      category: ['', Validators.required],
-      description: ['', [Validators.required, Validators.maxLength(300)]],
-      price: ['', Validators.required],
-      isnegociable: ['', Validators.required]
+      title: ['', [Validators.required, Validators.maxLength(100)]],
+      category: ['', [Validators.required, Validators.maxLength(200)]],
+      description: ['', [Validators.required, Validators.maxLength(200)]],
+      price: ['', [Validators.required, , Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+      isnegociable: [false]
     });
   }
 
 
   ngOnInit(): void {}
 
-  onSubmit(): void {
+  createProduct(): void {
     if (this.productForm.valid) {
-      this.productService.createProduct(this.productForm.value).subscribe(() => {
+      const newProduct: Product = this.productForm.value;
+      this.productService.createProduct(newProduct).subscribe(() => {
         this.router.navigate(['/products']);
       });
     }

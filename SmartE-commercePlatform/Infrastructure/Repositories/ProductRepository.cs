@@ -57,6 +57,14 @@ namespace Infrastructure.Repositories
             catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
             catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
+        public async Task<IEnumerable<Product>> GetProductsByTitleAsync(string title)
+        {
+            return await context.Products.Where(p => p.Title.Contains(title)).ToListAsync();
+        }
+        public async Task<IEnumerable<Product>> GetProductsByCategoryAsync(string category)
+        {
+            return await context.Products.Where(p => p.Category.Contains(category)).ToListAsync();
+        }
 
         public async Task<ErrorOr<Deleted>> DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
