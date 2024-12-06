@@ -58,15 +58,13 @@ namespace Infrastructure.Repositories
             catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
 
-        //de modificat ce returneaza
-
-        public async Task<ErrorOr<IEnumerable<Product>>> GetAllProductsPaginatedAsync(int page, CancellationToken cancellationToken)
+        public async Task<ErrorOr<IEnumerable<Product>>> GetAllProductsPaginatedAsync(int page, int pageSize, CancellationToken cancellationToken)
         {
             try
             {
                 var products = await context.Products
-                    .Skip((page - 1) * 10)
-                    .Take(10)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
                     .ToListAsync(cancellationToken);
 
                 return products.Any() ? products : RepositoryErrors.NotFound.ToErrorOr<IEnumerable<Product>>();
