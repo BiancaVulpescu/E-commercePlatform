@@ -27,10 +27,8 @@ export class ProductUpdateComponent implements OnInit {
     this.productForm = this.fb.group({
       id: [{ value: '', disabled: true }],
       title: ['', [Validators.required, Validators.maxLength(100)]],
-      category: ['', [Validators.required, Validators.maxLength(200)]],
       description: ['', [Validators.required, Validators.maxLength(200)]],
       price: ['', [Validators.required, , Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
-      isNegotiable: ['', Validators.required]
     });
   }
 

@@ -22,16 +22,14 @@ describe('ProductService', () => {
     expect(service).toBeTruthy();
   });
   it('should fetch products', () => {
-    const dummyProducts: { data: Product[], totalCount: number } = {
-      data: [
-        { id: '1', title: 'Product 1', category: 'Category 1', description: 'Description 1', price: 100, isNegotiable: true },
-        { id: '2', title: 'Product 2', category: 'Category 2', description: 'Description 2', price: 200, isNegotiable: false }
-      ],
-      totalCount: 2
-    };
+    const dummyProducts: Product[]  = 
+      [
+        { id: '1', title: 'Product 1', description: 'Description 1', price: 100 },
+        { id: '2', title: 'Product 2', description: 'Description 2', price: 200 }
+      ];
 
     service.getProducts().subscribe(products => {
-      expect(products.data.length).toBe(2);
+      expect(products.length).toBe(2);
       expect(products).toEqual(dummyProducts);
     });
 
@@ -41,7 +39,7 @@ describe('ProductService', () => {
   });
 
   it('should create a product', () => {
-    const newProduct: Product = { id: '3', title: 'Product 3', category: 'Category 3', description: 'Description 3', price: 300, isNegotiable: true };
+    const newProduct: Product = { id: '3', title: 'Product 3', description: 'Description 3', price: 300 };
 
     service.createProduct(newProduct).subscribe(product => {
       expect(product).toEqual(newProduct);
@@ -53,7 +51,7 @@ describe('ProductService', () => {
   });
 
   it('should fetch a product by id', () => {
-    const dummyProduct: Product = { id: '1', title: 'Product 1', category: 'Category 1', description: 'Description 1', price: 100, isNegotiable: true };
+    const dummyProduct: Product = { id: '1', title: 'Product 1', description: 'Description 1', price: 100 };
 
     service.getProductById('1').subscribe(product => {
       expect(product).toEqual(dummyProduct);
@@ -65,7 +63,7 @@ describe('ProductService', () => {
   });
 
   it('should update a product', () => {
-    const updatedProduct: Product = { id: '1', title: 'Updated Product', category: 'Updated Category', description: 'Updated Description', price: 150, isNegotiable: false };
+    const updatedProduct: Product = { id: '1', title: 'Updated Product', description: 'Updated Description', price: 150 };
 
     service.updateProduct('1', updatedProduct).subscribe(product => {
       expect(product).toEqual(updatedProduct);

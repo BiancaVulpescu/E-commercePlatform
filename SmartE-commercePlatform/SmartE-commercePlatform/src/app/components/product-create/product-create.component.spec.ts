@@ -38,10 +38,8 @@ describe('ProductCreateComponent', () => {
   });
   it('should have a form with controls', () => {
     expect(component.productForm.contains('title')).toBeTruthy();
-    expect(component.productForm.contains('category')).toBeTruthy();
     expect(component.productForm.contains('description')).toBeTruthy();
     expect(component.productForm.contains('price')).toBeTruthy();
-    expect(component.productForm.contains('isNegotiable')).toBeFalsy();
   });
 
   it('should make the title control required', () => {
@@ -50,11 +48,6 @@ describe('ProductCreateComponent', () => {
     expect(control?.valid).toBeFalsy();
   });
 
-  it('should make the category control required', () => {
-    const control = component.productForm.get('category');
-    control?.setValue('');
-    expect(control?.valid).toBeFalsy();
-  });
 
   it('should make the description control required', () => {
     const control = component.productForm.get('description');
@@ -76,10 +69,8 @@ describe('ProductCreateComponent', () => {
     spyOn(productService, 'createProduct').and.callThrough();
     component.productForm.setValue({
       title: 'Test Product',
-      category: 'Test Category',
       description: 'Test Description',
       price: 10,
-      isnegociable: false
     });
     component.createProduct();
     expect(productService.createProduct).toHaveBeenCalled();

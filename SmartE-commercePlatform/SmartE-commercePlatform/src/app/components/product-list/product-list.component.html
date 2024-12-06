@@ -5,20 +5,16 @@
         <thead>
             <tr>
                 <th>Title</th>
-                <th>Category</th>
                 <th>Description</th>
                 <th>Price</th>
-                <th>Negociable</th>
                 <th>Actions</th>
             </tr>
         </thead>  
         <tbody>
             <tr *ngFor="let product of products">
                 <td>{{product.title}}</td>
-                <td>{{product.category}}</td>
                 <td>{{product.description}}</td>
                 <td>{{product.price}}</td>
-                <td>{{product.isNegotiable ? 'Yes' : 'No'}}</td>
                 <td>
                     <button (click)="navigateToUpdate(product.id!)">Edit</button>
                     <button (click)="navigateToDetail(product.id!)">See details</button>

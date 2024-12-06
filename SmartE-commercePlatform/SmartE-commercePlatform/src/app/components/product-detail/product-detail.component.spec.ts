@@ -58,9 +58,7 @@ describe('ProductDetailComponent', () => {
 
   it('should load product data on init', () => {
     expect(component.product.title).toBe('Test Product');
-    expect(component.product.category).toBe('Test Category');
     expect(component.product.description).toBe('Test Description');
     expect(component.product.price).toBe(100);
-    expect(component.product.isNegotiable).toBe(true);
   });
 });

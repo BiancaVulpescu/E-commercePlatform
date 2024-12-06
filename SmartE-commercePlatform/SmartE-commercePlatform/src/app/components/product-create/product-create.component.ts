@@ -22,10 +22,8 @@ export class ProductCreateComponent implements OnInit {
   ) {
     this.productForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(100)]],
-      category: ['', [Validators.required, Validators.maxLength(200)]],
       description: ['', [Validators.required, Validators.maxLength(200)]],
       price: ['', [Validators.required, , Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
-      isnegociable: [false]
     });
   }
 

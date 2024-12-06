@@ -6,16 +6,15 @@ import {Product} from '../models/product.model';
   providedIn: 'root'
 })
 export class ProductService {
-  private apiURL = 'https://localhost:7003/api/v1/Products';
+  private apiURL = 'http://localhost:5109/api/v1/Products';
 
   constructor(private http: HttpClient) { 
     
   }
 
-  public getProducts(page:  number = 1, pageSize: number = 5): Observable<{ data: Product[], totalCount: number }>{
+  public getProducts(page:  number = 1, pageSize: number = 5): Observable<Product[]>{
     let params = new HttpParams().set('page', page.toString()).set('pageSize', pageSize.toString());
-    return this.http.get<{data: Product[], totalCount: number}>(`${this.apiURL}/paginated`, { params });
-    // return this.http.get<Product[]>(this.apiURL);
+    return this.http.get<Product[]>(`${this.apiURL}/paginated`, { params });
   }
 
   public createProduct(product: Product) : Observable<any>{
