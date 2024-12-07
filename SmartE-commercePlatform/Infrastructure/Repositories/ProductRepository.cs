@@ -66,7 +66,6 @@ namespace Infrastructure.Repositories
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
                     .ToListAsync(cancellationToken);
-
                 return products.Any() ? products : RepositoryErrors.NotFound.ToErrorOr<IEnumerable<Product>>();
             }
             catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
