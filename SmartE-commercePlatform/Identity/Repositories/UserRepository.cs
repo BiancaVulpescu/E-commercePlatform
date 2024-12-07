@@ -16,8 +16,8 @@ namespace Identity.Repositories
 
         public UserRepository(UsersDbContext usersDbContext, IConfiguration configuration)
         {
-            this.usersDbContext = usersDbContext;
-            this.configuration = configuration;
+            this.usersDbContext=usersDbContext;
+            this.configuration=configuration;
         }
 
         public async Task<string> Login(User user)
