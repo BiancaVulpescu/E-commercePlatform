@@ -7,7 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 
 export const appRoutes: Routes = [
-    {path:'', redirectTo: '/products', pathMatch: 'full'},
+    {path:'', redirectTo: '/register', pathMatch: 'full'},
     {path:'products', component: ProductListComponent},
     {path: 'products/create', component : ProductCreateComponent},
     {path: 'products/update/:id', component: ProductUpdateComponent },

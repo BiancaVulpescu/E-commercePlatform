@@ -4,6 +4,7 @@ form {
     padding: 1em;
     border: 1px solid #ccc;
     border-radius: 1em;
+    background-color: #f9f9f9;
   }
   
   label {
@@ -31,4 +32,18 @@ form {
   
   button:hover {
     background-color: #0056b3;
+  }
+  
+  p {
+    text-align: center;
+    margin-top: 1em;
+  }
+  
+  a {
+    color: #007bff;
+    cursor: pointer;
+  }
+  
+  a:hover {
+    text-decoration: underline;
   }

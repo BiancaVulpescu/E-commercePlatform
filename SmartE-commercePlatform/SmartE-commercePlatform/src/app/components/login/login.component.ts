@@ -24,8 +24,12 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       this.authenticationService.login(this.loginForm.value).subscribe(() => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/products']);
       });
     }
+  }
+
+  navigateToRegister() {
+    this.router.navigate(['/register']);
   }
 }
