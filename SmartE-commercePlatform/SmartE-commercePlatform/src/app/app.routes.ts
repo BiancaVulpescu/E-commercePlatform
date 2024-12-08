@@ -3,6 +3,8 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { ProductCreateComponent } from './components/product-create/product-create.component';
 import { ProductUpdateComponent } from './components/product-update/product-update.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 export const appRoutes: Routes = [
     {path:'', redirectTo: '/products', pathMatch: 'full'},
@@ -10,5 +12,6 @@ export const appRoutes: Routes = [
     {path: 'products/create', component : ProductCreateComponent},
     {path: 'products/update/:id', component: ProductUpdateComponent },
     {path: 'products/detail/:id', component: ProductDetailComponent },
-
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent }
 ];
