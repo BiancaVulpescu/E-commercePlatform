@@ -16,7 +16,7 @@ namespace Identity
             services.AddDbContext<UsersDbContext>(options => options.UseSqlite(configuration.GetConnectionString("UserConnection")));
 
             // Add Authentication
-            var key = Encoding.ASCII.GetBytes("YourSecretKeyHere");
+            var key = Encoding.ASCII.GetBytes("this is my custom Secret key for authentication");
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
