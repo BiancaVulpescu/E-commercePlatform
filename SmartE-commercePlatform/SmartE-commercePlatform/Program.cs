@@ -1,5 +1,6 @@
 using Infrastructure;
 using Application;
+using Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "MyAllowSpecificOrigins";
@@ -20,6 +21,7 @@ builder.Configuration["ConnectionStrings:DefaultConnection"] = defaultConnection
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddIdentity(builder.Configuration);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
@@ -41,7 +43,7 @@ app.UseRouting();
 app.UseCors(MyAllowSpecificOrigins);
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
