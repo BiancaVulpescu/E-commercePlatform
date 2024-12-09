@@ -406,3 +406,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /SmartE-commercePlatform/SmartE-commercePlatform/users.db
+/SmartE-commercePlatform/SmartE-commercePlatform/users.db-shm
+/SmartE-commercePlatform/SmartE-commercePlatform/users.db-wal
