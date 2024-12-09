@@ -16,12 +16,12 @@
         <small class="error-message" *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
       </div>
     </div>
-    <div class="invalid-credentials">
+    <div class="form-group">
       <button type="submit" [disabled]="loginForm.invalid">Login</button>
       <div *ngIf="invalidCredentialsError">
         <small class="error-message error">{{ invalidCredentialsError }}</small>
       </div>
     </div>
   </form>
-</div>
   <p>Don't have an account? <a (click)="navigateToRegister()">Register here</a></p>
+</div>

@@ -1,63 +1,89 @@
 form {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 1em;
-    border: 1px solid #ccc;
-    border-radius: 1em;
-    background-color: #f9f9f9;
-  }
-  
-  label {
-    margin-top: 1em;
-    display: block;
-  }
-  .error-message {
-    color: red;
-    font-size: 0.875em;
-    margin-top: 0.5em;
-  }
-  input {
-    width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+  background-color: #f9f9f9;
+}
+
+label {
+  margin-top: 1em;
+  display: block;
+}
+
+input {
+  width: 100%;
+  padding: 0.5em;
+  margin-top: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 0.5em;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875em;
+}
+
+button {
+  margin-top: 1em;
+  padding: 0.7em;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 0.5em;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+p {
+  text-align: center;
+  margin-top: 1em;
+}
+
+a {
+  color: #007bff;
+  cursor: pointer;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  form {
     padding: 0.5em;
-    margin-top: 0.5em;
-    border: 1px solid #ccc;
-    border-radius: 0.5em;
   }
-  .invalid-credentials{
-    display: flex;
-    flex-direction: row;
-    justify-content:space-between;
-    align-items:center;
-    width: 100%;
+
+  input {
+    padding: 0.4em;
   }
-  .error{
-    display:flex;
-    align-items:center;
-  }
+
   button {
-    margin-top: 1em;
-    padding: 0.7em;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 0.5em;
-    cursor: pointer;
+    padding: 0.6em;
   }
-  
-  button:hover {
-    background-color: #0056b3;
+}
+
+@media (max-width: 400px) {
+  form {
+    padding: 0.3em;
   }
-  
-  p {
-    text-align: center;
-    margin-top: 1em;
+
+  input {
+    padding: 0.3em;
   }
-  
-  a {
-    color: #007bff;
-    cursor: pointer;
+
+  button {
+    padding: 0.5em;
   }
-  
-  a:hover {
-    text-decoration: underline;
-  }
+}
