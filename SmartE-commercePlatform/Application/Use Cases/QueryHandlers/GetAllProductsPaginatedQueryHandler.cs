@@ -18,7 +18,7 @@ public class GetAllProductsPaginatedQueryHandler: IRequestHandler<GetAllProducts
     }
     public async Task<ErrorOr<IEnumerable<ProductDtoMinimal>>> Handle(GetAllProductsPaginatedQuery request, CancellationToken cancellationToken)
     {
-        return (await repository.GetAllProductsPaginatedAsync(request.Page, request.PageSize, cancellationToken))
+        return (await repository.GetAllProductsPaginatedAsync(request.Page, request.PageSize, request.Title, request.MinPrice, request.MaxPrice, cancellationToken))
             .Then(mapper.Map<IEnumerable<ProductDtoMinimal>>);
     }
 }

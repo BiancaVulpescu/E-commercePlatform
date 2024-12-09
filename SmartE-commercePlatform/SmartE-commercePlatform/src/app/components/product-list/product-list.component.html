@@ -1,5 +1,11 @@
 <div class="product-list">
     <h1>Product List</h1>
+    <div class="filters">
+        <input type="text" [(ngModel)]="titleFilter" placeholder="Title">
+        <input type="number" [(ngModel)]="minPriceFilter" placeholder="Min Price" min="0">
+        <input type="number" [(ngModel)]="maxPriceFilter" placeholder="Max Price" min="0">
+        <button class = "apply-filters-button"(click)="applyFilters()">Apply Filters</button>
+      </div>
     <button (click)="navigateToCreate()">Create New Product</button>
     <table>
         <thead>

@@ -9,6 +9,21 @@ table{
     border-collapse: collapse;
     margin-bottom: 20px;
 }
+input {
+    width: 70%;
+    padding: 0.5em;
+    margin-top: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+  }
+.filters{
+    display:flex;
+    flex-direction: column;
+}
+.apply-filters-button{
+    margin-top: 10px;
+    width: 30%;
+}
 th,td{
     border: 1px solid #ddd;
     padding:8px;

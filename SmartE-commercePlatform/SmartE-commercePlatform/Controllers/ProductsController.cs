@@ -59,9 +59,9 @@ namespace SmartE_commercePlatform.Controllers
         }
         [HttpGet("paginated")]
         [Authorize]
-        public async Task<ActionResult> GetAllProductsPaginated([FromQuery] int page = 1, [FromQuery] int pageSize = 5)
+        public async Task<ActionResult> GetAllProductsPaginated([FromQuery] int page = 1, [FromQuery] int pageSize = 5, string? title = null, [FromQuery] decimal? minPrice = null, [FromQuery] decimal? maxPrice = null)
         {
-            return (await mediator.Send(new GetAllProductsPaginatedQuery { Page = page, PageSize = pageSize }))
+            return (await mediator.Send(new GetAllProductsPaginatedQuery { Page = page, PageSize = pageSize, Title = title, MinPrice = minPrice, MaxPrice = maxPrice }))
                       .Match<ActionResult>(
                           productDtos => Ok(productDtos),
                           error => BadRequest(error)

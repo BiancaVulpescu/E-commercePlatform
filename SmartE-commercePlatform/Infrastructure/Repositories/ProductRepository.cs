@@ -58,11 +58,27 @@ namespace Infrastructure.Repositories
             catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
 
-        public async Task<ErrorOr<IEnumerable<Product>>> GetAllProductsPaginatedAsync(int page, int pageSize, CancellationToken cancellationToken)
+        public async Task<ErrorOr<IEnumerable<Product>>> GetAllProductsPaginatedAsync(int page, int pageSize, string? title, decimal? minPrice, decimal? maxPrice, CancellationToken cancellationToken)
         {
             try
             {
-                var products = await context.Products
+                var query = context.Products.AsQueryable();
+
+                if (!string.IsNullOrEmpty(title))
+                {
+                    query = query.Where(p => p.Title.Contains(title));
+                }
+
+                if (minPrice.HasValue)
+                {
+                    query = query.Where(p => p.Price >= minPrice.Value);
+                }
+
+                if (maxPrice.HasValue)
+                {
+                    query = query.Where(p => p.Price <= maxPrice.Value);
+                }
+                var products = await query
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
                     .ToListAsync(cancellationToken);

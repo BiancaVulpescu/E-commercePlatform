@@ -12,8 +12,21 @@ export class ProductService {
     
   }
 
-  public getProducts(page:  number = 1, pageSize: number = 5): Observable<Product[]>{
-    let params = new HttpParams().set('page', page.toString()).set('pageSize', pageSize.toString());
+  public getProducts(page:  number = 1, pageSize: number = 5,  title?: string, minPrice?: number, maxPrice?: number): Observable<Product[]>{
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('pageSize', pageSize.toString());
+    
+    if (title) {
+      params = params.set('title', title);
+    }
+    if (minPrice !== undefined) {
+      params = params.set('minPrice', minPrice.toString());
+    }
+    if (maxPrice !== undefined) {
+      params = params.set('maxPrice', maxPrice.toString());
+    }
+
     return this.http.get<Product[]>(`${this.apiURL}/paginated`, { params });
   }
 
