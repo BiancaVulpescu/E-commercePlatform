@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using ErrorOr;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -20,12 +21,12 @@ namespace Identity.Repositories
             this.configuration=configuration;
         }
 
-        public async Task<string> Login(User user)
+        public async Task<ErrorOr<string>> Login(User user)
         {
             var existingUser = await usersDbContext.Users.SingleOrDefaultAsync(u => u.Email == user.Email);
-            if (existingUser == null)
+            if (existingUser == null || !BCrypt.Net.BCrypt.Verify(user.PasswordHash, existingUser.PasswordHash))
             {
-                throw new UnauthorizedAccessException("Invalid credentials");
+                return Errors.RepositoryErrors.InvalidCredentials;
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -41,8 +42,13 @@ namespace Identity.Repositories
             return tokenHandler.WriteToken(token);
         }
 
-        public async Task<Guid> Register(User user, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Guid>> Register(User user, CancellationToken cancellationToken)
         {
+            var existingUser = await usersDbContext.Users.SingleOrDefaultAsync(u => u.Email == user.Email);
+            if (existingUser != null)
+            {
+                return Errors.RepositoryErrors.EmailAlreadyExists;
+            }
             usersDbContext.Users.Add(user);
             await usersDbContext.SaveChangesAsync(cancellationToken);
             return user.Id;

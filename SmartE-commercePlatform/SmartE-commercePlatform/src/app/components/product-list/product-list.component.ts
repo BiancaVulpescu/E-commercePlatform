@@ -44,6 +44,7 @@ export class ProductListComponent implements OnInit {
   }
 
   nextPage() : void{
+    console.log(this.totalCount)
     if(this.totalCount = this.pageSize){
       console.log(this.products);
       this.page++;

@@ -1,8 +1,27 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <label for="email">Email:</label>
-    <input id="email" formControlName="email" type="email">
-    <label for="password">Password:</label>
-    <input id="password" formControlName="password" type="password">
-    <button type="submit">Login</button>
+<div class="login">
+  <h1>Login</h1>
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email">
+      <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">
+        <small class="error-message" *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
+        <small class="error-message" *ngIf="loginForm.get('email')?.errors?.['email']">Email is invalid.</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input id="password" formControlName="password" type="password">
+      <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+        <small class="error-message" *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
+      </div>
+    </div>
+    <div class="invalid-credentials">
+      <button type="submit" [disabled]="loginForm.invalid">Login</button>
+      <div *ngIf="invalidCredentialsError">
+        <small class="error-message error">{{ invalidCredentialsError }}</small>
+      </div>
+    </div>
   </form>
+</div>
   <p>Don't have an account? <a (click)="navigateToRegister()">Register here</a></p>

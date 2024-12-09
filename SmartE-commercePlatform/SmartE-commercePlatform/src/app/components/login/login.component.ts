@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  invalidCredentialsError: string | null = null;
 
   constructor(private fb: FormBuilder, private authenticationService: AuthenticationService, private router: Router) {
     this.loginForm = this.fb.group({
@@ -21,10 +22,23 @@ export class LoginComponent {
     });
   }
 
-  onSubmit() {
+  login(): void {
     if (this.loginForm.valid) {
-      this.authenticationService.login(this.loginForm.value).subscribe(() => {
-        this.router.navigate(['/products']);
+      this.authenticationService.login(this.loginForm.value).subscribe({
+        next: (response) => {
+          if (response.token) {
+            localStorage.setItem('token', response.token);
+            this.router.navigate(['/products']);
+          }
+        },
+        error: (errorResponse) => {
+          const error = errorResponse.error;
+          if (Array.isArray(error) && error.some(e => e.code === 'User.InvalidCredentials')) {
+            this.invalidCredentialsError = 'The provided credentials are invalid.';
+          } else {
+            this.invalidCredentialsError = null;
+          }
+        }
       });
     }
   }

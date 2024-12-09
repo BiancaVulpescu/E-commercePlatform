@@ -33,7 +33,11 @@ form {
   button:hover {
     background-color: #218838;
   }
-  
+  .error-message {
+    color: red;
+    font-size: 0.875em;
+    margin-top: 0.5em;
+  }
   p {
     text-align: center;
     margin-top: 1em;

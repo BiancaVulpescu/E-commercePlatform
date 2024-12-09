@@ -1,10 +1,11 @@
 ﻿using Domain.Entities;
+using ErrorOr;
 
 namespace Domain.Repositories
 {
     public interface IUserRepository
     {
-        Task<Guid> Register(User user, CancellationToken cancellationToken);
-        Task<string> Login(User user);
+        Task<ErrorOr<Guid>> Register(User user, CancellationToken cancellationToken);
+        Task<ErrorOr<string>> Login(User user);
     }
 }
