@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHandlerFn } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
 // export class AuthInterceptor implements HttpInterceptor {
 //   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 //     const token = localStorage.getItem('token'); // Get the token from local storage
@@ -19,10 +18,11 @@ import { Observable } from 'rxjs';
 //   }
 // }
 export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
-    const authToken = localStorage.getItem('token'); 
+    // Inject the current `AuthService` and use it to get an authentication token:  
+    const authToken = localStorage.getItem('token'); // Get the token from local storage
     if (authToken) {
       const newReq = req.clone({    
-        headers: req.headers.append('Bearer ', authToken),  
+        headers: req.headers.set('Authorization', `Bearer ${authToken}`),  
       });  
       return next(newReq);
     } else {
