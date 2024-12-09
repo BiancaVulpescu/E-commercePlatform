@@ -11,7 +11,11 @@ form {
     margin-top: 1em;
     display: block;
   }
-  
+  .error-message {
+    color: red;
+    font-size: 0.875em;
+    margin-top: 0.5em;
+  }
   input {
     width: 100%;
     padding: 0.5em;
@@ -19,7 +23,17 @@ form {
     border: 1px solid #ccc;
     border-radius: 0.5em;
   }
-  
+  .invalid-credentials{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    align-items:center;
+    width: 100%;
+  }
+  .error{
+    display:flex;
+    align-items:center;
+  }
   button {
     margin-top: 1em;
     padding: 0.7em;

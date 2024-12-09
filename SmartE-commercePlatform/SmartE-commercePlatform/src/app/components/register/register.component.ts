@@ -13,20 +13,43 @@ import { CommonModule } from '@angular/common';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
+  emailAlreadyExistsError: string | null = null;
 
   constructor(private fb: FormBuilder, private authenticationService: AuthenticationService, private router: Router) {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]
-    });
+    }, {validator: this.passwordMatchValidator});
   }
 
-  onSubmit() {
+  register(): void {
     if (this.registerForm.valid) {
-      this.authenticationService.register(this.registerForm.value).subscribe(() => {
-        this.router.navigate(['/login']);
+      this.authenticationService.register(this.registerForm.value).subscribe({
+        next: (response) => {
+          if (response.userId) {
+            this.router.navigate(['/login']); 
+          }
+        },
+        error: (errorResponse) => {
+          const error = errorResponse.error;
+          if (Array.isArray(error) && error.some(e => e.code === 'User.EmailAlreadyExists')) {
+            this.emailAlreadyExistsError = 'This email is already registered with another account.';
+          } else {
+            this.emailAlreadyExistsError = null;
+          }
+        }
       });
+    }
+  }
+  
+  passwordMatchValidator(formGroup: FormGroup) {
+    const password = formGroup.get('password');
+    const confirmPassword = formGroup.get('confirmPassword');
+    if (password && confirmPassword && password.value !== confirmPassword.value) {
+      confirmPassword.setErrors({ passwordMismatch: true });
+    } else if (confirmPassword) {
+      confirmPassword.setErrors(null);
     }
   }
 

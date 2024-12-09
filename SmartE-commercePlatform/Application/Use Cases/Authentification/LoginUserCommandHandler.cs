@@ -1,8 +1,9 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using ErrorOr;
 using MediatR;
 
-public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, string>
+public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr<string>>
 {
     private readonly IUserRepository userRepository;
 
@@ -11,7 +12,7 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, string>
         this.userRepository=userRepository;
     }
 
-    public async Task<string> Handle(LoginUserCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<string>> Handle(LoginUserCommand request, CancellationToken cancellationToken)
     {
         var user = new User
         {

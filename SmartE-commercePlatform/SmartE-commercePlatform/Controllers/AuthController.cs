@@ -14,15 +14,27 @@ public class AuthController : ControllerBase
 
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterUserCommand command)
-    {
-        var userId = await _mediator.Send(command);
-        return Ok(new { UserId = userId });
+    {  
+        var result = await _mediator.Send(command);
+
+        if (result.IsError)
+        {
+          return BadRequest(result.Errors);
+        }
+
+        return Ok(new { userId = result.Value });
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginUserCommand command)
     {
-        var token = await _mediator.Send(command);
-        return Ok(new { Token = token });
-    }
+        var result = await _mediator.Send(command);
+
+        if (result.IsError)
+        {
+          return BadRequest(result.Errors);
+        }
+
+        return Ok(new { Token = result.Value });
+  }
 }
