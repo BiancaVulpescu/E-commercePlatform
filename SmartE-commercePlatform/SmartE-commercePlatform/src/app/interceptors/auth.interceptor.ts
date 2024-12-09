@@ -19,11 +19,10 @@ import { Observable } from 'rxjs';
 //   }
 // }
 export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
-    // Inject the current `AuthService` and use it to get an authentication token:  
-    const authToken = localStorage.getItem('token'); // Get the token from local storage
+    const authToken = localStorage.getItem('token'); 
     if (authToken) {
       const newReq = req.clone({    
-        headers: req.headers.append('X-Authentication-Token', authToken),  
+        headers: req.headers.append('Bearer ', authToken),  
       });  
       return next(newReq);
     } else {

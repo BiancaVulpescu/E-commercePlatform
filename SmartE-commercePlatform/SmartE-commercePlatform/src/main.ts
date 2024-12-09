@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 import {appRoutes} from '../src/app/app.routes';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import {provideHttpClient, withInterceptors} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptors} from '@angular/common/http';
 import { authInterceptor } from './app/interceptors/auth.interceptor';
 
 bootstrapApplication(AppComponent,{
@@ -13,5 +13,6 @@ bootstrapApplication(AppComponent,{
     provideRouter(appRoutes),
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    {provide: HTTP_INTERCEPTORS, useExisting: authInterceptor, multi: true}
   ]
 }).catch((err) => console.error(err));
