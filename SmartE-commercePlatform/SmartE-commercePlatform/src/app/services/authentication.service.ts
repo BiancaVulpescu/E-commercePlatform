@@ -8,8 +8,8 @@ import { User } from '../models/user.model';
 })
 export class AuthenticationService {
   
-  private loginUrl = 'http://localhost:5109/api/Auth/login';
-  private registerUrl = 'http://localhost:5109/api/Auth/register';
+  private loginUrl = 'https://localhost:7003/api/Auth/login';
+  private registerUrl = 'https://localhost:7003/api/Auth/register';
 
   constructor(private http: HttpClient) {}
 
