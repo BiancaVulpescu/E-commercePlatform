@@ -1,11 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="Use Cases\CommandValidators\CreateProductCommandValidator.cs" />
     <Compile Remove="Use Cases\CommandValidators\CreateShoppingCartItemCommandValidator.cs" />
@@ -14,7 +12,6 @@
     <Compile Remove="Use Cases\CommandValidators\UpdateShoppingCartItemCommandValidator.cs" />
     <Compile Remove="Use Cases\CommandValidators\UpdateWishlistItemValidator.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="Use Cases\CommandValidators\CreateProductCommandValidator.cs" />
     <None Include="Use Cases\CommandValidators\CreateShoppingCartItemCommandValidator.cs" />
@@ -23,18 +20,15 @@
     <None Include="Use Cases\CommandValidators\UpdateShoppingCartItemCommandValidator.cs" />
     <None Include="Use Cases\CommandValidators\UpdateWishlistItemValidator.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
-    <PackageReference Include="FluentValidation" Version="11.10.0" />
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.10.0" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
     <PackageReference Include="Gridify" Version="2.16.0" />
     <PackageReference Include="MediatR" Version="12.4.1" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
-
 </Project>
