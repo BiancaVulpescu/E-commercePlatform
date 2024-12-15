@@ -28,7 +28,6 @@ export class RegisterComponent {
       this.authenticationService.register(this.registerForm.value).subscribe({
         next: (response) => {
           if (response.userId) {
-            console.log('login check');
             this.router.navigate(['/login']); 
           }
         },

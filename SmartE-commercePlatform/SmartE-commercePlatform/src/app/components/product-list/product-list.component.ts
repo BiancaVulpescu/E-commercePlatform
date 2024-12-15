@@ -4,8 +4,7 @@ import { Router } from '@angular/router';
 import { Product } from '../../models/product.model';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
-import { title } from 'process';
-import { max } from 'rxjs';
+
 @Component({
   selector: 'app-product-list',
   standalone:true,
