@@ -1,0 +1,31 @@
+<div class="prediction-container">
+    <h2>Product Price Prediction</h2>
+    <form [formGroup]="predictionForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="title">Product Title</label>
+        <input id="title" formControlName="title" type="text" placeholder="Enter product title" />
+        <div *ngIf="predictionForm.get('title')?.invalid && predictionForm.get('title')?.touched">
+          Title is required.
+        </div>
+      </div>
+  
+      <div>
+        <label for="description">Product Description</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          placeholder="Enter product description"
+        ></textarea>
+        <div *ngIf="predictionForm.get('description')?.invalid && predictionForm.get('description')?.touched">
+          Description is required.
+        </div>
+      </div>
+  
+      <button type="submit" [disabled]="predictionForm.invalid">Predict Price</button>
+    </form>
+  
+    <div *ngIf="predictedPrice !== null">
+      <h3>Predicted Price: {{ predictedPrice | currency }}</h3>
+    </div>
+  </div>
+  

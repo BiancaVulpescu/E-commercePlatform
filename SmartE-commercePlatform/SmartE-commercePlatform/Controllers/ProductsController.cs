@@ -1,7 +1,6 @@
 using Application.DTOs;
 using Application.Use_Cases.Commands;
 using Application.Use_Cases.Queries;
-using Application.Use_Cases.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

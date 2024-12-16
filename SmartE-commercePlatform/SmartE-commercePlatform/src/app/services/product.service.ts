@@ -8,6 +8,7 @@ import {Product} from '../models/product.model';
 export class ProductService {
   private apiURL = 'http://localhost:5109/api/v1/Products';
 
+  private predictionApiURL = 'http://localhost:5109/api/v1/ProductPricePrediction';
   constructor(private http: HttpClient) { 
     
   }
@@ -41,5 +42,8 @@ export class ProductService {
   }
   public deleteProduct(id: string): Observable<any> {
     return this.http.delete(`${this.apiURL}/${id}`);
+  }
+  public predictPrice(productData: { title: string; description: string }): Observable<number> {
+    return this.http.post<number>(`${this.predictionApiURL}/predict`, productData);
   }
 }
