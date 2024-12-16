@@ -16,4 +16,5 @@ export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'product-price-prediction', component: ProductPricePredictionComponent }
+
 ];

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-price-prediction',
@@ -14,7 +15,7 @@ export class ProductPricePredictionComponent {
   predictionForm: FormGroup;
   predictedPrice: number | null = null;
 
-  constructor(private fb: FormBuilder, private productService: ProductService) {
+  constructor(private fb: FormBuilder, private productService: ProductService, private router: Router) {
     this.predictionForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -33,4 +34,8 @@ export class ProductPricePredictionComponent {
       });
     }
   }
+  navigateToCreateProduct(): void {
+    this.router.navigate(['/products/create']);
+  }
+  
 }

@@ -1,31 +1,31 @@
 <div class="prediction-container">
-    <h2>Product Price Prediction</h2>
-    <form [formGroup]="predictionForm" (ngSubmit)="onSubmit()">
-      <div>
-        <label for="title">Product Title</label>
-        <input id="title" formControlName="title" type="text" placeholder="Enter product title" />
-        <div *ngIf="predictionForm.get('title')?.invalid && predictionForm.get('title')?.touched">
-          Title is required.
+    <div class="back-link">
+      <a (click)="navigateToCreateProduct()">
+        <img src="white-left-arrow.png" alt="Back to Create Product" class="back-arrow"> Back to Create Product
+      </a>
+    </div>
+    <div class="prediction">
+      <div class="page-title">Product Price Prediction</div>
+      <form [formGroup]="predictionForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input id="title" formControlName="title" />
+          <div *ngIf="predictionForm.get('title')?.invalid && (predictionForm.get('title')?.dirty || predictionForm.get('title')?.touched)">
+            <small class="error-message" *ngIf="predictionForm.get('title')?.errors?.['required']">Title is required.</small>
+          </div>
         </div>
-      </div>
-  
-      <div>
-        <label for="description">Product Description</label>
-        <textarea
-          id="description"
-          formControlName="description"
-          placeholder="Enter product description"
-        ></textarea>
-        <div *ngIf="predictionForm.get('description')?.invalid && predictionForm.get('description')?.touched">
-          Description is required.
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input id="description" formControlName="description" />
+          <div *ngIf="predictionForm.get('description')?.invalid && (predictionForm.get('description')?.dirty || predictionForm.get('description')?.touched)">
+            <small class="error-message" *ngIf="predictionForm.get('description')?.errors?.['required']">Description is required.</small>
+          </div>
         </div>
-      </div>
-  
-      <button type="submit" [disabled]="predictionForm.invalid">Predict Price</button>
-    </form>
-  
-    <div *ngIf="predictedPrice !== null">
-      <h3>Predicted Price: {{ predictedPrice | currency }}</h3>
+        <button type="submit" [disabled]="predictionForm.invalid">Predict Price</button>
+        <div *ngIf="predictedPrice !== null">
+          <h3>The predicted price is: {{ predictedPrice | currency }}</h3>
+        </div>
+      </form>
     </div>
   </div>
   
