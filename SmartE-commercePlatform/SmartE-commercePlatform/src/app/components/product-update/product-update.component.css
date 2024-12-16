@@ -96,6 +96,26 @@ button:disabled {
   background-color: #4a6d9e;
   cursor: not-allowed;
 }  
+.back-link {
+  padding-top: 50px;
+  padding-left: 50px;
+  text-align: left;
+  position:fixed;
+}
+
+.back-link a {
+  display: inline-block;
+}
+
+.back-arrow {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.back-arrow:hover {
+  opacity: 0.8;
+}
 
 @media (max-width: 600px) {
   .page-title {

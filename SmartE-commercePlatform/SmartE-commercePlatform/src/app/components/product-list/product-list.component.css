@@ -1,13 +1,13 @@
+.product-list-container{
+    width:100%;
+    height:100%;
+    background-color: #202124;
+}
 .product-list{
     max-width: 100%;
     margin:0 auto;
     padding:20px;
     box-sizing: border-box;
-}
-.product-list-container{
-    width:100%;
-    height:100%;
-    background-color: #202124;
 }
 .page-title{
     display:flex;

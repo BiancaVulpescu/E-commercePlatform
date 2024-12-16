@@ -1,4 +1,9 @@
 <div class="product-create-container">
+  <div class="back-link">
+    <a (click)="navigateToProductList()">
+      <img src="white-left-arrow.png" alt="Back to Products" class="back-arrow">
+    </a>
+  </div>
   <div class="product-create">
     
     <div class="page-title">
@@ -34,8 +39,5 @@
       </div>
       <button type="submit" [disabled]="productForm.invalid">Create Product</button>
     </form>
-    <div class="back-link">
-      <a routerLink="/products">Back to Products</a>
-    </div>
   </div>
 </div>

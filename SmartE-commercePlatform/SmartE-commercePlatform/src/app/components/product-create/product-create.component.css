@@ -95,19 +95,26 @@ button:disabled {
   background-color: #4a6d9e;
   cursor: not-allowed;
 }
+
 .back-link {
-  margin-top: 20px;
-  text-align: center;
+  padding-top: 50px;
+  padding-left: 50px;
+  text-align: left;
+  position:fixed;
 }
 
 .back-link a {
-  color: #007bff;
-  text-decoration: none;
-  font-family: 'Kanit', sans-serif;
+  display: inline-block;
 }
 
-.back-link a:hover {
-  text-decoration: underline;
+.back-arrow {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.back-arrow:hover {
+  opacity: 0.8;
 }
 @media (max-width: 600px) {
   .page-title {
