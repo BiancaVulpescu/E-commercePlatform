@@ -19,13 +19,21 @@ namespace Application.AIML
                 .Append(mlContext.Regression.Trainers.Sdca(labelColumnName: nameof(ProductData.Price), maximumNumberOfIterations: 100)));
 
             model = pipeline.Fit(dataView);
+
         }
+
 
         public float Predict(ProductData productData)
         {
+            if (model == null)
+            {
+                throw new InvalidOperationException("The model has not been trained.");
+            }
             var predictionEngine = mlContext.Model.CreatePredictionEngine<ProductData, ProductDataPrediction>(model);
             var prediction = predictionEngine.Predict(productData);
+            Console.WriteLine(prediction.Price);
             return prediction.Price;
+
         }
     }
 }
