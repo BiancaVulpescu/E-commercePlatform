@@ -52,4 +52,7 @@ export class ProductUpdateComponent implements OnInit {
       });
     }
   }
+  navigateToProductList() : void {
+    this.router.navigate(['/products']);
+  }
 }

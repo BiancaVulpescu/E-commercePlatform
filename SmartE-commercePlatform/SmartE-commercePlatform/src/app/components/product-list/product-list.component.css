@@ -1,9 +1,22 @@
+.product-list-container{
+    width:100%;
+    height:100%;
+    background-color: #202124;
+}
 .product-list{
     max-width: 100%;
     margin:0 auto;
     padding:20px;
     box-sizing: border-box;
 }
+.page-title{
+    display:flex;
+    justify-content:start;
+    font-size: 45px;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 400;
+    color:#007bff;
+  }
 table{
     width: 100%;
     border-collapse: collapse;
