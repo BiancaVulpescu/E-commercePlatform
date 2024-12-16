@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.Use_Cases.Authentication.DTOs;
 using Application.Use_Cases.Commands;
 using AutoMapper;
 using Domain.Entities;
@@ -41,6 +42,9 @@ namespace Application.Utils
                     .ForMember(dest => dest.Products, opt => opt.Ignore());
             CreateMap<UpdateWishlistCommand, Wishlist>()
                     .ForMember(dest => dest.Products, opt => opt.Ignore());
+
+            CreateMap<LoginResponse, LoginResponseDto>().ReverseMap();
+            CreateMap<RefreshResponse, RefreshResponseDto>().ReverseMap();
         }
     }
 }

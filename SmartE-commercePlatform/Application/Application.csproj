@@ -13,14 +13,6 @@
     <Compile Remove="Use Cases\CommandValidators\UpdateWishlistItemValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Use Cases\CommandValidators\CreateProductCommandValidator.cs" />
-    <None Include="Use Cases\CommandValidators\CreateShoppingCartItemCommandValidator.cs" />
-    <None Include="Use Cases\CommandValidators\CreateWishlistItemCommandValidator.cs" />
-    <None Include="Use Cases\CommandValidators\UpdateProductCommandValidator.cs" />
-    <None Include="Use Cases\CommandValidators\UpdateShoppingCartItemCommandValidator.cs" />
-    <None Include="Use Cases\CommandValidators\UpdateWishlistItemValidator.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="FluentValidation" Version="11.11.0" />
@@ -30,5 +22,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Use Cases\CommandValidators\Product\" />
+    <Folder Include="Use Cases\CommandValidators\ShoppingCart\" />
+    <Folder Include="Use Cases\CommandValidators\Wishlist\" />
   </ItemGroup>
 </Project>

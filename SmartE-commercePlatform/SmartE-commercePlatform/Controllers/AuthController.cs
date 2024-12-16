@@ -1,40 +1,67 @@
+using Application.Use_Cases.Authentication.Commands;
+using Application.Use_Cases.Authentication.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-[ApiController]
-[Route("api/[controller]")]
-public class AuthController : ControllerBase
+namespace SmartE_commercePlatform.Controllers
 {
-    private readonly IMediator _mediator;
-
-    public AuthController(IMediator mediator)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AuthController(IMediator mediator) : ControllerBase
     {
-        _mediator = mediator;
-    }
+        private readonly IMediator mediator = mediator;
 
-    [HttpPost("register")]
-    public async Task<IActionResult> Register(RegisterUserCommand command)
-    {  
-        var result = await _mediator.Send(command);
-
-        if (result.IsError)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(RegisterUserCommand command)
         {
-          return BadRequest(result.Errors);
+            var result = await mediator.Send(command);
+
+            if (result.IsError)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            return Ok(new { userId = result.Value });
         }
 
-        return Ok(new { userId = result.Value });
-    }
-
-    [HttpPost("login")]
-    public async Task<IActionResult> Login(LoginUserCommand command)
-    {
-        var result = await _mediator.Send(command);
-
-        if (result.IsError)
+        [HttpPost("login")]
+        public async Task<ActionResult<LoginResponseDto>> Login(LoginUserCommand command)
         {
-          return BadRequest(result.Errors);
+            return (await mediator.Send(command))
+                .Match<ActionResult<LoginResponseDto>>(
+                    loginResponse => Ok(loginResponse),
+                    errors => BadRequest(errors)
+                );
         }
 
-        return Ok(new { Token = result.Value });
-  }
+        [HttpPost("refresh")]
+        public async Task<ActionResult<RefreshResponseDto>> Refresh([FromBody] RefreshAccessCommand command)
+        {
+            return (await mediator.Send(command))
+                .Match<ActionResult<RefreshResponseDto>>(
+                    loginResponse => Ok(loginResponse),
+                    errors => BadRequest(errors)
+                );
+        }
+
+        [HttpPost("logout")]
+        public async Task<ActionResult> Logout([FromBody] LogoutCommand command)
+        {
+            return (await mediator.Send(command))
+                .Match<ActionResult>(
+                    _ => NoContent(),
+                    errors => BadRequest(errors)
+                );
+        }
+
+        [HttpPost("logoutall")]
+        public async Task<ActionResult> LogoutAll([FromBody] LogoutAllCommand command)
+        {
+            return (await mediator.Send(command))
+                .Match<ActionResult>(
+                    _ => NoContent(),
+                    errors => BadRequest(errors)
+                );
+        }
+    }
 }
