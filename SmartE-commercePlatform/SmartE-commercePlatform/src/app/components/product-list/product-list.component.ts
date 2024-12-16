@@ -21,7 +21,7 @@ export class ProductListComponent implements OnInit {
   titleFilter: string = '';
   minPriceFilter: number | undefined;
   maxPriceFilter: number | undefined;
-
+  isFilterPopupVisible: boolean = false;
 
   constructor(
     private productService: ProductService, 
@@ -41,6 +41,7 @@ export class ProductListComponent implements OnInit {
   applyFilters(): void {
     this.page = 1;
     this.loadProducts();
+    this.toggleFilterPopup();
   }
   
   navigateToCreate() {
@@ -67,6 +68,9 @@ export class ProductListComponent implements OnInit {
       this.page--;
       this.loadProducts();
     }
+  }
+  toggleFilterPopup(): void {
+    this.isFilterPopupVisible = !this.isFilterPopupVisible;
   }
     
 }
