@@ -1,7 +1,22 @@
-<div class="product-detail" *ngIf="product">
-    <h1>{{ product.title }}</h1>
-    <p><strong>Category:</strong>  category </p>
-    <p><strong>Description:</strong> {{ product.description }}</p>
-    <p><strong>Price:</strong> {{ product.price }}</p>
-    <button (click)="deleteProduct()">Delete Product</button>   
+<div class="product-detail-page-container">
+    <div class="back-link">
+        <a (click)="navigateToProductList()">
+            <img src="white-left-arrow.png" alt="Back to Products" class="back-arrow">
+        </a>
+    </div>
+    <div class="product-detail-container">
+        <div class="product-detail" *ngIf="product">
+            <div class="product-detail-content">
+                <div class="product-image">
+                  <img src="shopping-cart.png" alt="{{ product.title }}">
+                </div>
+                <div class="product-info">
+                  <h1>{{ product.title }}</h1>
+                  <p><strong>Price:</strong> {{ product.price | currency }}</p>
+                </div>
+              </div>
+              <p><strong>Description:</strong> {{ product.description }}</p>
+              <button (click)="deleteProduct()">Delete Product</button>
+        </div>
+    </div>
 </div>

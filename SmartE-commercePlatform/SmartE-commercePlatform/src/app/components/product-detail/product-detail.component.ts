@@ -36,4 +36,7 @@ export class ProductDetailComponent implements OnInit{
       });
     }
   }
+  navigateToProductList() : void {
+    this.router.navigate(['/products']);
+  }
 }
