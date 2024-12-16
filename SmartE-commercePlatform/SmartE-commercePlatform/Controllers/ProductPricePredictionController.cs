@@ -1,5 +1,6 @@
 using Application.AIML;
 using Microsoft.AspNetCore.Mvc;
+using SQLitePCL;
 
 namespace SmartE_commercePlatform.Controllers
 {
@@ -11,8 +12,17 @@ namespace SmartE_commercePlatform.Controllers
         public ProductPricePredictionController()
         {
             productPricePredictionModel = new ProductPricePredictionModel();
-            var sampleData = ProductDataGenerator.GenerateProductData();
-            productPricePredictionModel.Train(sampleData);
+            var parentDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+            var filePath = Path.Combine(parentDirectory, "product_data.csv");
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                throw new FileNotFoundException($"The dataset file was not found at {filePath}");
+            }
+
+            var productData = ProductDataParser.ParseCsv(filePath);
+
+            productPricePredictionModel.Train(productData);
         }
 
         [HttpPost("predict")]
@@ -21,5 +31,6 @@ namespace SmartE_commercePlatform.Controllers
         {
             return productPricePredictionModel.Predict(productData);
         }
+        
     }
 }
