@@ -5,9 +5,9 @@ using MediatR;
 
 namespace Application.Use_Cases.CommandHandlers
 {
-    public class DeleteCategoryCommandHandler(IProductRepository repository) : IRequestHandler<DeleteCategoryCommand, ErrorOr<Deleted>>
+    public class DeleteCategoryCommandHandler(ICategoryRepository repository) : IRequestHandler<DeleteCategoryCommand, ErrorOr<Deleted>>
     {
-        private readonly IProductRepository repository = repository;
+        private readonly ICategoryRepository repository = repository;
 
         public async Task<ErrorOr<Deleted>> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
         {

@@ -3,7 +3,6 @@
     public class CreateCategoryCommandBase
     {
         public required string Title { get; set; }
-        public string? Description { get; set; }
-        public decimal Price { get; set; }
+        public Guid? ParentCategoryId { get; set; }
     }
 }

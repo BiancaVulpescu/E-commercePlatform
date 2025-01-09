@@ -7,14 +7,14 @@ using MediatR;
 
 namespace Application.Use_Cases.CommandHandlers
 {
-    public class CreateProductCommandHandler(IProductRepository repository, IMapper mapper) : IRequestHandler<CreateProductCommand, ErrorOr<Guid>>
+    public class CreateCategoryCommandHandler(ICategoryRepository repository, IMapper mapper) : IRequestHandler<CreateCategoryCommand, ErrorOr<Guid>>
     {
-        private readonly IProductRepository repository = repository;
+        private readonly ICategoryRepository repository = repository;
         private readonly IMapper mapper = mapper;
 
-        public async Task<ErrorOr<Guid>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Guid>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
-            return await repository.AddAsync(mapper.Map<Product>(request), cancellationToken);
+            return await repository.AddAsync(mapper.Map<Category>(request), cancellationToken);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace SmartE_commercePlatform.UnitTests
 {
     public class AutoMapperTests
     {
+        //teste la automapper pentru mapare category
         [Fact]
         public void MapFrom_Product_To_ProductDtoMinimal_IsValid()
         {
