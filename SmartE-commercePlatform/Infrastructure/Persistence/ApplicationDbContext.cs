@@ -10,7 +10,6 @@ namespace Infrastructure.Persistence
         public DbSet<Product> Products { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<Wishlist> Wishlists { get; set; }
-        public DbSet<Client> Clients { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,19 +24,6 @@ namespace Infrastructure.Persistence
                 entity.Property(e => e.Title).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.Description).HasMaxLength(1000);
                 entity.Property(e => e.Price).IsRequired();
-            });
-            modelBuilder.Entity<Client>(entity =>
-            {
-                entity.ToTable("Clients");
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id)
-                .HasColumnType("uuid")
-                .HasDefaultValueSql(UuidGenerationFunction)
-                .ValueGeneratedOnAdd();
-                entity.Property(e => e.Email).IsRequired().HasMaxLength(30);
-                entity.Property(e => e.Username).IsRequired().HasMaxLength(30);
-                entity.Property(e => e.Password).IsRequired();
-                entity.Property(e => e.Location).IsRequired();
             });
             modelBuilder.Entity<Wishlist>(entity =>
             {

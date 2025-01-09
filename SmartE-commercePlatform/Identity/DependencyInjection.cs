@@ -1,4 +1,5 @@
 ﻿using Domain.Repositories;
+using Identity.Persistence;
 using Identity.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
