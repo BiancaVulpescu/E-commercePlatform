@@ -1,33 +1,44 @@
-<div class="product-create">
-  <h1>Create New Product</h1>
-  <form [formGroup]="productForm" (ngSubmit)="createProduct()">
-    <div class="form-group">
-      <label for="title">Title</label>
-      <input id="title" formControlName="title" />
-      <div *ngIf="productForm.get('title')?.invalid && (productForm.get('title')?.dirty || productForm.get('title')?.touched)">
-        <small class="error-message" *ngIf="productForm.get('title')?.errors?.['required']">Title is required.</small>
-        <small class="error-message" *ngIf="productForm.get('title')?.errors?.['maxlength']">Title cannot exceed 100 characters.</small>
-      </div>
+<div class="product-create-container">
+  <div class="back-link">
+    <a (click)="navigateToProductList()">
+      <img src="white-left-arrow.png" alt="Back to Products" class="back-arrow">
+    </a>
+  </div>
+  <div class="product-create">
+    
+    <div class="page-title">
+      Create New Product
     </div>
-    <div class="form-group">
-      <label for="description">Description</label>
-      <input id="description" formControlName="description" />
-      <div *ngIf="productForm.get('description')?.invalid && (productForm.get('description')?.dirty || productForm.get('description')?.touched)">
-        <small class="error-message" *ngIf="productForm.get('description')?.errors?.['required']">Description is required.</small>
-        <small class="error-message" *ngIf="productForm.get('description')?.errors?.['maxlength']">Description cannot exceed 200 characters.</small>
+    <form [formGroup]="productForm" (ngSubmit)="createProduct()">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input id="title" formControlName="title" />
+        <div *ngIf="productForm.get('title')?.invalid && (productForm.get('title')?.dirty || productForm.get('title')?.touched)">
+          <small class="error-message" *ngIf="productForm.get('title')?.errors?.['required']">Title is required.</small>
+          <small class="error-message" *ngIf="productForm.get('title')?.errors?.['maxlength']">Title cannot exceed 100 characters.</small>
+        </div>
       </div>
-      <!-- <div class="error" *ngIf="productForm.get('isbn')?.hasError('pattern')">
-        ISBN must be in the format XXXXXXXXXXXXX
-      </div> -->
-    </div>
-    <div class="form-group">
-      <label for="price">Price</label>
-      <input id="price" formControlName="price"  />
-      <div *ngIf="productForm.get('price')?.invalid && (productForm.get('price')?.dirty || productForm.get('price')?.touched)">
-        <small class="error-message" *ngIf="productForm.get('price')?.errors?.['required']">Price is required.</small>
-        <small class="error-message"  *ngIf="productForm.get('price')?.errors?.['pattern']">Price must be a valid number.</small>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input id="description" formControlName="description" />
+        <div *ngIf="productForm.get('description')?.invalid && (productForm.get('description')?.dirty || productForm.get('description')?.touched)">
+          <small class="error-message" *ngIf="productForm.get('description')?.errors?.['required']">Description is required.</small>
+          <small class="error-message" *ngIf="productForm.get('description')?.errors?.['maxlength']">Description cannot exceed 200 characters.</small>
+        </div>
+        <!-- <div class="error" *ngIf="productForm.get('isbn')?.hasError('pattern')">
+          ISBN must be in the format XXXXXXXXXXXXX
+        </div> -->
       </div>
-    </div>
-    <button type="submit" [disabled]="productForm.invalid">Create Product</button>
-  </form>
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input id="price" formControlName="price"  />
+        <div *ngIf="productForm.get('price')?.invalid && (productForm.get('price')?.dirty || productForm.get('price')?.touched)">
+          <small class="error-message" *ngIf="productForm.get('price')?.errors?.['required']">Price is required.</small>
+          <small class="error-message"  *ngIf="productForm.get('price')?.errors?.['pattern']">Price must be a valid number.</small>
+        </div>
+      </div>
+      <button type="submit" [disabled]="productForm.invalid">Create Product</button>
+      <button type="button" (click)="navigateToPricePrediction()">Predict Price</button>
+    </form>
+  </div>
 </div>

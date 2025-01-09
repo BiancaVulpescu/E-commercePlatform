@@ -5,6 +5,7 @@ import { ProductUpdateComponent } from './components/product-update/product-upda
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { ProductPricePredictionComponent } from './components/product-price-prediction/product-price-prediction.component';
 
 export const appRoutes: Routes = [
     {path:'', redirectTo: '/register', pathMatch: 'full'},
@@ -13,5 +14,7 @@ export const appRoutes: Routes = [
     {path: 'products/update/:id', component: ProductUpdateComponent },
     {path: 'products/detail/:id', component: ProductDetailComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent }
+    { path: 'register', component: RegisterComponent },
+    { path: 'product-price-prediction', component: ProductPricePredictionComponent }
+
 ];

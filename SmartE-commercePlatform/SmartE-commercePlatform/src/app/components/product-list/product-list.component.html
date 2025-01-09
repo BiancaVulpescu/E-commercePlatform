@@ -1,36 +1,54 @@
-<div class="product-list">
-    <h1>Product List</h1>
-    <div class="filters">
-        <input type="text" [(ngModel)]="titleFilter" placeholder="Title">
-        <input type="number" [(ngModel)]="minPriceFilter" placeholder="Min Price" min="0">
-        <input type="number" [(ngModel)]="maxPriceFilter" placeholder="Max Price" min="0">
-        <button class = "apply-filters-button"(click)="applyFilters()">Apply Filters</button>
-      </div>
-    <button (click)="navigateToCreate()">Create New Product</button>
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Actions</th>
-            </tr>
-        </thead>  
-        <tbody>
-            <tr *ngFor="let product of products">
-                <td>{{product.title}}</td>
-                <td>{{product.description}}</td>
-                <td>{{product.price}}</td>
-                <td>
-                    <button (click)="navigateToUpdate(product.id!)">Edit</button>
-                    <button (click)="navigateToDetail(product.id!)">See details</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="pagination-controls">
-        <button (click)="previousPage()" [disabled]="page === 1">Previous</button>
-        <span>Page {{page}}</span>
-        <button (click)="nextPage()">Next</button>
+<div class="product-list-page-container">
+    <div class="product-list-page">
+        <div class="top-nav-bar">
+            <div class="page-title">
+                Welcome to our E-commerce Platform!
+            </div>
+            <div class="create-button-container">
+                <button class="create-button" (click)="navigateToCreate()">
+                    <img src="create.png" alt="Back to Products" class="create-icon">
+                    <div>
+                        Create New Product
+                    </div>
+                </button>
+            </div>
+        </div>
+        
+        <div *ngIf="isFilterPopupVisible" class="filter-popup">
+            <div class="filter-popup-content">
+                
+                <button class="close-button" (click)="toggleFilterPopup()">X</button>
+                <div class="filters">
+                    <input type="text" [(ngModel)]="titleFilter" placeholder="Title">
+                    <input type="number" [(ngModel)]="minPriceFilter" placeholder="Min Price" min="0">
+                    <input type="number" [(ngModel)]="maxPriceFilter" placeholder="Max Price" min="0">
+                    <button (click)="applyFilters()">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+        <div class="product-list-container">
+            <div class="product-list">
+                <button class="filter-button" (click)="toggleFilterPopup()">Filters</button>
+                <div class="product-card" *ngFor="let product of products" (click)="navigateToDetail(product.id!)">
+                    <div class="product-image">
+                        <img src="shopping-cart.png" alt="{{product.title}}">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">{{product.title}}</div>
+                        <div class="product-price">{{product.price | currency}}</div>
+                    </div>
+                    <div class="product-actions">
+                        <button (click)="navigateToUpdate(product.id!); $event.stopPropagation();">
+                            <img src="edit.png" alt="Edit">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pagination-controls">
+            <button (click)="previousPage()" [disabled]="page === 1">Previous</button>
+            <span>Page {{page}}</span>
+            <button (click)="nextPage()">Next</button>
+        </div>
     </div>
 </div>

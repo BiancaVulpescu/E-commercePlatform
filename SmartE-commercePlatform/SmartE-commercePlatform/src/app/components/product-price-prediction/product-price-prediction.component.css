@@ -1,0 +1,138 @@
+.prediction-page-container{
+  width:100%;
+  background-color: #202124;
+  min-height: 100vh;  
+}
+
+.prediction-page {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    max-width: 100%;
+    padding: 30px;
+    background: #202124;
+}
+  
+  .back-link {
+    padding-top: 50px;
+    padding-left: 50px;
+    text-align: left;
+    position:fixed;
+  }
+  
+  .back-link a {
+    display: inline-block;
+  }
+  
+  .back-arrow {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+  
+  .back-arrow:hover {
+    opacity: 0.8;
+  }
+  
+  .page-title{
+    display:flex;
+    justify-content:center;
+    padding-top: 50px;
+    font-size: 45px;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 400;
+    color:#007bff;
+  }
+  .form-group{
+    display:flex;
+    flex-direction:column;
+    width:600px;
+    padding-top: 25px;
+  }
+  label {
+    color:#c8c8c9;
+    font-family: 'Kanit', sans-serif;
+  }
+  
+  input {
+    width: 100%;
+    height: 45px;
+    padding: 0.5em;
+    margin-top: 0.5em;
+    border: 1px solid #3c4043;
+    border-radius: 0.5em;
+    background-color: hsl(206, 6%, 25%);
+    color: #fff;
+    box-sizing: border-box; 
+  }
+  input:focus {
+    border: none; 
+    outline: none;
+    background-color: #3c4043;
+    color: #fff; 
+    width: 100%; 
+    height: 45px;
+    padding: 0.5em; 
+    box-sizing: border-box;
+  }
+  
+  .error-message {
+    position:fixed;
+    padding-top:2px;
+    color: red;
+    font-family: 'Kanit', sans-serif;
+    font-size: 0.875em;
+  }
+  
+  button {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    padding: 0.7em;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 0.5em;
+    cursor: pointer;
+    width: 100%;
+    height: 45px;
+    font-family: 'Kanit', sans-serif;
+    font-size: 20px;
+  }
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  button:disabled {
+    background-color: #4a6d9e;
+    cursor: not-allowed;
+  }
+  .result{
+    font-family: 'Kanit', sans-serif;
+    font-size: 20px;
+    font-weight: 100;
+    color: white;
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    .prediction-container {
+      padding: 20px;
+    }
+  
+    .page-title {
+      font-size: 1.5rem;
+    }
+  
+    input {
+      font-size: 0.9rem;
+    }
+  
+    button {
+      font-size: 0.9rem;
+      padding: 10px 15px;
+    }
+  }
+  

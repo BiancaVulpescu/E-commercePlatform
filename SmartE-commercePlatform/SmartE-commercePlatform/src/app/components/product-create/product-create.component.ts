@@ -38,4 +38,10 @@ export class ProductCreateComponent implements OnInit {
       });
     }
   }
+  navigateToProductList() : void {
+    this.router.navigate(['/products']);
+  }
+  navigateToPricePrediction(): void {
+    this.router.navigate(['/product-price-prediction']);
+  }
 }

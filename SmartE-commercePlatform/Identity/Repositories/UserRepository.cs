@@ -60,6 +60,7 @@ namespace Identity.Repositories
                     new Claim(ClaimTypes.Name, userId.ToString())
                     ]),
                 Expires = expiration,
+
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 

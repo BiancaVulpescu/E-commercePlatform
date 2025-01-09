@@ -4,8 +4,7 @@ import { Router } from '@angular/router';
 import { Product } from '../../models/product.model';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
-import { title } from 'process';
-import { max } from 'rxjs';
+
 @Component({
   selector: 'app-product-list',
   standalone:true,
@@ -22,7 +21,7 @@ export class ProductListComponent implements OnInit {
   titleFilter: string = '';
   minPriceFilter: number | undefined;
   maxPriceFilter: number | undefined;
-
+  isFilterPopupVisible: boolean = false;
 
   constructor(
     private productService: ProductService, 
@@ -42,6 +41,7 @@ export class ProductListComponent implements OnInit {
   applyFilters(): void {
     this.page = 1;
     this.loadProducts();
+    this.toggleFilterPopup();
   }
   
   navigateToCreate() {
@@ -68,6 +68,9 @@ export class ProductListComponent implements OnInit {
       this.page--;
       this.loadProducts();
     }
+  }
+  toggleFilterPopup(): void {
+    this.isFilterPopupVisible = !this.isFilterPopupVisible;
   }
     
 }
