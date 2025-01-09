@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Use_Cases.Authentication.Commands;
+using Domain.Entities;
 using Domain.Repositories;
 using ErrorOr;
 using MediatR;
