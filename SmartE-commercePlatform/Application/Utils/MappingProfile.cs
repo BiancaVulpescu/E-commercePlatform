@@ -24,11 +24,12 @@ namespace Application.Utils
 
             CreateMap<CreateProductCommand, Product>()
                     .ForMember(dest => dest.Id, opt => opt.Ignore())
-                    .ForMember(dest => dest.ShoppingCarts, opt => opt.Ignore())
                     .ForMember(dest => dest.Category, opt => opt.Ignore())
+                    .ForMember(dest => dest.ShoppingCarts, opt => opt.Ignore())
                     .ForMember(dest => dest.ShoppingCartProducts, opt => opt.Ignore())
                     .ForMember(dest => dest.Wishlists, opt => opt.Ignore());
             CreateMap<UpdateProductCommand, Product>()
+                    .ForMember(dest => dest.Category, opt => opt.Ignore())
                     .ForMember(dest => dest.ShoppingCarts, opt => opt.Ignore())
                     .ForMember(dest => dest.ShoppingCartProducts, opt => opt.Ignore())
                     .ForMember(dest => dest.Wishlists, opt => opt.Ignore());

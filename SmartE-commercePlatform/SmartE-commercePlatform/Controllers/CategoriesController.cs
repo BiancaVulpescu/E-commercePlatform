@@ -28,7 +28,7 @@ namespace SmartE_commercePlatform.Controllers
         [Authorize]
         public async Task<ActionResult<CategoryDto>> GetCategoryById([FromRoute] Guid id)
         {
-            return (await mediator.Send(new GetProductByIdQuery { Id = id }))
+            return (await mediator.Send(new GetCategoryByIdQuery { Id = id }))
                 .Match<ActionResult<CategoryDto>>(
                     categoryDto => Ok(categoryDto),
                     error => BadRequest(error)

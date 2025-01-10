@@ -26,7 +26,6 @@ namespace Infrastructure.Repositories
             try
             {
                 var category = await context.Categories
-                    .Include(e => e.ParentCategoryId)
                     .Include(e => e.ParentCategory)
                     .Include(e => e.Subcategories)
                     .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
