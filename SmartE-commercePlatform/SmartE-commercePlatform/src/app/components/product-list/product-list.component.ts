@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { Product } from '../../models/product.model';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-product-list',
   standalone:true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css'
 })

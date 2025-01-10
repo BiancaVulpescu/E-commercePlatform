@@ -6,6 +6,7 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ProductPricePredictionComponent } from './components/product-price-prediction/product-price-prediction.component';
+import { HttpClientModule } from '@angular/common/http';
 
 export const appRoutes: Routes = [
     {path:'', redirectTo: '/register', pathMatch: 'full'},

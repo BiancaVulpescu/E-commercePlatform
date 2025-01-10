@@ -1,21 +1,22 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
-import { AuthenticationService } from '../../services/authentication.service';
+import { AuthService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule]
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule]
 })
 export class LoginComponent {
   loginForm: FormGroup;
   invalidCredentialsError: string | null = null;
 
-  constructor(private fb: FormBuilder, private authenticationService: AuthenticationService, private router: Router) {
+  constructor(private fb: FormBuilder, private authenticationService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
@@ -24,10 +25,12 @@ export class LoginComponent {
 
   login(): void {
     if (this.loginForm.valid) {
-      this.authenticationService.login(this.loginForm.value).subscribe({
+      const { email, password } = this.loginForm.value;
+      this.authenticationService.login(email, password).subscribe({
         next: (response) => {
-          if (response.token) {
-            localStorage.setItem('token', response.token);
+          console.log(response.accessToken);
+          if (response.accessToken) {
+            localStorage.setItem('accessToken', response.accessToken);  
             this.router.navigate(['/products']);
           }
         },
