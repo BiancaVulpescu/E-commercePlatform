@@ -26,6 +26,7 @@ namespace Infrastructure.Repositories
             try
             {
                 var product = await context.Products
+                    .Include(e => e.Category)
                     .Include(e => e.ShoppingCarts)
                     .Include(e => e.Wishlists)
                     .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
@@ -100,6 +101,8 @@ namespace Infrastructure.Repositories
             catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
             catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
+
+        //get products by category
 
         public async Task<ErrorOr<Deleted>> DeleteAsync(Guid id, CancellationToken cancellationToken)
         {

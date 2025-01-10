@@ -18,6 +18,7 @@ namespace Infrastructure
                         )
                 );
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IWishlistRepository, WishlistRepository>();
             services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
             return services;
