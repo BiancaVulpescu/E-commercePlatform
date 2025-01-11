@@ -8,6 +8,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { ProductPricePredictionComponent } from './components/product-price-prediction/product-price-prediction.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 
 export const appRoutes: Routes = [
     {path:'', redirectTo: '/register', pathMatch: 'full'},
@@ -18,5 +20,7 @@ export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'product-price-prediction', component: ProductPricePredictionComponent },
-    { path: 'forgot-password', component: ForgotPasswordComponent }
+    { path: 'forgot-password', component: ForgotPasswordComponent },
+    { path: 'profile', component: ProfileComponent },
+    { path: 'edit-profile', component: EditProfileComponent }
 ];
