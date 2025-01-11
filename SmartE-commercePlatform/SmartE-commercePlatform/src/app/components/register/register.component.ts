@@ -1,21 +1,22 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthenticationService } from '../../services/authentication.service';
+import { AuthService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule]
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule]
 })
 export class RegisterComponent {
   registerForm: FormGroup;
   emailAlreadyExistsError: string | null = null;
 
-  constructor(private fb: FormBuilder, private authenticationService: AuthenticationService, private router: Router) {
+  constructor(private fb: FormBuilder, private authenticationService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -25,7 +26,8 @@ export class RegisterComponent {
 
   register(): void {
     if (this.registerForm.valid) {
-      this.authenticationService.register(this.registerForm.value).subscribe({
+      const { email, password } = this.registerForm.value;
+      this.authenticationService.register(email, password).subscribe({
         next: (response) => {
           if (response.userId) {
             this.router.navigate(['/login']); 
