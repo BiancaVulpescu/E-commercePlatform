@@ -49,4 +49,7 @@ export class LoginComponent {
   navigateToRegister() {
     this.router.navigate(['/register']);
   }
+  navigateToChangePassword() {
+    this.router.navigate(['/change-password']);
+  }
 }
