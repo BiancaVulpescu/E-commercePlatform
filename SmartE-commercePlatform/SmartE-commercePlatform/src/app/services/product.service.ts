@@ -1,10 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable, NgModule } from '@angular/core';
+import { HttpClient, HttpClientModule, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Product} from '../models/product.model';
 @Injectable({
   providedIn: 'root'
 })
+// @NgModule({
+//   imports: [HttpClientModule],
+// })
 export class ProductService {
   private apiURL = 'http://localhost:5109/api/v1/Products';
 

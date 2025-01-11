@@ -5,14 +5,14 @@ import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-// import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-product-update',
   templateUrl: './product-update.component.html',
   styleUrl: './product-update.component.css',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule]
+  imports: [ReactiveFormsModule, CommonModule, HttpClientModule]
 })
 export class ProductUpdateComponent implements OnInit {
   productForm: FormGroup;

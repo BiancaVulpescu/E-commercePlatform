@@ -3,10 +3,11 @@ import { ProductService } from '../../services/product.service';
 import { ActivatedRoute,Router } from '@angular/router';
 import { Product } from '../../models/product.model';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [CommonModule],
+  imports: [CommonModule, HttpClientModule],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css'
 })

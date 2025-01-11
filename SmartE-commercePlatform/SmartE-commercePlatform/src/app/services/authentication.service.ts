@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { afterNextRender, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +15,10 @@ export class AuthService {
   }
 
   private loadTokens(): void {
-    this.accessToken = localStorage.getItem('accessToken');
-    this._refreshToken = localStorage.getItem('refreshToken');
+    afterNextRender(() => { 
+      this.accessToken = localStorage.getItem('accessToken');
+      this._refreshToken = localStorage.getItem('refreshToken');
+    })
   }
 
   getAccessToken(): string | null {
@@ -37,11 +39,29 @@ export class AuthService {
     localStorage.setItem('refreshToken', token);
   }
   
+  // login(email: string, password: string): Observable<any> {
+  //   return this.http.post<any>('http://localhost:5109/api/Auth/login', { email, password }).pipe(
+  //     tap(response => {
+  //       this.setAccessToken(response.accessToken);
+  //       this.setRefreshToken(response.refreshToken);
+  //     })
+  //   );
+  // }
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>('http://localhost:5109/api/Auth/login', { email, password }).pipe(
       tap(response => {
-        this.setAccessToken(response.accessToken);
-        this.setRefreshToken(response.refreshToken);
+        if (response.accessToken && response.refreshToken) {
+          this.setAccessToken(response.accessToken);
+          this.setRefreshToken(response.refreshToken);
+          // console.log(localStorage.getItem('accessToken'));
+          // console.log(localStorage.getItem('refreshToken'));
+        } else {
+          throw new Error('Invalid login response');
+        }
+      }),
+      catchError((error) => {
+        console.error('Login failed:', error);
+        return throwError(() => error); // Pass the error to the subscriber
       })
     );
   }

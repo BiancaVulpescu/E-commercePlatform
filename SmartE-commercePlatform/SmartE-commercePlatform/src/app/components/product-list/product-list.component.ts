@@ -3,15 +3,16 @@ import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
 import { Product } from '../../models/product.model';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { error } from 'console';
 
 @Component({
   selector: 'app-product-list',
-  standalone:true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './product-list.component.html',
-  styleUrl: './product-list.component.css'
+  styleUrl: './product-list.component.css',
+  standalone:true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule]
 })
 export class ProductListComponent implements OnInit {
 
@@ -31,12 +32,18 @@ export class ProductListComponent implements OnInit {
    }
   ngOnInit(): void {
     this.loadProducts();
+    // console.log('Component initialized: ProductListComponent');
   }
   loadProducts() : void{
-    this.productService.getProducts(this.page, this.pageSize, this.titleFilter, this.minPriceFilter, this.maxPriceFilter).subscribe(response=>{
-      this.products= response;
-      this.totalCount = response.length;
-      console.log(response);
+    this.productService.getProducts(this.page, this.pageSize, this.titleFilter, this.minPriceFilter, this.maxPriceFilter).subscribe({
+      next: (response) => {
+        this.products= response;
+        this.totalCount = response.length;
+        console.log(this.products);
+      }, 
+      error: (error) => {
+        console.error(error);
+      }
     });
   }
   applyFilters(): void {
