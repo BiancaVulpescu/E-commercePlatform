@@ -6,8 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-change-password',
-  templateUrl: './change-password.component.html',
-  styleUrls: ['./change-password.component.css'],
+  templateUrl: './forgot-password.component.html',
+  styleUrls: ['./forgot-password.component.css'],
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule]
 })
