@@ -1,10 +1,4 @@
 ﻿namespace Application.AIML
-{
-    public static class UserDataGenerator
-    {
-        public static List<UserData> GenerateUserData()
-        {
-           namespace Application.AIML
     {
         public static class UserDataGenerator
         {
@@ -51,7 +45,3 @@
             }
         }
     }
-
-}
-    }
-}
