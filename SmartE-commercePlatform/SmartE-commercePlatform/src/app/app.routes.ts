@@ -7,7 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ProductPricePredictionComponent } from './components/product-price-prediction/product-price-prediction.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 export const appRoutes: Routes = [
     {path:'', redirectTo: '/register', pathMatch: 'full'},
@@ -18,5 +18,5 @@ export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'product-price-prediction', component: ProductPricePredictionComponent },
-    { path: 'change-password', component: ChangePasswordComponent }
+    { path: 'forgot-password', component: ForgotPasswordComponent }
 ];
