@@ -5,24 +5,24 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({
-  selector: 'app-change-password',
+  selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.css'],
+  styleUrls: ['./forgot-password.component.css'], // Update this line
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule]
 })
-export class ChangePasswordComponent {
-  changePasswordForm: FormGroup;
+export class ForgotPasswordComponent {
+  forgotPasswordForm: FormGroup;
   emailSent: boolean = false;
 
   constructor(private fb: FormBuilder, private router: Router) {
-    this.changePasswordForm = this.fb.group({
+    this.forgotPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
     });
   }
 
   sendEmail(): void {
-    if (this.changePasswordForm.valid) {
+    if (this.forgotPasswordForm.valid) {
       // Simulate sending email
       this.emailSent = true;
     }
