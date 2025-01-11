@@ -14,7 +14,9 @@ namespace Infrastructure.Repositories
         public async Task<ErrorOr<IEnumerable<Product>>> GetAllAsync(CancellationToken cancellationToken)
         {
             try
-            {
+            {   var products = await context.Products
+                    .Include(ICategoryRepository => ICategoryRepository.Category)
+                    .ToListAsync(cancellationToken);
                 return await context.Products.ToListAsync(cancellationToken);
             }
             catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
@@ -26,7 +28,7 @@ namespace Infrastructure.Repositories
             try
             {
                 var product = await context.Products
-                    .Include(e => e.Category)
+                    .Include(ICategoryRepository => ICategoryRepository.Category)
                     .Include(e => e.ShoppingCarts)
                     .Include(e => e.Wishlists)
                     .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
@@ -94,6 +96,7 @@ namespace Infrastructure.Repositories
             {
                 var products = await context.Products
                     .Where(e => e.Title == title)
+                    .Include(ICategoryRepository => ICategoryRepository.Category)
                     .ToListAsync(cancellationToken);
 
                 return products.Any() ? products : RepositoryErrors.NotFound.ToErrorOr<IEnumerable<Product>>();
@@ -101,7 +104,20 @@ namespace Infrastructure.Repositories
             catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
             catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
+        public async Task<ErrorOr<IEnumerable<Product>>> GetProductsByCategoryAsync(Guid categoryId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var products = await context.Products
+                    .Where(e => e.CategoryId == categoryId)
+                    .Include(ICategoryRepository => ICategoryRepository.Category)
+                    .ToListAsync(cancellationToken);
 
+                return products.Any() ? products : RepositoryErrors.NotFound.ToErrorOr<IEnumerable<Product>>();
+            }
+            catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
+            catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
+        }
         //get products by category
 
         public async Task<ErrorOr<Deleted>> DeleteAsync(Guid id, CancellationToken cancellationToken)

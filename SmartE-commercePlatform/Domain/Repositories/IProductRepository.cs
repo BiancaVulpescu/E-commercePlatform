@@ -9,7 +9,7 @@ namespace Domain.Repositories
         Task<ErrorOr<IEnumerable<Wishlist>>> GetAllWishlistsByProductIdAsync(Guid id, CancellationToken cancellationToken = default);
         Task<ErrorOr<IEnumerable<Product>>> GetAllProductsPaginatedAsync(int page, int pageSize, string? title, decimal? minPrice, decimal? maxPrice, CancellationToken cancellationToken = default);
         Task<ErrorOr<IEnumerable<Product>>> GetProductsByTitleAsync(string title, CancellationToken cancellationToken = default);
-        //Task<ErrorOr<IEnumerable<Product>>> GetProductsByCategoryTitleAsync(string title, CancellationToken cancellationToken = default);
+        Task<ErrorOr<IEnumerable<Product>>> GetProductsByCategoryAsync(Guid categoryId, CancellationToken cancellationToken = default);
         //Task<ErrorOr<IEnumerable<Product>>> GetProductsByCategoryIdAsync(string title, CancellationToken cancellationToken = default); ???
 
     }
