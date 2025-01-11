@@ -93,7 +93,7 @@ namespace Infrastructure.Repositories
             try
             {
                 var products = await context.Products
-                    .Where(e => e.Title == title)
+                    .Where(e => e.Title.StartsWith(title))
                     .ToListAsync(cancellationToken);
 
                 return products.Any() ? products : RepositoryErrors.NotFound.ToErrorOr<IEnumerable<Product>>();

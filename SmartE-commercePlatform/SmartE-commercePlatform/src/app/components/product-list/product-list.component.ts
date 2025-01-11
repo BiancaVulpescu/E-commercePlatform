@@ -3,9 +3,9 @@ import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
 import { Product } from '../../models/product.model';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { error } from 'console';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-list',
@@ -24,15 +24,17 @@ export class ProductListComponent implements OnInit {
   minPriceFilter: number | undefined;
   maxPriceFilter: number | undefined;
   isFilterPopupVisible: boolean = false;
+  isCategoryPopupVisible: boolean = false;
 
   constructor(
     private productService: ProductService, 
     private router: Router,
+    private fb: FormBuilder
   ) {
-   }
+    
+  }
   ngOnInit(): void {
     this.loadProducts();
-    // console.log('Component initialized: ProductListComponent');
   }
   loadProducts() : void{
     this.productService.getProducts(this.page, this.pageSize, this.titleFilter, this.minPriceFilter, this.maxPriceFilter).subscribe({
@@ -41,6 +43,18 @@ export class ProductListComponent implements OnInit {
         this.totalCount = response.length;
         console.log(this.products);
       }, 
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+  searchProducts(title: string): void {
+    this.productService.searchProducts(title).subscribe({
+      next: (response) => {
+        this.products = response;
+        this.totalCount = response.length;
+        console.log(this.products);
+      },
       error: (error) => {
         console.error(error);
       }
@@ -79,6 +93,9 @@ export class ProductListComponent implements OnInit {
   }
   toggleFilterPopup(): void {
     this.isFilterPopupVisible = !this.isFilterPopupVisible;
+  }
+  toggleCategoryPopup(): void{
+    this.isCategoryPopupVisible = !this.isCategoryPopupVisible;
   }
     
 }
