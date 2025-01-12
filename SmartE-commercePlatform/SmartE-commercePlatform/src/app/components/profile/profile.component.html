@@ -1,0 +1,18 @@
+<div class="profile-container">
+    <div class="profile-details">
+      <h1>Profile Details</h1>
+      <div class="detail">
+        <label>Email:</label>
+        <span>{{ user.email }}</span>
+      </div>
+      <div class="detail">
+        <label>Password:</label>
+        <span>{{ user.password }}</span>
+      </div>
+      <button (click)="navigateToEditProfile()">Edit Details</button>
+    </div>
+    <div class="orders">
+      <h2>My Orders</h2>
+      <!-- Orders list will be implemented later -->
+    </div>
+  </div>

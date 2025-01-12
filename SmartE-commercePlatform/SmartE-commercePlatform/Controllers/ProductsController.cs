@@ -64,12 +64,12 @@ namespace SmartE_commercePlatform.Controllers
                           productDtos => Ok(productDtos),
                           error => BadRequest(error)
                       );
-        }
-        [HttpGet("by-title/{title}")]
-        //[Authorize]
-        public async Task<IActionResult> GetProductsByTitle([FromRoute] string title, [FromQuery] int page = 1, [FromQuery] int pageSize = 5)
+
+        [HttpGet("searchbox/{title}")]
+        [Authorize]
+        public async Task<IActionResult> GetProductsByTitle([FromRoute] string title)
         {
-            return (await mediator.Send(new GetProductsByTitleQuery { Title = title, Page = page, PageSize = pageSize }))
+            return (await mediator.Send(new GetProductsByTitleQuery { Title = title }))
                       .Match<ActionResult>(
                           productDtos => Ok(productDtos),
                           error => BadRequest(error)

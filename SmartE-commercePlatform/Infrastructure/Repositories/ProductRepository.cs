@@ -95,7 +95,7 @@ namespace Infrastructure.Repositories
             try
             {
                 var products = await context.Products
-                    .Where(e => e.Title == title)
+                    .Where(e => e.Title.StartsWith(title))
                     .Include(ICategoryRepository => ICategoryRepository.Category)
                     .ToListAsync(cancellationToken);
 

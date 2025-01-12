@@ -49,4 +49,7 @@ export class ProductService {
   public predictPrice(productData: { title: string; description: string }): Observable<number> {
     return this.http.post<number>(`${this.predictionApiURL}/predict`, productData);
   }
+  public searchProducts(title: string): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiURL}/searchbox/${title}`);
+  }
 }

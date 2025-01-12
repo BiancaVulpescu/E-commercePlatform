@@ -1,5 +1,6 @@
 using Application.Use_Cases.Authentication.Commands;
 using Application.Use_Cases.Authentication.DTOs;
+using Application.Use_Cases.Authentication.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -72,6 +73,28 @@ namespace SmartE_commercePlatform.Controllers
                     _ => NoContent(),
                     errors => BadRequest(errors)
                 );
+        }
+
+        [HttpPost("profile")]
+        public async Task<IActionResult> GetUserProfile([FromBody] GetUserProfileQuery query)
+        {
+            var result = await mediator.Send(query);
+
+            return result.Match(
+                userProfile => Ok(userProfile),
+                errors => Problem(errors.First().Description)
+            );
+        }
+
+        [HttpPost("cartsId")]
+        public async Task<IActionResult> GetUserCartsId([FromBody] GetUserCartsIdQuery query)
+        {
+            var result = await mediator.Send(query);
+
+            return result.Match(
+                cartsId => Ok(cartsId),
+                errors => Problem(errors.First().Description)
+            );
         }
     }
 }
