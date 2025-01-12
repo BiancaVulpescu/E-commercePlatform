@@ -63,5 +63,15 @@ namespace SmartE_commercePlatform.Controllers
                     errors => BadRequest(errors)
                 );
         }
+
+        [HttpPut("changepassword")]
+        public async Task<ActionResult> ChangePassword([FromBody] ChangeUserPasswordCommand command)
+        {
+            return (await mediator.Send(command))
+                .Match<ActionResult>(
+                    _ => NoContent(),
+                    errors => BadRequest(errors)
+                );
+        }
     }
 }

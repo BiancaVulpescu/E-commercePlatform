@@ -141,5 +141,32 @@ namespace Identity.Repositories
             catch (OperationCanceledException) { return AuthenticationErrors.Cancelled; }
             catch (Exception ex) { return AuthenticationErrors.Unknown(ex); }
         }
+        public async Task<ErrorOr<Success>> ChangeUserPassword(Guid tokenId, string currentPassword, string newPassword, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var refreshToken = await context.RefreshTokens.FindAsync([tokenId], cancellationToken);
+                if (refreshToken == null)
+                {
+                    return AuthenticationErrors.InvalidCredentials;
+                }
+                var user = await context.Users.FindAsync([refreshToken.UserId], cancellationToken);
+                if (user == null || !BCrypt.Net.BCrypt.Verify(currentPassword, user.PasswordHash))
+                {
+                    return AuthenticationErrors.InvalidCredentials;
+                }
+                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
+                await context.SaveChangesAsync(cancellationToken);
+                return Result.Success;
+            }
+            catch (OperationCanceledException)
+            { 
+                return AuthenticationErrors.Cancelled; 
+            }
+            catch (Exception ex)
+            {
+                return AuthenticationErrors.Unknown(ex);
+            }
+        }
     }
 }

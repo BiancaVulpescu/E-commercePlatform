@@ -77,6 +77,17 @@ namespace SmartE_commercePlatform.Controllers
                       );
         }
 
+        [HttpGet("by-category/{categoryId}")]
+        [Authorize]
+        public async Task<IActionResult> GetProductsByCategory([FromRoute] Guid categoryId, [FromQuery] int page = 1, [FromQuery] int pageSize = 5)
+        {
+            return (await mediator.Send(new GetProductsByCategoryQuery { CategoryId = categoryId, Page = page, PageSize = pageSize }))
+                      .Match<ActionResult>(
+                          productDtos => Ok(productDtos),
+                          error => BadRequest(error)
+                      );
+        }
+
         [HttpDelete("{id:guid}")]
         [Authorize]
         public async Task<ActionResult> DeleteProduct([FromRoute] Guid id)
