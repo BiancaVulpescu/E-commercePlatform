@@ -1,7 +1,5 @@
 ﻿using Application.Use_Cases.Authentication.Commands;
-using Application.Use_Cases.Authentication.DTOs;
 using AutoMapper;
-using Domain.Entities;
 using Domain.Repositories;
 using ErrorOr;
 using MediatR;

@@ -7,15 +7,15 @@ using MediatR;
 
 namespace Application.Use_Cases.QueryHandlers
 {
-    public class GetAllShoppingCartsByProductIdQueryHandler(IProductRepository repository, IMapper mapper) : IRequestHandler<GetAllShoppingCartsByProductIdQuery, ErrorOr<IEnumerable<ShoppingCartDtoMinimal>>>
+    public class GetAllShoppingCartsByProductIdQueryHandler(IProductRepository repository, IMapper mapper) : IRequestHandler<GetAllShoppingCartsByProductIdQuery, ErrorOr<IEnumerable<ShoppingCartProductDtoSC>>>
     {
         private readonly IProductRepository repository = repository;
         private readonly IMapper mapper = mapper;
 
-        public async Task<ErrorOr<IEnumerable<ShoppingCartDtoMinimal>>> Handle(GetAllShoppingCartsByProductIdQuery request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<IEnumerable<ShoppingCartProductDtoSC>>> Handle(GetAllShoppingCartsByProductIdQuery request, CancellationToken cancellationToken)
         {
             return (await repository.GetAllShoppingCartsByProductIdAsync(request.Id, cancellationToken))
-                .Then(mapper.Map<IEnumerable<ShoppingCartDtoMinimal>>);
+                .Then(mapper.Map<IEnumerable<ShoppingCartProductDtoSC>>);
         }
     }
 }

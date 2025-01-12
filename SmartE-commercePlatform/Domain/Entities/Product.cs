@@ -10,6 +10,8 @@
         public Category? Category { get; set; }
         public List<ShoppingCart> ShoppingCarts { get; set; } = [];
         public List<ShoppingCartProduct> ShoppingCartProducts { get; set; } = [];
+        public List<Order> Orders { get; set; } = [];
+        public List<OrderProduct> OrderProducts { get; set; } = [];
         public List<Wishlist> Wishlists { get; set; } = [];
     }
 }

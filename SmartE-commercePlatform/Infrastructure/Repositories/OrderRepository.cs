@@ -7,50 +7,50 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    public class ShoppingCartRepository(ApplicationDbContext context) : IShoppingCartRepository
+    public class OrderRepository(ApplicationDbContext context) : IOrderRepository
     {
         private readonly ApplicationDbContext context = context;
 
-        public async Task<ErrorOr<IEnumerable<ShoppingCart>>> GetAllAsync(CancellationToken cancellationToken)
+        public async Task<ErrorOr<IEnumerable<Order>>> GetAllAsync(CancellationToken cancellationToken)
         {
             try
             {
-                return await context.ShoppingCarts.ToListAsync(cancellationToken);
+                return await context.Orders.ToListAsync(cancellationToken);
             }
             catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
             catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
 
-        public async Task<ErrorOr<ShoppingCart>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Order>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             try
             {
-                var shoppingCart = await context.ShoppingCarts
+                var order = await context.Orders
                     .Include(e => e.Products)
                     .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
-                return shoppingCart ?? RepositoryErrors.NotFound.ToErrorOr<ShoppingCart>();
+                return order ?? RepositoryErrors.NotFound.ToErrorOr<Order>();
             }
             catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
             catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
 
-        public async Task<ErrorOr<Guid>> AddAsync(ShoppingCart shoppingCart, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Guid>> AddAsync(Order order, CancellationToken cancellationToken)
         {
             try
             {
-                context.ShoppingCarts.Add(shoppingCart);
+                context.Orders.Add(order);
                 await context.SaveChangesAsync(cancellationToken);
-                return shoppingCart.Id;
+                return order.Id;
             }
             catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
             catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
 
-        public async Task<ErrorOr<Updated>> UpdateAsync(ShoppingCart shoppingCart, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Updated>> UpdateAsync(Order order, CancellationToken cancellationToken)
         {
             try
             {
-                context.Entry(shoppingCart).State = EntityState.Modified;
+                context.Entry(order).State = EntityState.Modified;
                 await context.SaveChangesAsync(cancellationToken);
                 return Result.Updated;
             }
@@ -62,10 +62,10 @@ namespace Infrastructure.Repositories
         {
             try
             {
-                var shoppingCart = await context.ShoppingCarts.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
-                if (shoppingCart is not null)
+                var order = await context.Orders.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+                if (order is not null)
                 {
-                    context.Remove(shoppingCart);
+                    context.Remove(order);
                     await context.SaveChangesAsync(cancellationToken);
                 }
                 return Result.Deleted;
@@ -74,39 +74,39 @@ namespace Infrastructure.Repositories
             catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
 
-        public async Task<ErrorOr<IEnumerable<ShoppingCartProduct>>> GetAllProductsByShoppingCartIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<ErrorOr<IEnumerable<OrderProduct>>> GetAllProductsByOrderIdAsync(Guid id, CancellationToken cancellationToken)
         {
             try
             {
-                var shoppingCart = await context.ShoppingCarts
-                    .Include(e => e.ShoppingCartProducts)
+                var order = await context.Orders
+                    .Include(e => e.OrderProducts)
                     .Include(e => e.Products)
                     .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
-                return shoppingCart?.ShoppingCartProducts ?? RepositoryErrors.NotFound.ToErrorOr<IEnumerable<ShoppingCartProduct>>();
+                return order?.OrderProducts ?? RepositoryErrors.NotFound.ToErrorOr<IEnumerable<OrderProduct>>();
             }
             catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
             catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
 
-        public async Task<ErrorOr<Updated>> AddProductToShoppingCartAsync(Guid shoppingCartId, Guid productId, uint quantity, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Updated>> AddProductToOrderAsync(Guid orderId, Guid productId, uint quantity, CancellationToken cancellationToken)
         {
             try
             {
-                var shoppingCart = await context.ShoppingCarts
-                    .Include(e => e.ShoppingCartProducts)
-                    .FirstOrDefaultAsync(e => e.Id == shoppingCartId, cancellationToken);
+                var order = await context.Orders
+                    .Include(e => e.OrderProducts)
+                    .FirstOrDefaultAsync(e => e.Id == orderId, cancellationToken);
                 var product = await context.Products.FirstOrDefaultAsync(e => e.Id == productId, cancellationToken);
-                if (product is not null && shoppingCart is not null) 
+                if (product is not null && order is not null)
                 {
-                    if (shoppingCart.ShoppingCartProducts.FirstOrDefault(sp => sp.ProductId == product.Id) is null)
+                    if (order.OrderProducts.FirstOrDefault(op => op.ProductId == product.Id) is null)
                     {
-                        shoppingCart.ShoppingCartProducts.Add(new ShoppingCartProduct
+                        order.OrderProducts.Add(new OrderProduct
                         {
-                            ShoppingCartId = shoppingCartId,
+                            OrderId = orderId,
                             ProductId = productId,
                             Quantity = quantity,
                         });
-                        context.Update(shoppingCart);
+                        context.Update(order);
                         await context.SaveChangesAsync(cancellationToken);
                     }
                     return Result.Updated;
@@ -117,19 +117,19 @@ namespace Infrastructure.Repositories
             catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
 
-        public async Task<ErrorOr<Deleted>> DeleteProductFromShoppingCartAsync(Guid shoppingCartId, Guid productId, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Deleted>> DeleteProductFromOrderAsync(Guid orderId, Guid productId, CancellationToken cancellationToken)
         {
             try
             {
-                var shoppingCart = await context.ShoppingCarts
-                    .Include(e => e.ShoppingCartProducts)
-                    .FirstOrDefaultAsync(e => e.Id == shoppingCartId, cancellationToken);
-                var shoppingCartProduct = shoppingCart?.ShoppingCartProducts.FirstOrDefault(e => e.ProductId == productId);
-                if (shoppingCartProduct is not null)
+                var order = await context.Orders
+                    .Include(e => e.OrderProducts)
+                    .FirstOrDefaultAsync(e => e.Id == orderId, cancellationToken);
+                var orderProduct = order?.OrderProducts.FirstOrDefault(e => e.ProductId == productId);
+                if (orderProduct is not null)
                 {
-                    if (shoppingCart!.ShoppingCartProducts.Remove(shoppingCartProduct))
+                    if (order!.OrderProducts.Remove(orderProduct))
                     {
-                        context.Update(shoppingCart);
+                        context.Update(order);
                         await context.SaveChangesAsync(cancellationToken);
                     }
                     return Result.Deleted;
