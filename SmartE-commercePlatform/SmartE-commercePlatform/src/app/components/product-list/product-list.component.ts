@@ -11,12 +11,12 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css',
-  standalone:true,
+  standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule]
 })
 export class ProductListComponent implements OnInit {
 
-  products: Product[]=[];
+  products: Product[] = [];
   page: number = 1;
   pageSize: number = 5;
   totalCount: number = 0;
@@ -25,29 +25,31 @@ export class ProductListComponent implements OnInit {
   maxPriceFilter: number | undefined;
   isFilterPopupVisible: boolean = false;
   isCategoryPopupVisible: boolean = false;
+  isCreateOptionsVisible: boolean = false;
 
   constructor(
-    private productService: ProductService, 
+    private productService: ProductService,
     private router: Router,
     private fb: FormBuilder
-  ) {
-    
-  }
+  ) {}
+
   ngOnInit(): void {
     this.loadProducts();
   }
-  loadProducts() : void{
+
+  loadProducts(): void {
     this.productService.getProducts(this.page, this.pageSize, this.titleFilter, this.minPriceFilter, this.maxPriceFilter).subscribe({
       next: (response) => {
-        this.products= response;
+        this.products = response;
         this.totalCount = response.length;
         console.log(this.products);
-      }, 
+      },
       error: (error) => {
         console.error(error);
       }
     });
   }
+
   searchProducts(title: string): void {
     this.productService.searchProducts(title).subscribe({
       next: (response) => {
@@ -60,42 +62,64 @@ export class ProductListComponent implements OnInit {
       }
     });
   }
+
   applyFilters(): void {
     this.page = 1;
     this.loadProducts();
     this.toggleFilterPopup();
   }
-  
-  navigateToCreate() {
+
+  navigateToCreateProduct() {
     this.router.navigate(['products/create']);
   }
+
+  navigateToCreateCategory() {
+    // Implement navigation to create category page
+  }
+
+  navigateToProfile() {
+    this.router.navigate(['/profile']);
+  }
+
+  navigateToWishlist() {
+    // Implement navigation to wishlist page
+  }
+
+  navigateToCart() {
+    // Implement navigation to cart page
+  }
+
   navigateToUpdate(productId: string) {
     this.router.navigate(['products/update', productId]);
   }
+
   navigateToDetail(productId: string) {
     this.router.navigate(['products/detail', productId]);
   }
 
-  nextPage() : void{
-    console.log(this.totalCount)
-    if(this.totalCount = this.pageSize){
-      console.log(this.products);
+  nextPage(): void {
+    if (this.totalCount === this.pageSize) {
       this.page++;
       this.loadProducts();
     }
-
   }
-  previousPage(): void{
+
+  previousPage(): void {
     if (this.page > 1) {
       this.page--;
       this.loadProducts();
     }
   }
+
   toggleFilterPopup(): void {
     this.isFilterPopupVisible = !this.isFilterPopupVisible;
   }
-  toggleCategoryPopup(): void{
+
+  toggleCategoryPopup(): void {
     this.isCategoryPopupVisible = !this.isCategoryPopupVisible;
   }
-    
+
+  toggleCreateOptions(): void {
+    this.isCreateOptionsVisible = !this.isCreateOptionsVisible;
+  }
 }
