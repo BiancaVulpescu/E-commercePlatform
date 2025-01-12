@@ -111,7 +111,7 @@
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    width: 100%; /* Width based on content */
+    width: fit-content; /* Width based on content */
 }
 
 .create-option {
@@ -340,7 +340,7 @@
   
   @media (max-width: 950px) {
     .create-options {
-        width: 100%; /* Full width on smaller screens */
+        width: fit-content; /* Full width on smaller screens */
     }
     .top-nav-bar {
         flex-direction: row; /* Keep logo and buttons in a row */
@@ -434,7 +434,6 @@
     }
 
     .create-button-container {
-        width: 100%;
         order: 2; /* Keep the create button below nav buttons */
         display: flex; /* Ensure it's a flex container */
         justify-content: center; /* Center create button */
@@ -468,6 +467,6 @@
     }
 
     .create-options {
-        width: 100%; /* Full width for create options */
+        width: fit-content; /* Full width for create options */
     }
 }
