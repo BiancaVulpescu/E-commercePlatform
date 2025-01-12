@@ -66,15 +66,16 @@ namespace SmartE_commercePlatform.Controllers
                           error => BadRequest(error)
                       );
         }
+
         [HttpGet("searchbox/{title}")]
         [Authorize]
         public async Task<IActionResult> GetProductsByTitle([FromRoute] string title)
         {
             return (await mediator.Send(new GetProductsByTitleQuery { Title = title }))
-                      .Match<ActionResult>(
-                          productDtos => Ok(productDtos),
-                          error => BadRequest(error)
-                      );
+                        .Match<ActionResult>(
+                            productDtos => Ok(productDtos),
+                            error => BadRequest(error)
+                        );
         }
 
         [HttpGet("by-category/{categoryId}")]
@@ -82,10 +83,10 @@ namespace SmartE_commercePlatform.Controllers
         public async Task<IActionResult> GetProductsByCategory([FromRoute] Guid categoryId, [FromQuery] int page = 1, [FromQuery] int pageSize = 5)
         {
             return (await mediator.Send(new GetProductsByCategoryQuery { CategoryId = categoryId, Page = page, PageSize = pageSize }))
-                      .Match<ActionResult>(
-                          productDtos => Ok(productDtos),
-                          error => BadRequest(error)
-                      );
+                        .Match<ActionResult>(
+                            productDtos => Ok(productDtos),
+                            error => BadRequest(error)
+                        );
         }
 
         [HttpDelete("{id:guid}")]
@@ -101,10 +102,10 @@ namespace SmartE_commercePlatform.Controllers
 
         [HttpGet("{id:guid}/shoppingcarts")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<ShoppingCartDtoMinimal>>> GetAllShoppingCartsByProductId([FromRoute] Guid id)
+        public async Task<ActionResult<IEnumerable<ShoppingCartProductDtoSC>>> GetAllShoppingCartsByProductId([FromRoute] Guid id)
         {
             return (await mediator.Send(new GetAllShoppingCartsByProductIdQuery { Id = id }))
-                .Match<ActionResult<IEnumerable<ShoppingCartDtoMinimal>>>(
+                .Match<ActionResult<IEnumerable<ShoppingCartProductDtoSC>>>(
                     shoppingCartDtos => Ok(shoppingCartDtos),
                     error => BadRequest(error)
                 );

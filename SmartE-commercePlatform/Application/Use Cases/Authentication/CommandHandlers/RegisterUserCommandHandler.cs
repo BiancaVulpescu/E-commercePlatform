@@ -33,8 +33,8 @@ namespace Application.Use_Cases.Authentication.CommandHandlers
                 return result;
             }
 
-            var wishlist = new Wishlist { Id = user.Id };
-            var shoppingCart = new ShoppingCart { Id = user.Id };
+            var wishlist = new Wishlist { Id = user.CartsId };
+            var shoppingCart = new ShoppingCart { Id = user.CartsId };
 
             await wishlistRepository.AddAsync(wishlist, cancellationToken);
             await shoppingCartRepository.AddAsync(shoppingCart, cancellationToken);

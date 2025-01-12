@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Use_Cases.Queries
 {
-    public class GetAllShoppingCartsByProductIdQuery : IRequest<ErrorOr<IEnumerable<ShoppingCartProductDtoSC>>>
+    public class GetOrderByIdQuery : IRequest<ErrorOr<OrderDto>>
     {
         public Guid Id { get; set; }
     }

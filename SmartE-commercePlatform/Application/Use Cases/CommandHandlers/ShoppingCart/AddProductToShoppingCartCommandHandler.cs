@@ -11,7 +11,7 @@ namespace Application.Use_Cases.CommandHandlers
 
         public async Task<ErrorOr<Updated>> Handle(AddProductToShoppingCartCommand request, CancellationToken cancellationToken)
         {
-            return await repository.AddProductToShoppingCartAsync(request.ShoppingCartId, request.ProductId, cancellationToken);
+            return await repository.AddProductToShoppingCartAsync(request.ShoppingCartId, request.ProductId, request.Quantity, cancellationToken);
         }
     }
 }
