@@ -136,14 +136,14 @@ namespace Infrastructure.Repositories
             catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
 
-        public async Task<ErrorOr<IEnumerable<ShoppingCart>>> GetAllShoppingCartsByProductIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<ErrorOr<IEnumerable<ShoppingCartProduct>>> GetAllShoppingCartsByProductIdAsync(Guid id, CancellationToken cancellationToken)
         {
             try
             {
                 var product = await context.Products
-                    .Include(e => e.ShoppingCarts)
+                    .Include(e => e.ShoppingCartProducts)
                     .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
-                return product?.ShoppingCarts ?? RepositoryErrors.NotFound.ToErrorOr<IEnumerable<ShoppingCart>>();
+                return product?.ShoppingCartProducts ?? RepositoryErrors.NotFound.ToErrorOr<IEnumerable<ShoppingCartProduct>>();
             }
             catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
             catch (Exception ex) { return RepositoryErrors.Unknown(ex); }

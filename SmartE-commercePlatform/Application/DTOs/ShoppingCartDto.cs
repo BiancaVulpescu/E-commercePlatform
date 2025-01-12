@@ -3,6 +3,6 @@
     public class ShoppingCartDto
     {
         public Guid Id { get; set; }
-        public List<ProductDtoMinimal> Products { get; set; } = [];
+        public List<ShoppingCartProductDtoP> ShoppingCartProducts { get; set; } = [];
     }
 }
