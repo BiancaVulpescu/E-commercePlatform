@@ -47,8 +47,7 @@ namespace Infrastructure.Persistence
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id)
                     .HasColumnType("uuid")
-                    .HasDefaultValueSql(UuidGenerationFunction)
-                    .ValueGeneratedOnAdd();
+                    .ValueGeneratedNever();
                 entity.HasMany(e => e.Products)
                     .WithMany(e => e.Wishlists);
             });
@@ -57,10 +56,9 @@ namespace Infrastructure.Persistence
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id)
                     .HasColumnType("uuid")
-                    .HasDefaultValueSql(UuidGenerationFunction)
-                    .ValueGeneratedOnAdd();
+                    .ValueGeneratedNever();
                 entity.HasMany(e => e.Products)
-                    .WithMany(e => e.ShoppingCarts)
+                    .WithMany(e => e.ShoppingCarts) 
                     .UsingEntity<ShoppingCartProduct>(/*TODO: j => j.Property(e => e.Quantity)*/);
              });
 
