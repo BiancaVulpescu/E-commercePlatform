@@ -2,71 +2,77 @@
     <div class="product-list-page">
         <div class="top-nav-bar-container">
             <div class="top-nav-bar">
-                <div class="page-title">
-                    <img src="smart-logo.png" alt="Products" class="logo-icon">
-                </div>
-                <app-search-box (searchResults)="onSearchResults($event)" (productSelected)="onProductSelected($event)"></app-search-box>
+              <div class="page-title">
+                <img src="smart-logo.png" alt="Products" class="logo-icon">
+              </div>
+              <div class="search-box-container">
+                <form>
+                  <input formControlName="search" placeholder="Search products..." class="search-box" />
+                </form>
+              </div>
+              <app-search-box (searchResults)="onSearchResults($event)" (productSelected)="onProductSelected($event)"></app-search-box>
+              <div class="nav-buttons-container">
+                <button class="nav-button" (click)="navigateToProfile()">
+                  <img src="profile.png" alt="Profile" class="nav-icon">
+                  <span class="nav-text">Profile</span>
+                </button>
+                <button class="nav-button" (click)="navigateToWishlist()">
+                  <img src="wishlist.png" alt="Wishlist" class="nav-icon">
+                  <span class="nav-text">Wishlist</span>
+                </button>
+                <button class="nav-button" (click)="navigateToCart()">
+                  <img src="shopping-cart.png" alt="Cart" class="nav-icon">
+                  <span class="nav-text">Cart</span>
+                </button>
                 <div class="create-button-container">
-                    <button class="create-button" (click)="navigateToCreate()">
-                        <img src="create.png" alt="Back to Products" class="create-icon">
-                        <div>
-                            Create New Product
-                        </div>
+                    <button class="nav-button" (click)="toggleCreateOptions()">
+                        <img src="create.png" alt="Create" class="create-icon">
+                        <span class="nav-text">Create</span>
                     </button>
-                    <button class="create-button" (click)="navigateToCreate()">
-                        <img src="create.png" alt="Back to Products" class="create-icon">
-                        <div>
-                            Create New Category
-                        </div>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        
-        <div *ngIf="isFilterPopupVisible" class="filter-popup">
-            <div class="filter-popup-content">
-                <button class="close-button" (click)="toggleFilterPopup()">X</button>
-                <div class="filters">
-                    <input type="text" [(ngModel)]="titleFilter" placeholder="Title">
-                    <input type="number" [(ngModel)]="minPriceFilter" placeholder="Min Price" min="0">
-                    <input type="number" [(ngModel)]="maxPriceFilter" placeholder="Max Price" min="0">
-                    <button (click)="applyFilters()">Apply Filters</button>
-                </div>
-            </div>
-        </div>
-        <!-- <div *ngIf="isCategoryPopupVisible" class="category-popup">
-            <div class="category-popup-content">
-                <button class="close-button" (click)="toggleCategoryPopup()">X</button>
-                <div class="categories">
-                    <div class="category" *ngFor="let category of categories" (click)="filterByCategory(category)">
-                        {{category}}
-                    </div>
-        </div> -->
-        <div class="product-list-container">
-            <div class="product-list">
-                <button class="filter-button" (click)="toggleFilterPopup()">Filters</button>
-                <button class="filter-button category-button" (click)="toggleCategoryPopup()">See Categories</button>
-                <div class="product-card" *ngFor="let product of products" (click)="navigateToDetail(product.id!)">
-                    <div class="product-image">
-                        <img src="shopping-cart.png" alt="{{product.title}}">
-                    </div>
-                    <div class="product-info">
-                        <div class="product-title">{{product.title}}</div>
-                        <div class="product-price">{{product.price | currency}}</div>
-                    </div>
-                    <div class="product-actions">
-                        <button (click)="navigateToUpdate(product.id!); $event.stopPropagation();">
-                            <img src="edit.png" alt="Edit">
-                        </button>
+                    <div *ngIf="isCreateOptionsVisible" class="create-options">
+                        <button class="create-option" (click)="navigateToCreateProduct()">Create New Product</button>
+                        <button class="create-option" (click)="navigateToCreateCategory()">Create New Category</button>
                     </div>
                 </div>
+              </div>
             </div>
+          </div>          
+      <div *ngIf="isFilterPopupVisible" class="filter-popup">
+        <div class="filter-popup-content">
+          <button class="close-button" (click)="toggleFilterPopup()">X</button>
+          <div class="filters">
+            <input type="text" [(ngModel)]="titleFilter" placeholder="Title">
+            <input type="number" [(ngModel)]="minPriceFilter" placeholder="Min Price" min="0">
+            <input type="number" [(ngModel)]="maxPriceFilter" placeholder="Max Price" min="0">
+            <button (click)="applyFilters()">Apply Filters</button>
+          </div>
         </div>
-        <div class="pagination-controls">
-            <button (click)="previousPage()" [disabled]="page === 1">Previous</button>
-            <span>Page {{page}}</span>
-            <button (click)="nextPage()">Next</button>
+      </div>
+  
+      <div class="product-list-container">
+        <div class="product-list">
+          <button class="filter-button" (click)="toggleFilterPopup()">Filters</button>
+          <button class="filter-button category-button" (click)="toggleCategoryPopup()">See Categories</button>
+          <div class="product-card" *ngFor="let product of products" (click)="navigateToDetail(product.id!)">
+            <div class="product-image">
+              <img src="shopping-cart.png" alt="{{product.title}}">
+            </div>
+            <div class="product-info">
+              <div class="product-title">{{product.title}}</div>
+              <div class="product-price">{{product.price | currency}}</div>
+            </div>
+            <div class="product-actions">
+              <button (click)="navigateToUpdate(product.id!); $event.stopPropagation();">
+                <img src="edit.png" alt="Edit">
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="pagination-controls">
+        <button (click)="previousPage()" [disabled]="page === 1">Previous</button>
+        <span>Page {{page}}</span>
+        <button (click)="nextPage()">Next</button>
+      </div>
     </div>
-</div>
+  </div>
