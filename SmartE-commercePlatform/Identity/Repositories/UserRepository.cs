@@ -170,23 +170,24 @@ namespace Identity.Repositories
                 return AuthenticationErrors.Unknown(ex);
             }
         }
-        public async Task<ErrorOr<User>> GetUserProfile(Guid tokenId, CancellationToken cancellationToken = default)
+        public async Task<ErrorOr<UserDto>> GetUserProfile(Guid tokenId, CancellationToken cancellationToken = default)
         {
             try
             {
-                var refreshToken = await context.RefreshTokens.FindAsync(new object[] { tokenId }, cancellationToken);
-                if (refreshToken == null)
-                {
-                    return AuthenticationErrors.InvalidCredentials;
-                }
-
-                var user = await context.Users.FindAsync(new object[] { refreshToken.UserId }, cancellationToken);
+                var user = await context.Users.FirstOrDefaultAsync(u => u.RefreshTokens.Any(rt => rt.Id == tokenId), cancellationToken);
                 if (user == null)
                 {
                     return AuthenticationErrors.InvalidCredentials;
                 }
 
-                return user;
+                var userDto = new UserDto
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    PasswordHash = user.PasswordHash
+                };
+
+                return userDto;
             }
             catch (OperationCanceledException)
             {
@@ -197,6 +198,5 @@ namespace Identity.Repositories
                 return AuthenticationErrors.Unknown(ex);
             }
         }
-
     }
 }
