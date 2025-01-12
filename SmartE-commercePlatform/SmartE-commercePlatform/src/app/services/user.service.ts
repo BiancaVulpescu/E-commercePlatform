@@ -12,7 +12,7 @@ export class UserService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  private getAuthHeaders(): HttpHeaders {
+ /* private getAuthHeaders(): HttpHeaders {
     const token = this.authService.getAccessToken();
     if (!token) {
       throw new Error('Access token is missing'); // Handle this error more gracefully    
@@ -22,9 +22,19 @@ export class UserService {
       'Content-Type': 'application/json'
     });
   }
-
+*/
   getUserProfile(): Observable<UserProfile> {
-    const headers = this.getAuthHeaders();
+    this.authService.loadTokens();
+    const token = this.authService.getAccessToken();
+    if (!token) {
+      throw new Error('Access token is missing');
+    }
+    console.log('Token:', token);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    
     const tokenId = this.authService.getRefreshTokenId(); // Assuming the token ID is stored as the refresh token
 
     if (!tokenId) {
@@ -35,9 +45,9 @@ export class UserService {
     console.log('Request headers:', headers);
     console.log('Request tokenId:', tokenId);
 
-    const params = new HttpParams().set('tokenId', tokenId);
+   // const params = new HttpParams().set('tokenId', tokenId);
 
-    return this.http.get<UserProfile>(`${this.apiUrl}/profile`, { headers, params });
+    return this.http.post<UserProfile>(`${this.apiUrl}/profile`, { tokenId }, { headers});
   }
 
   /*updateUserProfile(user: UserProfile): Observable<any> {

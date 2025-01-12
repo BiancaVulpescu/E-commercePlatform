@@ -26,11 +26,6 @@ export class ProfileComponent implements OnInit {
       this.user.id = user.id;
       this.user.email = user.email;
       this.user.password = '*****'; // Mask the password
-    },
-    (error) => {
-      console.error('Error loading profile:', error);
-      alert('Failed to load profile. Please login again.');
-      this.router.navigate(['/login']);
     }
   );
   }
