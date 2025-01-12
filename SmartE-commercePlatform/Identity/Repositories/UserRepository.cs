@@ -25,7 +25,7 @@ namespace Identity.Repositories
             {
                 var existingUser = await context.Users.FirstOrDefaultAsync(u => u.Email == user.Email, cancellationToken);
                 if (existingUser == null || !BCrypt.Net.BCrypt.Verify(user.PasswordHash, existingUser.PasswordHash))
-                { 
+                {
                     return AuthenticationErrors.InvalidCredentials;
                 }
 
@@ -41,7 +41,8 @@ namespace Identity.Repositories
 
                 DateTime accessExpiresAt = DateTime.UtcNow.AddMinutes(15);
                 string accessToken = GenerateJWT(existingUser.Id, accessExpiresAt);
-                return new LoginResponse { 
+                return new LoginResponse
+                {
                     RefreshTokenId = refreshToken.Id,
                     RefreshToken = refreshSecret,
                     AccessToken = accessToken,
@@ -162,8 +163,8 @@ namespace Identity.Repositories
                 return Result.Success;
             }
             catch (OperationCanceledException)
-            { 
-                return AuthenticationErrors.Cancelled; 
+            {
+                return AuthenticationErrors.Cancelled;
             }
             catch (Exception ex)
             {
@@ -197,6 +198,31 @@ namespace Identity.Repositories
                 return AuthenticationErrors.Unknown(ex);
             }
         }
+        public async Task<ErrorOr<Guid>> GetUserCartsId(Guid tokenId, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var refreshToken = await context.RefreshTokens.FindAsync(new object[] { tokenId }, cancellationToken);
+                if (refreshToken == null)
+                {
+                    return AuthenticationErrors.InvalidCredentials;
+                }
+                var user = await context.Users.FindAsync(new object[] { refreshToken.UserId }, cancellationToken);
+                if (user == null)
+                {
+                    return AuthenticationErrors.InvalidCredentials;
+                }
+                return user.CartsId;
+            }
+            catch (OperationCanceledException)
+            {
+                return AuthenticationErrors.Cancelled;
+            }
+            catch (Exception ex)
+            {
+                return AuthenticationErrors.Unknown(ex);
+            }
 
+        }
     }
 }

@@ -58,7 +58,7 @@ namespace Infrastructure.Persistence
                     .HasColumnType("uuid")
                     .ValueGeneratedNever();
                 entity.HasMany(e => e.Products)
-                    .WithMany(e => e.ShoppingCarts) 
+                    .WithMany(e => e.ShoppingCarts)
                     .UsingEntity<ShoppingCartProduct>(/*TODO: j => j.Property(e => e.Quantity)*/);
              });
 
