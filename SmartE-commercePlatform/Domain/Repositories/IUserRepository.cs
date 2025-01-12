@@ -12,6 +12,7 @@ namespace Domain.Repositories
         Task<ErrorOr<Success>> Logout(Guid tokenId, string refreshSecret, CancellationToken cancellationToken = default);
         Task<ErrorOr<Success>> LogoutAll(Guid tokenId, string refreshSecret, CancellationToken cancellationToken = default);
         Task<ErrorOr<User>> GetUserProfile(Guid tokenId, CancellationToken cancellationToken = default);
+        Task<ErrorOr<Guid>> GetUserCartsId(Guid tokenId, CancellationToken cancellationToken = default);
 
     }
 }

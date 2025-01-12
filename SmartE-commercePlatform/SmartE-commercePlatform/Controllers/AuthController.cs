@@ -85,5 +85,16 @@ namespace SmartE_commercePlatform.Controllers
                 errors => Problem(errors.First().Description)
             );
         }
+
+        [HttpPost("cartsId")]
+        public async Task<IActionResult> GetUserCartsId([FromBody] GetUserCartsIdQuery query)
+        {
+            var result = await mediator.Send(query);
+
+            return result.Match(
+                cartsId => Ok(cartsId),
+                errors => Problem(errors.First().Description)
+            );
+        }
     }
 }
