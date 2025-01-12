@@ -9,6 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Application.DTOs;
+using Microsoft.ML;
 
 namespace Identity.Repositories
 {
@@ -168,5 +170,33 @@ namespace Identity.Repositories
                 return AuthenticationErrors.Unknown(ex);
             }
         }
+        public async Task<ErrorOr<User>> GetUserProfile(Guid tokenId, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var refreshToken = await context.RefreshTokens.FindAsync(new object[] { tokenId }, cancellationToken);
+                if (refreshToken == null)
+                {
+                    return AuthenticationErrors.InvalidCredentials;
+                }
+
+                var user = await context.Users.FindAsync(new object[] { refreshToken.UserId }, cancellationToken);
+                if (user == null)
+                {
+                    return AuthenticationErrors.InvalidCredentials;
+                }
+
+                return user;
+            }
+            catch (OperationCanceledException)
+            {
+                return AuthenticationErrors.Cancelled;
+            }
+            catch (Exception ex)
+            {
+                return AuthenticationErrors.Unknown(ex);
+            }
+        }
+
     }
 }
