@@ -48,12 +48,9 @@ export class AuthService {
     return null;
   }
   getRefreshTokenId(): string | null {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const token = localStorage.getItem('refreshTokenId');
-      console.log('getRefreshTokenId:', token);
-      return token;
-    }
-    return null;
+    const token = localStorage.getItem('refreshTokenId');
+    console.log('getRefreshTokenId:', token);
+    return token || null;
   }
   setRefreshToken(token: string): void {
     this._refreshToken = token;
@@ -97,15 +94,22 @@ export class AuthService {
   }
 
   refreshToken(): Observable<any> {
-    return this.http.post<any>('http://localhost:5109/api/Auth/refresh-token', {
-      _refreshToken: this.getRefreshToken()
-    }).pipe(
-      tap(response => {
+    const refreshToken = this.getRefreshToken();
+    if (!refreshToken) {
+      return throwError(() => new Error('Refresh token is missing'));
+    }
+  
+    return this.http.post<any>('http://localhost:5109/api/Auth/refresh-token', { refreshToken }).pipe(
+      tap((response) => {
         this.setAccessToken(response.accessToken);
         this.setRefreshToken(response.refreshToken);
+      }),
+      catchError((error) => {
+        console.error('Failed to refresh token:', error);
+        return throwError(() => error);
       })
     );
-  }
+  }  
 
   logout(): void {
     this.accessToken = null;
