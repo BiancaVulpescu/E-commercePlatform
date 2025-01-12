@@ -1,6 +1,5 @@
-export interface User {
+export interface UserProfile {
     id: string;
     email: string;
     password: string;
-    confirmPassword?: string;
-  }
+  } 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../../models/user.model';
+import { UserProfile } from '../../models/profile.model';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -9,7 +9,8 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  user: User = {
+  user: UserProfile = {
+    id: '',
     email: '',
     password: '*****'
   };
@@ -22,10 +23,10 @@ export class ProfileComponent implements OnInit {
 
   loadUserProfile(): void {
     this.userService.getUserProfile().subscribe({
-      next: /*(user: User)*/(response) => {
-       // this.user = user;
-        //this.user.password = '*****'; // Mask the password
-        console.log(response);
+      next: (user: UserProfile) => {
+        this.user.id = user.id;
+        this.user.email = user.email;
+        this.user.password = '*****'; // Mask the password
       },
       error: (error) => {
         console.error('Error loading user profile:', error);

@@ -1,11 +1,17 @@
-﻿using Domain.Entities;
+﻿using MediatR;
 using ErrorOr;
-using MediatR;
+using Domain.Entities;
+using System.Security.Claims;
 
 namespace Application.Use_Cases.Authentication.Queries
 {
     public class GetUserProfileQuery : IRequest<ErrorOr<User>>
     {
-        public required Guid TokenId { get; set; }
+        public ClaimsPrincipal User { get; }
+
+        public GetUserProfileQuery(ClaimsPrincipal user)
+        {
+            User = user;
+        }
     }
 }

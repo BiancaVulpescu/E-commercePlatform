@@ -1,7 +1,9 @@
 using Application.Use_Cases.Authentication.Commands;
 using Application.Use_Cases.Authentication.DTOs;
 using Application.Use_Cases.Authentication.Queries;
+using Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SmartE_commercePlatform.Controllers
@@ -75,13 +77,45 @@ namespace SmartE_commercePlatform.Controllers
                 );
         }
 
-        [HttpPost("profile")]
+        /*[HttpPost("profile")]
         public async Task<IActionResult> GetUserProfile([FromBody] GetUserProfileQuery query)
         {
             var result = await mediator.Send(query);
 
             return result.Match(
                 userProfile => Ok(userProfile),
+                errors => Problem(errors.First().Description)
+            );
+        }*/
+        /*[HttpPost("profile")]
+        public async Task<IActionResult> GetUserProfile([FromBody] GetUserProfileQuery query)
+        {
+            var result = await mediator.Send(query);
+
+            return result.Match(
+                userProfile => Ok(new UserDto
+                {
+                    Id = userProfile.Id,
+                    Email = userProfile.Email,
+                    PasswordHash = userProfile.PasswordHash
+                }),
+                errors => Problem(errors.First().Description)
+            );
+        }*/
+        [HttpGet("profile")]
+        [Authorize]
+        public async Task<IActionResult> GetUserProfile()
+        {
+            var query = new GetUserProfileQuery(User);
+            var result = await mediator.Send(query);
+
+            return result.Match(
+                userProfile => Ok(new UserDto
+                {
+                    Id = userProfile.Id,
+                    Email = userProfile.Email,
+                    PasswordHash = userProfile.PasswordHash
+                }),
                 errors => Problem(errors.First().Description)
             );
         }

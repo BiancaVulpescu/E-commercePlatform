@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from '../models/user.model';
+import { UserProfile } from '../models/profile.model';
 import { AuthService } from './authentication.service';
 
 @Injectable({
@@ -20,15 +20,16 @@ export class UserService {
     });
   }
 
-  getUserProfile(): Observable<any> {
+  getUserProfile(): Observable<UserProfile> {
     const headers = this.getAuthHeaders();
-    const tokenId = this.authService.getRefreshToken(); // Assuming the token ID is stored as the refresh token
-    //console.log('Token ID:',);
-    return this.http.post<User>(`${this.apiUrl}/profile`, { tokenId });
+    console.log('Making request to:', `${this.apiUrl}/profile`);
+    console.log('Request headers:', headers);
+
+    return this.http.get<UserProfile>(`${this.apiUrl}/profile`, { headers });
   }
 
-  updateUserProfile(user: User): Observable<any> {
+  /*updateUserProfile(user: UserProfile): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.put(`${this.apiUrl}/profile`, user, { headers });
-  }
+  }*/
 }
