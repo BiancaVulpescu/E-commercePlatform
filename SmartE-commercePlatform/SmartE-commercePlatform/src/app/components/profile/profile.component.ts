@@ -10,7 +10,7 @@ import { UserService } from '../../services/user.service';
 })
 export class ProfileComponent implements OnInit {
   user: User = {
-    email: 'user@example.com',
+    email: '',
     password: '*****'
   };
 
@@ -21,9 +21,15 @@ export class ProfileComponent implements OnInit {
   }
 
   loadUserProfile(): void {
-    this.userService.getUserProfile().subscribe((user: User) => {
-      this.user = user;
-      this.user.password = '*****'; // Mask the password
+    this.userService.getUserProfile().subscribe({
+      next: /*(user: User)*/(response) => {
+       // this.user = user;
+        //this.user.password = '*****'; // Mask the password
+        console.log(response);
+      },
+      error: (error) => {
+        console.error('Error loading user profile:', error);
+      }
     });
   }
 

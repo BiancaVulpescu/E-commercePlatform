@@ -18,10 +18,11 @@ export class AuthService {
     afterNextRender(() => { 
       this.accessToken = localStorage.getItem('accessToken');
       this._refreshToken = localStorage.getItem('refreshToken');
-    })
+   })
   }
 
   getAccessToken(): string | null {
+   // return localStorage.getItem('accessToken');
     return this.accessToken;
   }
 
@@ -31,6 +32,8 @@ export class AuthService {
   }
 
   getRefreshToken(): string | null {
+    //return localStorage.getItem('refreshToken');
+
     return this._refreshToken;
   }
 

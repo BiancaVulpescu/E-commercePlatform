@@ -15,13 +15,16 @@ export class UserService {
   private getAuthHeaders(): HttpHeaders {
     const token = this.authService.getAccessToken();
     return new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
     });
   }
 
-  getUserProfile(): Observable<User> {
+  getUserProfile(): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.post<User>(`${this.apiUrl}/profile`, {}, { headers });
+    const tokenId = this.authService.getRefreshToken(); // Assuming the token ID is stored as the refresh token
+    //console.log('Token ID:',);
+    return this.http.post<User>(`${this.apiUrl}/profile`, { tokenId });
   }
 
   updateUserProfile(user: User): Observable<any> {
