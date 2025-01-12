@@ -3,15 +3,15 @@ import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
 import { Product } from '../../models/product.model';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { SearchBoxComponent } from '../search-box/search-box.component';
-
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css',
-  standalone:true,
+  standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, SearchBoxComponent]
 })
 export class ProductListComponent implements OnInit {
@@ -26,7 +26,6 @@ export class ProductListComponent implements OnInit {
   isFilterPopupVisible: boolean = false;
   isCategoryPopupVisible: boolean = false;
   isCreateOptionsVisible: boolean = false;
-  isInitialLoad: boolean = true;
 
   constructor(
     private productService: ProductService,
@@ -36,6 +35,19 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProducts();
+  }
+
+  loadProducts(): void {
+    this.productService.getProducts(this.page, this.pageSize, this.titleFilter, this.minPriceFilter, this.maxPriceFilter).subscribe({
+      next: (response) => {
+        this.products = response;
+        this.totalCount = response.length;
+        console.log(this.products);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 
   searchProducts(title: string): void {
@@ -49,26 +61,6 @@ export class ProductListComponent implements OnInit {
         console.error(error);
       }
     });
-  loadProducts() : void{
-      this.productService.getProducts(this.page, this.pageSize, this.titleFilter, this.minPriceFilter, this.maxPriceFilter).subscribe({
-        next: (response) => {
-          this.products= response;
-          this.totalCount = response.length;
-          console.log(this.products);
-          this.isInitialLoad = false;
-        }, 
-        error: (error) => {
-          console.error(error);
-        }
-      });
-  }
-  onSearchResults(results: Product[]):void {
-    console.log('Search results:', results);
-    this.products = results;
-    this.totalCount = results.length;
-  }
-  onProductSelected(product: Product): void {
-    this.router.navigate(['products/detail', product.id]);
   }
 
   applyFilters(): void {
@@ -129,5 +121,13 @@ export class ProductListComponent implements OnInit {
 
   toggleCreateOptions(): void {
     this.isCreateOptionsVisible = !this.isCreateOptionsVisible;
+  }
+  onSearchResults(results: Product[]):void {
+    console.log('Search results:', results);
+    this.products = results;
+    this.totalCount = results.length;
+  }
+  onProductSelected(product: Product): void {
+    this.router.navigate(['products/detail', product.id]);
   }
 }

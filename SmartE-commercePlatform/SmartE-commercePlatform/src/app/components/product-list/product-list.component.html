@@ -6,11 +6,8 @@
                 <img src="smart-logo.png" alt="Products" class="logo-icon">
               </div>
               <div class="search-box-container">
-                <form>
-                  <input formControlName="search" placeholder="Search products..." class="search-box" />
-                </form>
-              </div>
               <app-search-box (searchResults)="onSearchResults($event)" (productSelected)="onProductSelected($event)"></app-search-box>
+                </div>
               <div class="nav-buttons-container">
                 <button class="nav-button" (click)="navigateToProfile()">
                   <img src="profile.png" alt="Profile" class="nav-icon">
