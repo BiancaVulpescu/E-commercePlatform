@@ -88,6 +88,32 @@ namespace Infrastructure.Repositories
             catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
             catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
+        public async Task<ErrorOr<IEnumerable<Category>>> GetAllParentCategoriesAsync(CancellationToken cancellationToken)
+        {
+            try
+            {
+                var categories = await context.Categories
+                    .Where(e => e.ParentCategory == null)
+                    .ToListAsync(cancellationToken);
 
+                return categories.Any() ? categories : RepositoryErrors.NotFound.ToErrorOr<IEnumerable<Category>>();
+            }
+            catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
+            catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
+
+        }
+        public async Task<ErrorOr<IEnumerable<Category>>> GetByParentCategoryIdAsync(Guid ParentCategoryId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var categories = await context.Categories
+                    .Where(e => e.ParentCategoryId == ParentCategoryId)
+                    .ToListAsync(cancellationToken);
+
+                return categories.Any() ? categories : RepositoryErrors.NotFound.ToErrorOr<IEnumerable<Category>>();
+            }
+            catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
+            catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
+        }
     }
 }

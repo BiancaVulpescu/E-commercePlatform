@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Use_Cases.Queries.Category
 {
-    public class GetAllParentCategoriesQuery : IRequest<ErrorOr<IEnumerable<CategoryDto>>>
+    public class GetAllParentCategoriesQuery : IRequest<ErrorOr<IEnumerable<CategoryDtoMinimal>>>
     {
     }
 }
