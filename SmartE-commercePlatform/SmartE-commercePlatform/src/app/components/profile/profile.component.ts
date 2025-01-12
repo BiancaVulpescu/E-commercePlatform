@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserProfile } from '../../models/profile.model';
 import { UserService } from '../../services/user.service';
-
+import { AuthService } from '../../services/authentication.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -26,7 +26,13 @@ export class ProfileComponent implements OnInit {
       this.user.id = user.id;
       this.user.email = user.email;
       this.user.password = '*****'; // Mask the password
-    });
+    },
+    (error) => {
+      console.error('Error loading profile:', error);
+      alert('Failed to load profile. Please login again.');
+      this.router.navigate(['/login']);
+    }
+  );
   }
 
   navigateToEditProfile() {

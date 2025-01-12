@@ -9,6 +9,7 @@ import { catchError, tap } from 'rxjs/operators';
 export class AuthService {
   private accessToken: string | null = null;
   private _refreshToken: string | null = null;
+  private _refreshTokenId: string | null = null;
 
   constructor(private http: HttpClient) {
     this.loadTokens();
@@ -18,6 +19,7 @@ export class AuthService {
     if (typeof window !== 'undefined' && window.localStorage) {
       this.accessToken = localStorage.getItem('accessToken');
       this._refreshToken = localStorage.getItem('refreshToken');
+      this._refreshTokenId = localStorage.getItem('refreshTokenId');
     }
   }
 
@@ -45,11 +47,25 @@ export class AuthService {
     }
     return null;
   }
-
+  getRefreshTokenId(): string | null {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const token = localStorage.getItem('refreshTokenId');
+      console.log('getRefreshTokenId:', token);
+      return token;
+    }
+    return null;
+  }
   setRefreshToken(token: string): void {
     this._refreshToken = token;
     if (typeof window !== 'undefined' && window.localStorage) {
       localStorage.setItem('refreshToken', token);
+    }
+  }
+  
+  setRefreshTokenId(token: string): void {
+    this._refreshToken = token;
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('refreshTokenId', token);
     }
   }
 
@@ -59,6 +75,7 @@ export class AuthService {
         if (response.accessToken && response.refreshToken) {
           this.setAccessToken(response.accessToken);
           this.setRefreshToken(response.refreshToken);
+          this.setRefreshTokenId(response.refreshTokenId);
         } else {
           throw new Error('Invalid login response');
         }
