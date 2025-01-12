@@ -2,6 +2,7 @@ using Application.DTOs;
 using Application.Use_Cases.Commands;
 using Application.Use_Cases.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SmartE_commercePlatform.Controllers
@@ -13,7 +14,7 @@ namespace SmartE_commercePlatform.Controllers
         private readonly IMediator mediator = mediator;
 
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<ProductDtoMinimal>>> GetAllProducts()
         {
             return (await mediator.Send(new GetAllProductsQuery { }))
@@ -24,7 +25,7 @@ namespace SmartE_commercePlatform.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<ProductDto>> GetProductById([FromRoute] Guid id)
         {
             return (await mediator.Send(new GetProductByIdQuery { Id = id }))
@@ -35,7 +36,7 @@ namespace SmartE_commercePlatform.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<Guid>> CreateProduct([FromBody] CreateProductCommand command)
         {
             return (await mediator.Send(command))
@@ -46,7 +47,7 @@ namespace SmartE_commercePlatform.Controllers
         }
 
         [HttpPut("{id:guid}")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult> UpdateProduct([FromBody] UpdateProductCommand command, [FromRoute] Guid id)
         {
             return command.Id == id ? (await mediator.Send(command))
@@ -56,7 +57,7 @@ namespace SmartE_commercePlatform.Controllers
                 ) : BadRequest();
         }
         [HttpGet("paginated")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult> GetAllProductsPaginated([FromQuery] int page = 1, [FromQuery] int pageSize = 5, string? title = null, [FromQuery] decimal? minPrice = null, [FromQuery] decimal? maxPrice = null)
         {
             return (await mediator.Send(new GetAllProductsPaginatedQuery { Page = page, PageSize = pageSize, Title = title, MinPrice = minPrice, MaxPrice = maxPrice }))
@@ -64,31 +65,32 @@ namespace SmartE_commercePlatform.Controllers
                           productDtos => Ok(productDtos),
                           error => BadRequest(error)
                       );
+        }
 
         [HttpGet("searchbox/{title}")]
         [Authorize]
         public async Task<IActionResult> GetProductsByTitle([FromRoute] string title)
         {
             return (await mediator.Send(new GetProductsByTitleQuery { Title = title }))
-                      .Match<ActionResult>(
-                          productDtos => Ok(productDtos),
-                          error => BadRequest(error)
-                      );
+                        .Match<ActionResult>(
+                            productDtos => Ok(productDtos),
+                            error => BadRequest(error)
+                        );
         }
 
         [HttpGet("by-category/{categoryId}")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> GetProductsByCategory([FromRoute] Guid categoryId, [FromQuery] int page = 1, [FromQuery] int pageSize = 5)
         {
             return (await mediator.Send(new GetProductsByCategoryQuery { CategoryId = categoryId, Page = page, PageSize = pageSize }))
-                      .Match<ActionResult>(
-                          productDtos => Ok(productDtos),
-                          error => BadRequest(error)
-                      );
+                        .Match<ActionResult>(
+                            productDtos => Ok(productDtos),
+                            error => BadRequest(error)
+                        );
         }
 
         [HttpDelete("{id:guid}")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult> DeleteProduct([FromRoute] Guid id)
         {
             return (await mediator.Send(new DeleteProductCommand { Id = id }))
@@ -99,7 +101,7 @@ namespace SmartE_commercePlatform.Controllers
         }
 
         [HttpGet("{id:guid}/shoppingcarts")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<ShoppingCartProductDtoSC>>> GetAllShoppingCartsByProductId([FromRoute] Guid id)
         {
             return (await mediator.Send(new GetAllShoppingCartsByProductIdQuery { Id = id }))
@@ -110,7 +112,7 @@ namespace SmartE_commercePlatform.Controllers
         }
 
         [HttpGet("{id:guid}/wishlists")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<WishlistDtoMinimal>>> GetAllWishlistsByProductId([FromRoute] Guid id)
         {
             return (await mediator.Send(new GetAllShoppingCartsByProductIdQuery { Id = id }))
