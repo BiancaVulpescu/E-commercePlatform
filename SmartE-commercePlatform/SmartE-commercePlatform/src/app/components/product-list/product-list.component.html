@@ -1,22 +1,35 @@
 <div class="product-list-page-container">
     <div class="product-list-page">
-        <div class="top-nav-bar">
-            <div class="page-title">
-                Welcome to our E-commerce Platform!
-            </div>
-            <div class="create-button-container">
-                <button class="create-button" (click)="navigateToCreate()">
-                    <img src="create.png" alt="Back to Products" class="create-icon">
-                    <div>
-                        Create New Product
-                    </div>
-                </button>
+        <div class="top-nav-bar-container">
+            <div class="top-nav-bar">
+                <div class="page-title">
+                    <img src="smart-logo.png" alt="Products" class="logo-icon">
+                </div>
+                <div class="search-box-container">
+                    <form >
+                        <input formControlName="search" placeholder="Search products..." class="search-box" />
+                    </form>
+                </div>
+                <div class="create-button-container">
+                    <button class="create-button" (click)="navigateToCreate()">
+                        <img src="create.png" alt="Back to Products" class="create-icon">
+                        <div>
+                            Create New Product
+                        </div>
+                    </button>
+                    <button class="create-button" (click)="navigateToCreate()">
+                        <img src="create.png" alt="Back to Products" class="create-icon">
+                        <div>
+                            Create New Category
+                        </div>
+                    </button>
+                </div>
             </div>
         </div>
+
         
         <div *ngIf="isFilterPopupVisible" class="filter-popup">
             <div class="filter-popup-content">
-                
                 <button class="close-button" (click)="toggleFilterPopup()">X</button>
                 <div class="filters">
                     <input type="text" [(ngModel)]="titleFilter" placeholder="Title">
@@ -26,9 +39,18 @@
                 </div>
             </div>
         </div>
+        <!-- <div *ngIf="isCategoryPopupVisible" class="category-popup">
+            <div class="category-popup-content">
+                <button class="close-button" (click)="toggleCategoryPopup()">X</button>
+                <div class="categories">
+                    <div class="category" *ngFor="let category of categories" (click)="filterByCategory(category)">
+                        {{category}}
+                    </div>
+        </div> -->
         <div class="product-list-container">
             <div class="product-list">
                 <button class="filter-button" (click)="toggleFilterPopup()">Filters</button>
+                <button class="filter-button category-button" (click)="toggleCategoryPopup()">See Categories</button>
                 <div class="product-card" *ngFor="let product of products" (click)="navigateToDetail(product.id!)">
                     <div class="product-image">
                         <img src="shopping-cart.png" alt="{{product.title}}">

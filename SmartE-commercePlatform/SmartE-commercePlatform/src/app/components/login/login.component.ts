@@ -28,7 +28,7 @@ export class LoginComponent {
       const { email, password } = this.loginForm.value;
       this.authenticationService.login(email, password).subscribe({
         next: (response) => {
-          // console.log(response.accessToken);
+          console.log(response.accessToken);
           if (response.accessToken) {
             localStorage.setItem('accessToken', response.accessToken);  
             this.router.navigate(['/products']);
