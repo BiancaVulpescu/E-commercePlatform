@@ -8,9 +8,16 @@ namespace Application.Use_Cases.Authentication.CommandHandlers
 {
     public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, ErrorOr<Guid>>
     {
-        private readonly IUserRepository repository;
+        private readonly IUserRepository userRepository;
+        private readonly IWishlistRepository wishlistRepository;
+        private readonly IShoppingCartRepository shoppingCartRepository;
 
-        public RegisterUserCommandHandler(IUserRepository repository) => this.repository = repository;
+        public RegisterUserCommandHandler(IUserRepository userRepository, IWishlistRepository wishlistRepository, IShoppingCartRepository shoppingCartRepository)
+        {
+            this.userRepository = userRepository;
+            this.wishlistRepository = wishlistRepository;
+            this.shoppingCartRepository = shoppingCartRepository;
+        }
 
         public async Task<ErrorOr<Guid>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
@@ -20,7 +27,18 @@ namespace Application.Use_Cases.Authentication.CommandHandlers
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password)
             };
 
-            var result = await repository.Register(user, cancellationToken);
+            var result = await userRepository.Register(user, cancellationToken);
+            if (result.IsError)
+            {
+                return result;
+            }
+
+            var wishlist = new Wishlist { Id = user.Id };
+            var shoppingCart = new ShoppingCart { Id = user.Id };
+
+            await wishlistRepository.AddAsync(wishlist, cancellationToken);
+            await shoppingCartRepository.AddAsync(shoppingCart, cancellationToken);
+
             return result;
         }
     }
