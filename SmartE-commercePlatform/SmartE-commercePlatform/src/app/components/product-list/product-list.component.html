@@ -1,24 +1,32 @@
 <div class="product-list-page-container">
     <div class="product-list-page">
-        <div class="top-nav-bar">
-            <div class="page-title">
-                <img src="smart-e-commerce-logo.png" alt="Products" class="logo-icon">
-            </div>
-            <div class="create-button-container">
-                <button class="create-button" (click)="navigateToCreate()">
-                    <img src="create.png" alt="Back to Products" class="create-icon">
-                    <div>
-                        Create New Product
-                    </div>
-                </button>
-                <button class="create-button" (click)="navigateToCreate()">
-                    <img src="create.png" alt="Back to Products" class="create-icon">
-                    <div>
-                        Create New Category
-                    </div>
-                </button>
+        <div class="top-nav-bar-container">
+            <div class="top-nav-bar">
+                <div class="page-title">
+                    <img src="smart-logo.png" alt="Products" class="logo-icon">
+                </div>
+                <div class="search-box-container">
+                    <form >
+                        <input formControlName="search" placeholder="Search products..." class="search-box" />
+                    </form>
+                </div>
+                <div class="create-button-container">
+                    <button class="create-button" (click)="navigateToCreate()">
+                        <img src="create.png" alt="Back to Products" class="create-icon">
+                        <div>
+                            Create New Product
+                        </div>
+                    </button>
+                    <button class="create-button" (click)="navigateToCreate()">
+                        <img src="create.png" alt="Back to Products" class="create-icon">
+                        <div>
+                            Create New Category
+                        </div>
+                    </button>
+                </div>
             </div>
         </div>
+
         
         <div *ngIf="isFilterPopupVisible" class="filter-popup">
             <div class="filter-popup-content">
