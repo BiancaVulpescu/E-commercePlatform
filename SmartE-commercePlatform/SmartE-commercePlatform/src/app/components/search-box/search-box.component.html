@@ -1,0 +1,17 @@
+<div class="search-box-container">
+  <div class="search-box">
+    <div class="input-and-icon">
+      <form [formGroup]="searchForm" (keydown)="onKeydown($event)" (focusout)="onBlur()">
+        <input formControlName="search" placeholder="Search products..." class="search-box-input" />
+      </form>
+      <button type="button" class="search-icon-button" (click)="onIconClick()">
+        <img src="search-icon.png" alt="Search" class="search-icon">
+      </button>
+    </div>
+    <div *ngIf="searchResultsList.length > 0" class="dropdown">
+      <div *ngFor="let result of searchResultsList" class="dropdown-item" (click)="selectProduct(result)">
+        {{ result.title }}
+      </div>
+    </div>
+  </div>
+</div>
