@@ -1,6 +1,7 @@
 using Application.DTOs;
 using Application.Use_Cases.Commands;
 using Application.Use_Cases.Queries;
+using Application.Use_Cases.Queries.Category;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -74,6 +75,27 @@ namespace SmartE_commercePlatform.Controllers
             return (await mediator.Send(new DeleteCategoryCommand { Id = id }))
                 .Match<ActionResult>(
                     _ => NoContent(),
+                    error => BadRequest(error)
+                );
+        }
+
+        [HttpGet("parent-categories")]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<CategoryDtoMinimal>>> GetAllParentCategories()
+        {
+            return (await mediator.Send(new GetAllParentCategoriesQuery { }))
+                .Match<ActionResult>(
+                    categoryDtos => Ok(categoryDtos),
+                    error => BadRequest(error)
+                );
+        }
+        [HttpGet("subcategories/{ParentCategoryId:guid}")]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<CategoryDto>>> GetByParentCategoryIdAsync([FromRoute] Guid ParentCategoryId)
+        {
+            return (await mediator.Send(new GetCategoriesByParentIdQuery { ParentCategoryId = ParentCategoryId }))
+                .Match<ActionResult<IEnumerable<CategoryDto>>>(
+                    categoryDto => Ok(categoryDto),
                     error => BadRequest(error)
                 );
         }

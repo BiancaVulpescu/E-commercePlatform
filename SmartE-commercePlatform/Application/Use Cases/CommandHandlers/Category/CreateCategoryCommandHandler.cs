@@ -14,7 +14,9 @@ namespace Application.Use_Cases.CommandHandlers
 
         public async Task<ErrorOr<Guid>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
-            return await repository.AddAsync(mapper.Map<Category>(request), cancellationToken);
+            var category = new Category { Title = request.Title, ParentCategoryId = request.ParentCategoryId };
+            return await repository.AddAsync(mapper.Map<Category>(category), cancellationToken);
+
         }
     }
 }
