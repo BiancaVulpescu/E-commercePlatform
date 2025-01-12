@@ -6,6 +6,6 @@ namespace Application.Use_Cases.Authentication.Queries
 {
     public class GetUserProfileQuery : IRequest<ErrorOr<User>>
     {
-        public Guid TokenId { get; set; }
+        public required Guid TokenId { get; set; }
     }
 }

@@ -74,10 +74,10 @@ namespace SmartE_commercePlatform.Controllers
                     errors => BadRequest(errors)
                 );
         }
-        [HttpGet("profile/{tokenId}")]
-        public async Task<IActionResult> GetUserProfile(Guid tokenId)
+
+        [HttpPost("profile")]
+        public async Task<IActionResult> GetUserProfile([FromBody] GetUserProfileQuery query)
         {
-            var query = new GetUserProfileQuery { TokenId = tokenId };
             var result = await mediator.Send(query);
 
             return result.Match(

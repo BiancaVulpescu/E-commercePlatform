@@ -8,7 +8,7 @@ import { AuthService } from './authentication.service';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:5109/api/v1/Users';
+  private apiUrl = 'http://localhost:5109/api/Auth'; // Update this to your correct user API URL
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -21,7 +21,7 @@ export class UserService {
 
   getUserProfile(): Observable<User> {
     const headers = this.getAuthHeaders();
-    return this.http.get<User>(`${this.apiUrl}/profile`, { headers });
+    return this.http.post<User>(`${this.apiUrl}/profile`, {}, { headers });
   }
 
   updateUserProfile(user: User): Observable<any> {
