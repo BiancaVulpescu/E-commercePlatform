@@ -11,6 +11,21 @@
     </div>
     <form [formGroup]="productForm" (ngSubmit)="createProduct()">
       <div class="form-group">
+        <label for="category"> 
+            <div class="category-wrapper">
+              <div class="label-category">
+                <p> Category </p>
+              </div> 
+              <div *ngIf="selectedCategory" class="label-category" class="padding-5">
+                <p>Selected Category: {{ selectedCategory.title }}</p>
+              </div>
+            </div>
+
+        </label>
+        <button type="button" class="margin-top-5" (click)="openCategoryPopup()">Choose Category (optional)</button>
+        
+      </div>
+      <div class="form-group">
         <label for="title">Title</label>
         <input id="title" formControlName="title" />
         <div *ngIf="productForm.get('title')?.invalid && (productForm.get('title')?.dirty || productForm.get('title')?.touched)">
@@ -40,5 +55,30 @@
       <button type="submit" [disabled]="productForm.invalid">Create Product</button>
       <button type="button" (click)="navigateToPricePrediction()">Predict Price</button>
     </form>
+    <div *ngIf="isCategoryPopupVisible" class="category-popup">
+      <div class="category-popup-content">
+        <div class="pop-up-header">
+          <div class="title-pop-up-header">Choose a Category</div>
+          <div class="close-button-wrapper">
+            <div class="close-button" (click)="closeCategoryPopup()">X</div>
+          </div>
+        </div>
+        <ul>
+          <li *ngFor="let category of categories" (click)="loadSubcategories(category.id)">
+            {{ category.title }}
+            <div *ngIf="selectedCategoryId == category.id" class="subcategory-list">
+              <ul>
+                <li *ngFor="let subcategory of subcategories" (click)="selectCategory(subcategory)">
+                  {{ subcategory.title }}
+                </li>
+              </ul>
+              <div *ngIf="subcategoriesMessage" class="subcategory-list">
+                <p>{{ subcategoriesMessage }}</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>

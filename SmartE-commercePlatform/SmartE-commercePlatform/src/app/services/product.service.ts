@@ -33,7 +33,10 @@ export class ProductService {
 
     return this.http.get<Product[]>(`${this.apiURL}/paginated`, { params });
   }
-
+  public getProductsByCategory(categoryId: string, page: number = 1, pageSize: number = 5): Observable<Product[]> {
+    console.log('cu ce se apeleaza',categoryId, page, pageSize);
+    return this.http.get<Product[]>(`${this.apiURL}/by-category/${categoryId}?page=${page}&pageSize=${pageSize}`);
+  }
   public createProduct(product: Product) : Observable<any>{
     return this.http.post<Product>(this.apiURL, product);
   }

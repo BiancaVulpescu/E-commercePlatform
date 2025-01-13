@@ -339,44 +339,131 @@
   .pagination-controls span {
     text-align: center;
   }
+  .category-dropdown-container {
+    position: relative;
+    display:flex;
+    flex-direction:column;
+  }
   
+  .category-dropdown {
+    background-color: #343538;
+    display: none;
+    position: absolute;
+    top: 100%;
+    min-width: 300px;
+    font: 16px 'Kanit', sans-serif;
+    z-index: 1;
+    color:white;
+    /* max-height: 500px;
+    overflow-y: auto; */
+  }
+  
+  .category-dropdown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .category-dropdown li {
+    /* display: flex;
+    justify-content: center; */
+    padding: 12px 16px;
+    cursor: pointer;
+  }
+  
+  .category-dropdown li:hover {
+    background-color: #0056b3;
+  }
+  
+  .category-dropdown-container .category-dropdown {
+    display: block;
+  }
+  .subcategory-dropdown {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: #343538;
+    width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    color:white;
+  }
+  .subcategory-message{
+    display:flex;
+    justify-content:center;
+    padding: 20px;
+  }
+  .subcategory-dropdown-item{
+    display:flex;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .subcategory-dropdown-item:hover{
+    background-color: #0056b3;
+  }
+  .subcategory-dropdown ul {
+    /* list-style-type: none;
+    padding: 0;
+    margin: 0; */
+  }
+  
+  .subcategory-dropdown li {
+    /* padding: 12px 16px;
+    width: 100%;
+    cursor: pointer; */
+  }
+  
+  .subcategory-dropdown li:hover {
+    /* background-color: #0056b3; */
+  }
   @media (max-width: 950px) {
     .create-options {
-        width: fit-content; /* Full width on smaller screens */
+        width: fit-content; 
     }
     .top-nav-bar {
-        flex-direction: row; /* Keep logo and buttons in a row */
-        align-items: center; /* Center items vertically */
-        justify-content: space-between; /* Space between logo and buttons */
-        width: 100%; /* Full width */
-        margin-bottom: 10px; /* Space below the nav bar for the search box */
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%; 
+        margin-bottom: 10px;
     }
 
     .nav-buttons-container {
-        display: flex; /* Use flexbox for buttons */
-        justify-content: flex-start; /* Align buttons to the left */
-        gap: 10px; /* Add spacing between buttons */
+        display: flex; 
+        justify-content: flex-start; 
+        gap: 10px; 
     }
 
     .search-box-container {
-        width: 100%; /* Full width for the search bar */
-        margin-top: 10px; /* Add margin for spacing below the buttons */
-        order: 3; /* Set order to 3 to place it below logo and buttons */
+        width: 100%; 
+        margin-top: 10px; 
+        order: 3; 
     }
 
     .logo-icon {
-        order: 1; /* Ensure logo is first */
+        order: 1; 
     }
 
     .nav-buttons-container {
-        order: 2; /* Ensure buttons are second */
+        order: 2; 
+    }
+    .category-dropdown{
+      min-width: 50%;
+    }
+    .subcategory-dropdown{
+      position: absolute;
+      top: 0;
+      left: 100%;
     }
 }
 
   
   @media (max-width: 660px) {
     .create-option {
-        font-size: 14px; /* Adjust font size for smaller screens */
+        font-size: 14px; 
     }
     .nav-button,
     .create-button {
@@ -395,27 +482,27 @@
   
   @media (max-width: 550px) {
     .create-option {
-        padding: 8px 10px; /* Adjust padding for smaller buttons */
-        font-size: 12px; /* Smaller font size */
+        padding: 8px 10px; 
+        font-size: 12px; 
     }
     .top-nav-bar {
-        flex-direction: column; /* Stack logo and nav buttons vertically */
-        align-items: flex-start; /* Align items to the start */
+        flex-direction: column; 
+        align-items: flex-start;
     }
 
     .search-box-container {
         width: 100%;
-        margin: 10px 0; /* Add margin for spacing */
-        order: 3; /* Ensure it appears below logo and buttons */
+        margin: 10px 0; 
+        order: 3; 
     }
 
     .nav-buttons-container {
-        width: 100%; /* Full width */
-        display: flex; /* Ensure buttons are in a flex container */
-        justify-content: flex-start; /* Align buttons to the left */
-        gap: 10px; /* Add space between buttons */
-        flex-wrap: nowrap; /* Prevent buttons from wrapping to the next line */
-        order: 1; /* Ensure it appears first */
+        width: 100%;
+        display: flex; 
+        justify-content: flex-start; 
+        gap: 10px; 
+        flex-wrap: nowrap; 
+        order: 1; 
     }
 
     .nav-button,

@@ -1,0 +1,23 @@
+<div class="product-list-by-category-container">
+  <div class="product-list-by-category">
+    <div *ngIf="products.length > 0">
+      <ul>
+        <li *ngFor="let product of products">
+          <div class="product-card">
+            <h2>{{ product.title }}</h2>
+            <p>{{ product.description }}</p>
+            <p>Price: {{ product.price | currency }}</p>
+          </div>
+        </li>
+      </ul>
+      <div class="pagination-controls">
+        <button (click)="previousPage()" [disabled]="page === 1">Previous</button>
+        <span>Page {{ page }}</span>
+        <button (click)="nextPage()" [disabled]="page * pageSize >= totalCount">Next</button>
+      </div>
+    </div>
+    <div *ngIf="products.length === 0">
+      <p>No products found for this category.</p>
+    </div>
+  </div>
+</div>
