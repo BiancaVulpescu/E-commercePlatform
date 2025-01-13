@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { HttpClientModule } from '@angular/common/http';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { SearchBoxComponent } from '../search-box/search-box.component';
+import { ShoppingCartService } from '../../services/shopping-cart.service';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -30,7 +31,8 @@ export class ProductListComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private shoppingCartService: ShoppingCartService
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +51,17 @@ export class ProductListComponent implements OnInit {
       }
     });
   }
+  addToCart(productId: string): void {
+    this.shoppingCartService.addProductToCart(productId, 1).subscribe({
+      next: () => {
+        console.log('Product added to cart');
+      },
+      error: (error) => {
+        console.error('Error adding product to cart:', error);
+      }
+    });
+  }
+
 
   searchProducts(title: string): void {
     this.productService.searchProducts(title).subscribe({
@@ -86,7 +99,7 @@ export class ProductListComponent implements OnInit {
   }
 
   navigateToCart() {
-    // Implement navigation to cart page
+    this.router.navigate(['/shopping-cart']);
   }
 
   navigateToUpdate(productId: string) {
