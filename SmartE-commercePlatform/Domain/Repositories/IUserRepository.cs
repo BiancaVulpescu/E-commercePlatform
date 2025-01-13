@@ -13,6 +13,7 @@ namespace Domain.Repositories
         Task<ErrorOr<Success>> LogoutAll(Guid tokenId, string refreshSecret, CancellationToken cancellationToken = default);
         Task<ErrorOr<UserDto>> GetUserProfile(Guid tokenId, CancellationToken cancellationToken = default);
         Task<ErrorOr<Guid>> GetUserCartsId(Guid tokenId, CancellationToken cancellationToken = default);
+        Task<ErrorOr<Guid>> GetUserId(Guid tokenId, CancellationToken cancellationToken = default);
 
     }
 }

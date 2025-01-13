@@ -225,5 +225,27 @@ namespace Identity.Repositories
             }
 
         }
+        public async Task<ErrorOr<Guid>> GetUserId(Guid tokenId, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var user = await context.Users.FirstOrDefaultAsync(u => u.RefreshTokens.Any(rt => rt.Id == tokenId), cancellationToken);
+                if (user == null)
+                {
+                    return AuthenticationErrors.InvalidCredentials;
+                }
+
+                return user.Id;
+            }
+            catch (OperationCanceledException)
+            {
+                return AuthenticationErrors.Cancelled;
+            }
+            catch (Exception ex)
+            {
+                return AuthenticationErrors.Unknown(ex);
+            }
+        }
+
     }
 }
