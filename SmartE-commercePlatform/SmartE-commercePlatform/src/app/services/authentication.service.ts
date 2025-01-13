@@ -1,4 +1,4 @@
-import { afterNextRender, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -9,52 +9,70 @@ import { catchError, tap } from 'rxjs/operators';
 export class AuthService {
   private accessToken: string | null = null;
   private _refreshToken: string | null = null;
+  private _refreshTokenId: string | null = null;
 
   constructor(private http: HttpClient) {
     this.loadTokens();
   }
 
-  private loadTokens(): void {
-    afterNextRender(() => { 
+  public loadTokens(): void {
+    if (typeof window !== 'undefined' && window.localStorage) {
       this.accessToken = localStorage.getItem('accessToken');
       this._refreshToken = localStorage.getItem('refreshToken');
-    })
+      this._refreshTokenId = localStorage.getItem('refreshTokenId');
+      console.log('Tokens loaded:', this.accessToken);
+    }
   }
 
   getAccessToken(): string | null {
-    return this.accessToken;
+   return this.accessToken;
   }
 
   setAccessToken(token: string): void {
     this.accessToken = token;
-    localStorage.setItem('accessToken', token);
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('accessToken', token);
+    console.log('Access token saved to localStorage:', token);
+    }
   }
 
   getRefreshToken(): string | null {
-    return this._refreshToken;
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const token = localStorage.getItem('refreshToken');
+      console.log('getRefreshToken:', token);
+      return token;
+    }
+    return null;
   }
-
+  getRefreshTokenId(): string | null {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const token = localStorage.getItem('refreshTokenId');
+      console.log('getRefreshTokenId:', token);
+      return token;
+    }
+    return null;
+  }
   setRefreshToken(token: string): void {
     this._refreshToken = token;
-    localStorage.setItem('refreshToken', token);
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('refreshToken', token);
+    }
   }
   
-  // login(email: string, password: string): Observable<any> {
-  //   return this.http.post<any>('http://localhost:5109/api/Auth/login', { email, password }).pipe(
-  //     tap(response => {
-  //       this.setAccessToken(response.accessToken);
-  //       this.setRefreshToken(response.refreshToken);
-  //     })
-  //   );
-  // }
+  setRefreshTokenId(token: string): void {
+    this._refreshToken = token;
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('refreshTokenId', token);
+    }
+  }
+
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>('http://localhost:5109/api/Auth/login', { email, password }).pipe(
       tap(response => {
         if (response.accessToken && response.refreshToken) {
           this.setAccessToken(response.accessToken);
           this.setRefreshToken(response.refreshToken);
-          // console.log(localStorage.getItem('accessToken'));
-          // console.log(localStorage.getItem('refreshToken'));
+          this.setRefreshTokenId(response.refreshTokenId);
         } else {
           throw new Error('Invalid login response');
         }
@@ -65,6 +83,7 @@ export class AuthService {
       })
     );
   }
+
   register(email: string, password: string): Observable<any> {
     return this.http.post<any>('http://localhost:5109/api/Auth/register', { email, password }).pipe(
       tap(response => {
@@ -75,7 +94,7 @@ export class AuthService {
   }
 
   refreshToken(): Observable<any> {
-    return this.http.post<any>('/api/auth/refresh-token', {
+    return this.http.post<any>('http://localhost:5109/api/Auth/refresh-token', {
       _refreshToken: this.getRefreshToken()
     }).pipe(
       tap(response => {
@@ -88,7 +107,9 @@ export class AuthService {
   logout(): void {
     this.accessToken = null;
     this._refreshToken = null;
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+    }
   }
 }
