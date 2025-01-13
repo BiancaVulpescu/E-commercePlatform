@@ -4,7 +4,6 @@ using Domain.Repositories;
 
 public class ProductDataParser
 {
-    private readonly Dictionary<Guid, float> productMapping;
     private readonly Dictionary<Guid, float> categoryMapping;
 
     private readonly IWishlistRepository wishlistRepository;
@@ -17,7 +16,6 @@ public class ProductDataParser
         this.wishlistRepository = wishlistRepository;
         this.shoppingCartRepository = shoppingCartRepository;
 
-        productMapping = new Dictionary<Guid, float>();
         categoryMapping = new Dictionary<Guid, float>();
     }
 
@@ -54,19 +52,8 @@ public class ProductDataParser
     {
         return products.Select(product => new ProductData
         {
-            ProductId = GetOrCreateProductId(product.Id),
             CategoryId = product.CategoryId.HasValue ? GetOrCreateCategoryId(product.CategoryId.Value) : 0,
-            Price = (float)product.Price
         }).ToList();
-    }
-
-    private float GetOrCreateProductId(Guid productId)
-    {
-        if (!productMapping.ContainsKey(productId))
-        {
-            productMapping[productId] = productMapping.Count + 1;
-        }
-        return productMapping[productId];
     }
 
     private float GetOrCreateCategoryId(Guid categoryId)

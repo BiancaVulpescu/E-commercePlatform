@@ -1,5 +1,9 @@
 using Application.AIML;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
+using System.Linq;
+using Domain.Repositories;
 
 namespace SmartE_commercePlatform.Controllers
 {
@@ -8,22 +12,32 @@ namespace SmartE_commercePlatform.Controllers
     public class ProductRecommendationPredictionController : ControllerBase
     {
         private readonly ProductRecommendationPredictionModel productRecommendationPredictionModel;
-        public ProductRecommendationPredictionController()
+        private readonly ProductDataParser productDataParser;
+        private readonly IProductRepository productRepository;
+
+        public ProductRecommendationPredictionController(
+            ProductRecommendationPredictionModel productRecommendationPredictionModel,
+            ProductDataParser productDataParser,
+            IProductRepository productRepository)
         {
-            productRecommendationPredictionModel = new ProductRecommendationPredictionModel();
-
-
-            var productData = ProductDataParser.ParseUserProductsAsync(cartsId).Result;
-
-            productRecommendationPredictionModel.Train(productData);
+            this.productRecommendationPredictionModel = productRecommendationPredictionModel;
+            this.productDataParser = productDataParser;
+            this.productRepository = productRepository;
         }
 
-        [HttpPost("predict")]
-
-        public ActionResult<float> Predict(ProductData productData)
+        [HttpPost("train")]
+        public async Task<ActionResult> Train([FromBody] Guid cartsId)
         {
-            return productRecommendationPredictionModel.Predict(productData);
+            try
+            {
+                var productDataList = await productDataParser.ParseUserProductsAsync(cartsId);
+                productRecommendationPredictionModel.Train(productDataList);
+                return Ok("Training completed successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error during training: {ex.Message}");
+            }
         }
-
     }
 }
