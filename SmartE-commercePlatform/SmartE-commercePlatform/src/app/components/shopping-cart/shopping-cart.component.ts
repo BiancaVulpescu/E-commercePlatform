@@ -3,6 +3,8 @@ import { ShoppingCartService } from '../../services/shopping-cart.service';
 import { ShoppingCartProduct } from '../../models/shopping-cart-product.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-shopping-cart',
   standalone: true,
@@ -13,19 +15,20 @@ import { FormsModule } from '@angular/forms';
 export class ShoppingCartComponent implements OnInit {
   shoppingCartProducts: ShoppingCartProduct[] = [];
 
-  constructor(private shoppingCartService: ShoppingCartService) {}
+  constructor(private shoppingCartService: ShoppingCartService, private router: Router) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.loadShoppingCart();
+    });
+  }
 
   ngOnInit(): void {
     this.loadShoppingCart();
   }
 
   loadShoppingCart(): void {
-    const tokenId = this.shoppingCartService.getRefreshTokenId();
-    if (!tokenId) {
-      console.error('Refresh token is missing');
-      return;
-    }
-    this.shoppingCartService.getShoppingCartProducts(tokenId).subscribe({
+    this.shoppingCartService.getShoppingCartProducts().subscribe({
       next: (response) => {
         this.shoppingCartProducts = response;
         console.log(this.shoppingCartProducts);
@@ -37,12 +40,7 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   updateQuantity(productId: string, quantity: number): void {
-    const tokenId = this.shoppingCartService.getRefreshTokenId();
-    if (!tokenId) {
-      console.error('Refresh token is missing');
-      return;
-    }
-    this.shoppingCartService.updateProductQuantity(tokenId, productId, quantity).subscribe({
+    this.shoppingCartService.updateProductQuantity(productId, quantity).subscribe({
       next: () => {
         console.log('Product quantity updated');
       },
@@ -53,12 +51,7 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   removeFromCart(productId: string): void {
-    const tokenId = this.shoppingCartService.getRefreshTokenId();
-    if (!tokenId) {
-      console.error('Refresh token is missing');
-      return;
-    }
-    this.shoppingCartService.removeProductFromCart(tokenId, productId).subscribe({
+    this.shoppingCartService.removeProductFromCart(productId).subscribe({
       next: () => {
         console.log('Product removed from cart');
         this.loadShoppingCart();
@@ -67,5 +60,8 @@ export class ShoppingCartComponent implements OnInit {
         console.error('Error removing product from cart:', error);
       }
     });
+  }
+  navigateToProductList(): void {
+    this.router.navigate(['/products']);
   }
 }

@@ -52,12 +52,7 @@ export class ProductListComponent implements OnInit {
     });
   }
   addToCart(productId: string): void {
-    const tokenId = this.shoppingCartService.getRefreshTokenId();
-    if (!tokenId) { 
-      console.error('Refresh token is missing');
-      return;
-    }
-    this.shoppingCartService.addProductToCart(tokenId, productId, 1).subscribe({
+    this.shoppingCartService.addProductToCart(productId, 1).subscribe({
       next: () => {
         console.log('Product added to cart');
       },
@@ -66,6 +61,7 @@ export class ProductListComponent implements OnInit {
       }
     });
   }
+
 
   searchProducts(title: string): void {
     this.productService.searchProducts(title).subscribe({
@@ -103,7 +99,7 @@ export class ProductListComponent implements OnInit {
   }
 
   navigateToCart() {
-    // Implement navigation to cart page
+    this.router.navigate(['/shopping-cart']);
   }
 
   navigateToUpdate(productId: string) {

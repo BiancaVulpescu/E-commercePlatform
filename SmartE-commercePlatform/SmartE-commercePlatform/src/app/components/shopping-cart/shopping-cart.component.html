@@ -1,8 +1,16 @@
-<p>shopping-cart works!</p>
-<div class="shopping-cart-container">
+<div class="shopping-cart-page-container">
     <div class="shopping-cart-page">
-      <div class="page-title">
-        Shopping Cart
+      <div class="top-nav-bar-container">
+        <div class="top-nav-bar">
+          <div class="page-title">
+            <img src="smart-logo.png" alt="Shopping Cart" class="logo-icon">
+          </div>
+          <div class="nav-buttons-container">
+            <button class="nav-button" (click)="navigateToProductList()">
+              <span class="nav-text">Back to Products</span>
+            </button>
+          </div>
+        </div>
       </div>
       <div class="shopping-cart-details" *ngIf="shoppingCartProducts.length > 0">
         <div class="cart-item" *ngFor="let item of shoppingCartProducts">

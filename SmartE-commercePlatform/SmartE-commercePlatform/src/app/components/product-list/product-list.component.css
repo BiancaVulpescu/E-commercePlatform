@@ -196,6 +196,7 @@
   .product-actions button {
     padding: 5px 10px;
     cursor: pointer;
+    color:blue;
     border: 2px solid transparent;
     background-color: transparent;
     border-radius: 25%;
@@ -390,6 +391,13 @@
   
     .nav-text {
       display: none;
+    }
+    .product-image img {
+      width: 70px;
+      height: 70px;
+    }
+    .product-info {
+      padding-left: 20px;
     }
   }
   
