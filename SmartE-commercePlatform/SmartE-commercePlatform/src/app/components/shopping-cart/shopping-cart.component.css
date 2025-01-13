@@ -39,9 +39,11 @@
   .logo-icon {
     width: 150px; /* Set the desired width */
     height: auto; /* Maintain aspect ratio */
+    margin-left: 50px;
   }
   
   .nav-buttons-container {
+    margin-right: 50px;
     display: flex;
     gap: 10px;
   }
@@ -92,10 +94,16 @@
   .cart-item:hover {
     background-color: #364052;
   }
+  .product-image img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
   
   .item-info {
     flex: 1;
-    padding-left: 50px;
+    padding-left: 20px;
   }
   
   .item-title {
@@ -136,6 +144,7 @@
     cursor: pointer;
     font-family: 'Kanit', sans-serif;
     font-size: 16px;
+    margin-left: 5px;
   }
   
   button:hover {
@@ -159,57 +168,58 @@
   }
   
   @media (max-width: 660px) {
-    .nav-button {
-      justify-content: center;
-      width: auto;
-    }
   
     .nav-icon {
       display: inline-block;
     }
   
-    .nav-text {
-      display: none;
-    }
   }
   
   @media (max-width: 550px) {
-    .top-nav-bar {
-      flex-direction: column;
-      align-items: flex-start;
-    }
   
-    .nav-buttons-container {
-      width: 100%;
-      display: flex;
-      justify-content: flex-start;
-      gap: 10px;
-      flex-wrap: nowrap;
-      order: 1;
+    .nav-buttons-container{
+        margin-right: 10px;
     }
-  
-    .nav-button {
-      flex: 1;
-      justify-content: center;
-      min-width: 50px;
-      max-width: 150px;
-      margin: 5px;
-    }
-  
-    .nav-icon {
-      display: inline-block;
-    }
-  
-    .nav-text {
-      display: none;
-    }
-  
     .shopping-cart-details {
       padding: 10px;
     }
+    .logo-icon{
+        margin-left: 10px;
+    }
   
     button {
-      width: 100%;
+      width: fit-content;
       padding: 10px;
+    }
+    .item-quantity input {
+      width: 50px;
+    }
+    .product-image img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+      .cart-item{
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+      .item-info {
+        flex: 1;
+        padding-left: 5px;
+      }
+  }
+  @media (max-width: 450px) {
+    .cart-item{
+        flex-direction: column;
+        padding-bottom: 10px;
+        padding-top:10px;
+    }
+    .item-quantity{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .item-info{
+        text-align: center;
     }
   }
