@@ -22,6 +22,15 @@ namespace SmartE_commercePlatform.Controllers
                     error => BadRequest(error)
                 );
         }
+        [HttpGet("profile/{userId}")]
+        public async Task<ActionResult<IEnumerable<OrderDtoMinimal>>> GetAllOrdersByUserId([FromRoute] Guid userId)
+        {
+            return (await mediator.Send(new GetAllOrdersByUserIdQuery {UserId = userId }))
+                .Match<ActionResult<IEnumerable<OrderDtoMinimal>>>(
+                    orderDtos => Ok(orderDtos),
+                    error => BadRequest(error)
+                );
+        }
 
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<OrderDto>> GetOrderById([FromRoute] Guid id)

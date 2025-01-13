@@ -20,6 +20,17 @@ namespace Infrastructure.Repositories
             catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
             catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
+        public async Task<ErrorOr<IEnumerable<Order>>> GetAllOrdersByUserIdAsync(Guid userId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return await context.Orders
+                    .Where(e => e.UserId == userId)
+                    .ToListAsync(cancellationToken);
+            }
+            catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
+            catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
+        }
 
         public async Task<ErrorOr<Order>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
