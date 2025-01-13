@@ -2,11 +2,10 @@
 {
     public class ProductData
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public float Price { get; set; }
-        
-        //de vazut category stuff
-
+        public float UserId { get; set; }
+        public float ProductId { get; set; }
+        public decimal Price { get; set; }
+        public float CategoryId { get; set; }
+        public float CartsId { get; set; }
     }
 }
