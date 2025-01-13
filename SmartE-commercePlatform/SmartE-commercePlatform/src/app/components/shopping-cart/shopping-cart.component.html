@@ -31,5 +31,12 @@
       <div *ngIf="shoppingCartProducts.length === 0">
         <p>Your shopping cart is empty.</p>
       </div>
+      <div class="order-details" *ngIf="shoppingCartProducts.length > 0">
+        <label for="city">City:</label>
+        <input id="city" type="text" [(ngModel)]="city">
+        <label for="address">Address:</label>
+        <input id="address" type="text" [(ngModel)]="address">
+        <button (click)="placeOrder()">Place Order</button>
+      </div>
     </div>
   </div>

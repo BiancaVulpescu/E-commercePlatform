@@ -14,6 +14,8 @@ import { filter } from 'rxjs/operators';
 })
 export class ShoppingCartComponent implements OnInit {
   shoppingCartProducts: ShoppingCartProduct[] = [];
+  city: string = '';
+  address: string = '';
 
   constructor(private shoppingCartService: ShoppingCartService, private router: Router) {
     this.router.events.pipe(
@@ -61,6 +63,35 @@ export class ShoppingCartComponent implements OnInit {
       }
     });
   }
+  placeOrder(): void {
+    const order = {
+      city: this.city,
+      address: this.address,
+      status: 'pending'
+    };
+
+    this.shoppingCartService.createOrder(order).subscribe({
+      next: (orderId) => {
+        console.log('Order placed', orderId);
+        this.shoppingCartService.addProductsToOrder(orderId, this.shoppingCartProducts.map(item => ({
+          productId: item.productId,
+          quantity: item.quantity
+        }))).subscribe({
+          next: () => {
+            console.log('Products added to order');
+            this.router.navigate(['/orders', orderId]);
+          },
+          error: (error) => {
+            console.error('Error adding products to order:', error);
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Error placing order:', error);
+      }
+    });
+  }
+
   navigateToProductList(): void {
     this.router.navigate(['/products']);
   }
