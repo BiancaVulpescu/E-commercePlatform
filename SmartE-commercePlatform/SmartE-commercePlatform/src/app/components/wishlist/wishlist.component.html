@@ -1,0 +1,31 @@
+<div class="wishlist-page-container">
+    <div class="wishlist-page">
+      <div class="top-nav-bar-container">
+        <div class="top-nav-bar">
+          <div class="page-title">
+            <img src="smart-logo.png" alt="Wishlist" class="logo-icon">
+          </div>
+          <div class="nav-buttons-container">
+            <button class="nav-button" (click)="navigateToProductList()">
+              <span class="nav-text">Back to Products</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="wishlist-details" *ngIf="wishlistProducts.length > 0">
+        <div class="wishlist-item" *ngFor="let item of wishlistProducts">
+            <div class="product-image" >
+                <img src="shopping-cart.png" alt="{{item.product.title}}">
+              </div>
+          <div class="item-info" >
+            <div class="item-title">{{ item.product.title }}</div>
+            <div class="item-price">{{ item.product.price }}</div>
+          </div>
+          <button (click)="removeFromWishlist(item.product.id!)">Remove</button>
+        </div>
+      </div>
+      <div *ngIf="wishlistProducts.length === 0">
+        <p>Your wishlist is empty.</p>
+      </div>
+    </div>
+  </div>

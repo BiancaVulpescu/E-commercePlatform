@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { SearchBoxComponent } from '../search-box/search-box.component';
 import { ShoppingCartService } from '../../services/shopping-cart.service';
+import { WishlistService } from '../../services/wishlist.service';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -32,7 +33,8 @@ export class ProductListComponent implements OnInit {
     private productService: ProductService,
     private router: Router,
     private fb: FormBuilder,
-    private shoppingCartService: ShoppingCartService
+    private shoppingCartService: ShoppingCartService,
+    private wishlistService: WishlistService
   ) {}
 
   ngOnInit(): void {
@@ -61,7 +63,16 @@ export class ProductListComponent implements OnInit {
       }
     });
   }
-
+  addToWishlist(productId: string): void {
+    this.wishlistService.addProductToWishlist(productId).subscribe({
+      next: () => {
+        console.log('Product added to wishlist');
+      },
+      error: (error) => {
+        console.error('Error adding product to wishlist:', error);
+      }
+    });
+  }
 
   searchProducts(title: string): void {
     this.productService.searchProducts(title).subscribe({
@@ -95,7 +106,7 @@ export class ProductListComponent implements OnInit {
   }
 
   navigateToWishlist() {
-    // Implement navigation to wishlist page
+    this.router.navigate(['/wishlist']);
   }
 
   navigateToCart() {
