@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { HttpClientModule } from '@angular/common/http';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { SearchBoxComponent } from '../search-box/search-box.component';
+import { ShoppingCartService } from '../../services/shopping-cart.service';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -30,7 +31,8 @@ export class ProductListComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private shoppingCartService: ShoppingCartService
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +48,21 @@ export class ProductListComponent implements OnInit {
       },
       error: (error) => {
         console.error(error);
+      }
+    });
+  }
+  addToCart(productId: string): void {
+    const tokenId = this.shoppingCartService.getRefreshTokenId();
+    if (!tokenId) { 
+      console.error('Refresh token is missing');
+      return;
+    }
+    this.shoppingCartService.addProductToCart(tokenId, productId, 1).subscribe({
+      next: () => {
+        console.log('Product added to cart');
+      },
+      error: (error) => {
+        console.error('Error adding product to cart:', error);
       }
     });
   }

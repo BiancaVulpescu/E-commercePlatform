@@ -1,0 +1,24 @@
+<p>shopping-cart works!</p>
+<div class="shopping-cart-container">
+    <div class="shopping-cart-page">
+      <div class="page-title">
+        Shopping Cart
+      </div>
+      <div class="shopping-cart-details" *ngIf="shoppingCartProducts.length > 0">
+        <div class="cart-item" *ngFor="let item of shoppingCartProducts">
+          <div class="item-info">
+            <div class="item-title">{{ item.product.title }}</div>
+            <div class="item-price">{{ item.product.price }}</div>
+          </div>
+          <div class="item-quantity">
+            <label for="quantity">Quantity:</label>
+            <input id="quantity" type="number" [(ngModel)]="item.quantity" (change)="updateQuantity(item.product.id!, item.quantity)">
+          </div>
+          <button (click)="removeFromCart(item.product.id!)">Remove</button>
+        </div>
+      </div>
+      <div *ngIf="shoppingCartProducts.length === 0">
+        <p>Your shopping cart is empty.</p>
+      </div>
+    </div>
+  </div>
