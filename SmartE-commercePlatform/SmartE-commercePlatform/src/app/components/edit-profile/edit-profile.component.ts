@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
-
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
