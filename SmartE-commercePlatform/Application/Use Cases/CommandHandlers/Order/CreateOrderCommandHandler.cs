@@ -1,4 +1,5 @@
-﻿using Application.Use_Cases.Commands;
+﻿using Application.Use_Cases.Authentication.Commands;
+using Application.Use_Cases.Commands;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Repositories;
@@ -7,14 +8,33 @@ using MediatR;
 
 namespace Application.Use_Cases.CommandHandlers
 {
-    public class CreateOrderCommandHandler(IOrderRepository repository, IMapper mapper) : IRequestHandler<CreateOrderCommand, ErrorOr<Guid>>
+    public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, ErrorOr<Guid>>
     {
-        private readonly IOrderRepository repository = repository;
-        private readonly IMapper mapper = mapper;
+        private readonly IOrderRepository orderRepository;
+        private readonly IUserRepository userRepository;
+        private readonly IMapper mapper;
+
+        public CreateOrderCommandHandler(IOrderRepository orderRepository, IMapper mapper, IUserRepository userRepository)
+        {
+            this.orderRepository = orderRepository;
+            this.mapper = mapper;
+            this.userRepository = userRepository;
+        }
 
         public async Task<ErrorOr<Guid>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
-            return await repository.AddAsync(mapper.Map<Order>(request), cancellationToken);
+
+            var result = await userRepository.GetUserId(request.TokenId, cancellationToken);
+            if (result.IsError)
+            {
+                return result;
+            }
+
+            var order = mapper.Map<Order>(request);
+            order.UserId = result.Value;
+
+            return await orderRepository.AddAsync(order, cancellationToken);
         }
     }
+
 }

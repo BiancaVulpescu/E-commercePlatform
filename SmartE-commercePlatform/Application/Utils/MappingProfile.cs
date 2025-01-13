@@ -72,11 +72,13 @@ namespace Application.Utils
 
 			CreateMap<CreateOrderCommand, Order>()
 					.ForMember(dest => dest.Id, opt => opt.Ignore())
-					.ForMember(dest => dest.Products, opt => opt.Ignore())
+                    .ForMember(dest => dest.UserId, opt => opt.Ignore())
+                    .ForMember(dest => dest.Products, opt => opt.Ignore())
 					.ForMember(dest => dest.OrderProducts, opt => opt.Ignore());
 			CreateMap<UpdateOrderCommand, Order>()
-					.ForMember(dest => dest.Products, opt => opt.Ignore())
-					.ForMember(dest => dest.OrderProducts, opt => opt.Ignore());
+					.ForMember(dest => dest.UserId, opt => opt.Ignore())
+                    .ForMember(dest => dest.Products, opt => opt.Ignore())
+                    .ForMember(dest => dest.OrderProducts, opt => opt.Ignore());
 
 			CreateMap<LoginResponse, LoginResponseDto>().ReverseMap();
 			CreateMap<RefreshResponse, RefreshResponseDto>().ReverseMap();

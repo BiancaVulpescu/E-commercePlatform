@@ -69,6 +69,14 @@ namespace Infrastructure.Persistence
 					.HasColumnType("uuid")
 					.HasDefaultValueSql(UuidGenerationFunction)
 					.ValueGeneratedOnAdd();
+				entity.Property(e => e.UserId)
+					.HasColumnType("uuid")
+					.ValueGeneratedNever();
+
+                entity.Property(e => e.City).IsRequired().HasMaxLength(55);
+				entity.Property(e => e.Address).IsRequired().HasMaxLength(255);
+                entity.Property(e => e.Status).IsRequired().HasMaxLength(25);
+
 				entity.HasMany(e => e.Products)
 					.WithMany(e => e.Orders)
 					.UsingEntity<OrderProduct>(j => j.Property(e => e.Quantity));
