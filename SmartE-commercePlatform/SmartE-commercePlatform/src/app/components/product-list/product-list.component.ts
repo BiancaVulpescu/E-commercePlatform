@@ -5,10 +5,8 @@ import { Product } from '../../models/product.model';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { SearchBoxComponent } from '../search-box/search-box.component';
 import { CategoryService } from '../../services/category.service';
-import { ProductListByCategoryComponent } from '../product-list-by-category/product-list-by-category.component';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -38,7 +36,6 @@ export class ProductListComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private categoryService: CategoryService,
-    private productListByCategory: ProductListByCategoryComponent,
     private router: Router,
     private fb: FormBuilder
   ) {}
