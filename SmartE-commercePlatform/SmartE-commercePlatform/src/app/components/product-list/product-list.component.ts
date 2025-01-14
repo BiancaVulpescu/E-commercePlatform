@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
 import { Product } from '../../models/product.model';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { SearchBoxComponent } from '../search-box/search-box.component';
+import { CategoryService } from '../../services/category.service';
 import { ShoppingCartService } from '../../services/shopping-cart.service';
 import { WishlistService } from '../../services/wishlist.service';
+
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -19,6 +20,12 @@ import { WishlistService } from '../../services/wishlist.service';
 export class ProductListComponent implements OnInit {
 
   products: Product[] = [];
+  categories: any[] = [];
+  subcategories: any[] = [];
+  categoriesMessage: string = '';
+  subcategoriesMessage: string = '';
+  selectedCategoryId: string | null = null;
+  selectedSubcategoryId: string | null = null;
   page: number = 1;
   pageSize: number = 5;
   totalCount: number = 0;
@@ -31,6 +38,7 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
+    private categoryService: CategoryService,
     private router: Router,
     private fb: FormBuilder,
     private shoppingCartService: ShoppingCartService,
@@ -39,20 +47,57 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProducts();
+    this.loadCategories();
   }
 
   loadProducts(): void {
-    this.productService.getProducts(this.page, this.pageSize, this.titleFilter, this.minPriceFilter, this.maxPriceFilter).subscribe({
-      next: (response) => {
-        this.products = response;
-        this.totalCount = response.length;
-        console.log(this.products);
+      this.productService.getProducts(this.page, this.pageSize, this.titleFilter, this.minPriceFilter, this.maxPriceFilter).subscribe({
+        next: (response) => {
+          this.products = response;
+          this.totalCount = response.length;
+          // console.log(this.products);
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
+    
+  }
+  loadCategories(): void {
+    this.categoryService.getParentCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+        // console.log('Categories:', categories);
       },
       error: (error) => {
-        console.error(error);
+        if (error.status === 400 && error.error[0].code === 'Repository.NotFound') {
+          this.categoriesMessage = 'No categories to show';
+        } else {
+          console.error('Error fetching categories:', error);
+        }
       }
     });
   }
+  loadSubcategories(parentId: string): void {
+    this.selectedCategoryId = parentId;
+    this.subcategories = [];
+    this.subcategoriesMessage = '';
+    this.categoryService.getChildrenCategories(parentId).subscribe({
+      next: (subcategories) => {
+        this.subcategories = subcategories;
+        this.subcategoriesMessage = '';
+        // console.log('Subcategories:', subcategories);
+      },
+      error: (error) => {
+        if (error.status === 400 && error.error[0].code === 'Repository.NotFound') {
+          this.subcategoriesMessage = 'No subcategories to show';
+        } else {
+          console.error('Error fetching subcategories:', error);
+        }
+      }
+    });
+  }
+
   addToCart(productId: string): void {
     this.shoppingCartService.addProductToCart(productId, 1).subscribe({
       next: () => {
@@ -73,13 +118,12 @@ export class ProductListComponent implements OnInit {
       }
     });
   }
-
   searchProducts(title: string): void {
     this.productService.searchProducts(title).subscribe({
       next: (response) => {
         this.products = response;
         this.totalCount = response.length;
-        console.log(this.products);
+        // console.log(this.products);
       },
       error: (error) => {
         console.error(error);
@@ -98,7 +142,7 @@ export class ProductListComponent implements OnInit {
   }
 
   navigateToCreateCategory() {
-    // Implement navigation to create category page
+    this.router.navigate(['categories/create']);
   }
 
   navigateToProfile() {
@@ -120,6 +164,11 @@ export class ProductListComponent implements OnInit {
   navigateToDetail(productId: string) {
     this.router.navigate(['products/detail', productId]);
   }
+  navigateToCategory(categoryId: string): void {
+    // console.log('ajunge aici', categoryId);
+    this.selectedSubcategoryId = categoryId;
+    this.router.navigate(['/products/categories/by-category', categoryId]);
+  }
 
   nextPage(): void {
     if (this.totalCount === this.pageSize) {
@@ -139,19 +188,23 @@ export class ProductListComponent implements OnInit {
     this.isFilterPopupVisible = !this.isFilterPopupVisible;
   }
 
-  toggleCategoryPopup(): void {
-    this.isCategoryPopupVisible = !this.isCategoryPopupVisible;
-  }
-
   toggleCreateOptions(): void {
     this.isCreateOptionsVisible = !this.isCreateOptionsVisible;
   }
   onSearchResults(results: Product[]):void {
-    console.log('Search results:', results);
+    // console.log('Search results:', results);
     this.products = results;
     this.totalCount = results.length;
   }
   onProductSelected(product: Product): void {
     this.router.navigate(['products/detail', product.id]);
   }
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.category-dropdown-container')) {
+      this.isCategoryPopupVisible = false;
+    }
+  }
+
 }

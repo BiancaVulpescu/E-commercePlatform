@@ -10,9 +10,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import { ProductListByCategoryComponent } from './components/product-list-by-category/product-list-by-category.component';
+import { CategoryCreateComponent } from './components/category-create/category-create.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
 import { OrderComponent } from './components/order/order.component';
+
 export const appRoutes: Routes = [
     {path:'', redirectTo: '/register', pathMatch: 'full'},
     {path:'products', component: ProductListComponent},
@@ -25,7 +28,10 @@ export const appRoutes: Routes = [
     { path: 'forgot-password', component: ForgotPasswordComponent },
     { path: 'profile', component: ProfileComponent },
     { path: 'edit-profile', component: EditProfileComponent },
+    { path: 'products/categories/by-category/:categoryId', component: ProductListByCategoryComponent },
+    {path: 'categories/create', component: CategoryCreateComponent},
     {path: 'shopping-cart', component: ShoppingCartComponent},
     {path: 'wishlist', component: WishlistComponent},
     {path: 'orders/:orderId', component: OrderComponent}
+
 ];

@@ -1,15 +1,14 @@
-.product-list-page-container {
+.product-list-by-category-container {
     width: 100%;
     background-color: #202124;
     min-height: 100vh;
-  }
+}
   
-  .product-list-page {
+  .product-list-by-category {
     margin: 0 auto;
     padding-top: 5px;
     box-sizing: border-box;
   }
-  
   .page-title {
     display: flex;
     justify-content: start;
@@ -196,7 +195,6 @@
   .product-actions button {
     padding: 5px 10px;
     cursor: pointer;
-    color:blue;
     border: 2px solid transparent;
     background-color: transparent;
     border-radius: 25%;
@@ -406,150 +404,3 @@
   .subcategory-dropdown-item:hover{
     background-color: #0056b3;
   }
-  @media (max-width: 950px) {
-    .create-options {
-        width: fit-content; 
-    }
-    .top-nav-bar {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%; 
-        margin-bottom: 10px;
-    }
-
-    .nav-buttons-container {
-        display: flex; 
-        justify-content: flex-start; 
-        gap: 10px; 
-    }
-
-    .search-box-container {
-        width: 100%; 
-        margin-top: 10px; 
-        order: 3; 
-    }
-
-    .logo-icon {
-        order: 1; 
-    }
-
-    .nav-buttons-container {
-        order: 2; 
-    }
-    .category-dropdown{
-      min-width: 50%;
-    }
-    .subcategory-dropdown{
-      position: absolute;
-      top: 0;
-      left: 100%;
-    }
-}
-
-  
-  @media (max-width: 660px) {
-    .create-option {
-        font-size: 14px; 
-    }
-    .nav-button,
-    .create-button {
-      justify-content: center;
-      width: auto;
-    }
-  
-    .nav-icon {
-      display: inline-block;
-    }
-  
-    .nav-text {
-      display: none;
-    }
-    .product-image img {
-      width: 70px;
-      height: 70px;
-    }
-    .product-info {
-      padding-left: 20px;
-    }
-  }
-  
-  @media (max-width: 550px) {
-    .create-option {
-        padding: 8px 10px; 
-        font-size: 12px; 
-    }
-    .top-nav-bar {
-        flex-direction: column; 
-        align-items: flex-start;
-    }
-
-    .search-box-container {
-        width: 100%;
-        margin: 10px 0; 
-        order: 3; 
-    }
-
-    .nav-buttons-container {
-        width: 100%;
-        display: flex; 
-        justify-content: flex-start; 
-        gap: 10px; 
-        flex-wrap: nowrap; 
-        order: 1; 
-    }
-
-    .nav-button,
-    .create-button {
-        flex: 1; /* Allow buttons to take equal space */
-        justify-content: center; /* Center the button text */
-        min-width: 50px; /* Set a minimum width for buttons */
-        max-width: 150px; /* Optional: set a max width to avoid overly wide buttons */
-        margin: 5px; /* Add some margin for spacing */
-    }
-
-    .nav-icon {
-        display: inline-block; /* Show nav icons */
-    }
-
-    .nav-text {
-        display: none; /* Hide nav text if needed */
-    }
-
-    .create-button-container {
-        order: 2; /* Keep the create button below nav buttons */
-        display: flex; /* Ensure it's a flex container */
-        justify-content: center; /* Center create button */
-    }
-
-    .product-list {
-        padding: 10px; /* Padding for product list */
-    }
-
-    th,
-    td {
-        padding: 6px; /* Padding for table cells */
-    }
-
-    button {
-        width: 100%; /* Full width for buttons */
-        padding: 10px; /* Padding for buttons */
-    }
-
-    .create-button-container {
-        justify-content: center; /* Center create button */
-        flex-direction: column; /* Stack create button elements if necessary */
-    }
-
-    .create-button {
-        font-size: 14px; /* Font size for create button */
-    }
-
-    .create-icon {
-        width: 14px; /* Icon size */
-    }
-
-    .create-options {
-        width: fit-content; /* Full width for create options */
-    }
-}
