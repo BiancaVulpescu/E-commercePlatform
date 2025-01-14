@@ -55,6 +55,7 @@ export class ProductListByCategoryComponent implements OnInit {
     if (this.categoryId) {
       this.productService.getProductsByCategory(this.categoryId, this.page, this.pageSize).subscribe({
         next: (response) => {
+          console.log(response);
           this.products = response;
           this.totalCount = response.length;        },
         error: (error) => {
