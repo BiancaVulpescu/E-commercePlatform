@@ -8,10 +8,16 @@
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="AutoMapperTests.cs" />
     <Compile Remove="GetAllProductsQueryHandlerTests.cs" />
     <Compile Remove="GetProductByIdQueryHandlerTests.cs" />
+    <Compile Remove="OrderTests\CommandTests\CreateOrderCommandHandlerTests.cs" />
+    <Compile Remove="OrderTests\QueryTests\GetOrderByIdQueryHandlerTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="AutoMapperTests.cs" />
+    <None Include="OrderTests\CommandTests\CreateOrderCommandHandlerTests.cs" />
+    <None Include="OrderTests\QueryTests\GetOrderByIdQueryHandlerTests.cs" />
     <None Include="ProductTests\QueryTests\GetAllProductsQueryHandlerTests.cs" />
     <None Include="ProductTests\QueryTests\GetProductByIdQueryHandlerTests.cs" />
   </ItemGroup>
