@@ -1,13 +1,13 @@
 ﻿using Application.DTOs;
 using Application.Use_Cases.Queries;
-using Application.Use_Cases.QueryHandler;
+using Application.Use_Cases.QueryHandlers;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Repositories;
 using FluentAssertions;
 using NSubstitute;
 
-namespace SmartE_commercePlatform.UnitTests
+namespace SmartE_commercePlatform.UnitTests.ProductTests.QueryTests
 {
     public class GetAllProductsQueryHandlerTests
     {
@@ -35,57 +35,47 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.Count.Should().Be(products.Count);
+            result.Value.Count().Should().Be(products.Count);
         }
 
         private static List<Product> GenerateProducts()
         {
-            return new List<Product>
-            {
-                new Product
-                {
+            return [
+                new() {
                     Id = Guid.NewGuid(),
                     Title = "Product 1",
-                    Category = "category1",
+                    Category = null,
                     Description = "description1",
                     Price = 100,
-                    IsNegotiable = true
                 },
-                new Product
-                {
+                new() {
                     Id = Guid.NewGuid(),
                     Title = "Product 2",
-                    Category = "category1",
+                    Category = null,
                     Description = "description2",
                     Price = 200,
-                    IsNegotiable = false
                 }
-            };
+            ];
         }
 
         private void GenerateProductDtos(List<Product> products)
         {
-            mapper.Map<List<ProductDto>>(products).Returns(new List<ProductDto>
-            {
-                new ProductDto
-                {
+            mapper.Map<IEnumerable<ProductDtoMinimal>>(products).Returns([
+                new() {
                     Id = products.ElementAt(0).Id,
                     Title = products.ElementAt(0).Title,
-                    Category = products.ElementAt(0).Category,
+                    Category = null,
                     Description = products.ElementAt(0).Description,
                     Price = products.ElementAt(0).Price,
-                    IsNegotiable = products.ElementAt(0).IsNegotiable
                 },
-                new ProductDto
-                {
+                new() {
                     Id = products.ElementAt(1).Id,
                     Title = products.ElementAt(1).Title,
-                    Category = products.ElementAt(1).Category,
+                    Category = null,
                     Description = products.ElementAt(1).Description,
                     Price = products.ElementAt(1).Price,
-                    IsNegotiable = products.ElementAt(1).IsNegotiable
                 }
-            });
+            ]);
         }
     }
 }

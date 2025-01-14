@@ -8,38 +8,12 @@
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="CreateProductCommandHandlerTests.cs" />
-    <Compile Remove="CreateShoppingCartItemCommandHandlerTests.cs" />
-    <Compile Remove="CreateWishlistItemCommandHandlerTests.cs" />
-    <Compile Remove="DeleteProductCommandHandlerTests.cs" />
-    <Compile Remove="DeleteShoppingCartItemCommandHandlerTests.cs" />
-    <Compile Remove="DeleteWishlistItemCommandHandlerTests.cs" />
     <Compile Remove="GetAllProductsQueryHandlerTests.cs" />
-    <Compile Remove="GetAllShoppingCartItemsQueryHandlerTests.cs" />
-    <Compile Remove="GetAllWishlistItemsQueryHandlerTests.cs" />
     <Compile Remove="GetProductByIdQueryHandlerTests.cs" />
-    <Compile Remove="GetShoppingCartItemByIdQueryHandlerTests.cs" />
-    <Compile Remove="GetWishlistItemByIdQueryHandlerTests.cs" />
-    <Compile Remove="UpdateProductCommandHandlerTests.cs" />
-    <Compile Remove="UpdateShoppingCartItemCommandHandlerTests.cs" />
-    <Compile Remove="UpdateWishlistItemCommandHandlerTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CreateProductCommandHandlerTests.cs" />
-    <None Include="CreateShoppingCartItemCommandHandlerTests.cs" />
-    <None Include="CreateWishlistItemCommandHandlerTests.cs" />
-    <None Include="DeleteProductCommandHandlerTests.cs" />
-    <None Include="DeleteShoppingCartItemCommandHandlerTests.cs" />
-    <None Include="DeleteWishlistItemCommandHandlerTests.cs" />
-    <None Include="GetAllProductsQueryHandlerTests.cs" />
-    <None Include="GetAllShoppingCartItemsQueryHandlerTests.cs" />
-    <None Include="GetAllWishlistItemsQueryHandlerTests.cs" />
-    <None Include="GetProductByIdQueryHandlerTests.cs" />
-    <None Include="GetShoppingCartItemByIdQueryHandlerTests.cs" />
-    <None Include="GetWishlistItemByIdQueryHandlerTests.cs" />
-    <None Include="UpdateProductCommandHandlerTests.cs" />
-    <None Include="UpdateShoppingCartItemCommandHandlerTests.cs" />
-    <None Include="UpdateWishlistItemCommandHandlerTests.cs" />
+    <None Include="ProductTests\QueryTests\GetAllProductsQueryHandlerTests.cs" />
+    <None Include="ProductTests\QueryTests\GetProductByIdQueryHandlerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
@@ -59,6 +33,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Using Include="Xunit" />
