@@ -66,8 +66,7 @@ export class ShoppingCartComponent implements OnInit {
     this.shoppingCartService.removeProductFromCart(productId).subscribe({
       next: () => {
         console.log('Product removed from cart');
-        this.shoppingCartProducts = this.shoppingCartProducts.filter(item => item.product.id !== productId);
-        this.loadShoppingCart();
+        this.shoppingCartProducts = this.shoppingCartProducts.filter(item => item.productId !== productId);
       },
       error: (error) => {
         console.error('Error removing product from cart:', error);
