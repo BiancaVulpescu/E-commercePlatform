@@ -1,6 +1,4 @@
-﻿using Application.DTOs;
-
-namespace Application.Use_Cases.Commands
+﻿namespace Application.Use_Cases.Commands
 {
     public class CreateProductCommandBase
     {

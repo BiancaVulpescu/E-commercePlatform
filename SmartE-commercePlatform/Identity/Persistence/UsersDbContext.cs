@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace Identity.Persistence
 {
@@ -15,6 +16,12 @@ namespace Identity.Persistence
                 .WithOne()
                 .HasForeignKey(e => e.UserId)
                 .IsRequired();
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.CartsId)
+                .HasColumnType("uuid")
+                .HasDefaultValueSql("lower(hex(randomblob(16)))")
+                .ValueGeneratedOnAdd();
         }
     }
 }

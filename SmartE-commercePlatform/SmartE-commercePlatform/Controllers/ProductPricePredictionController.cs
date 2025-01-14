@@ -1,6 +1,5 @@
 using Application.AIML;
 using Microsoft.AspNetCore.Mvc;
-using SQLitePCL;
 
 namespace SmartE_commercePlatform.Controllers
 {

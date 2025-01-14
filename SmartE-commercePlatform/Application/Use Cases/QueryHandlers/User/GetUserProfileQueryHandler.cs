@@ -6,13 +6,17 @@ using MediatR;
 
 namespace Application.Use_Cases.Authentication.QueryHandlers
 {
-    public class GetUserProfileQueryHandler(IUserRepository repository) : IRequestHandler<GetUserProfileQuery, ErrorOr<User>>
+    public class GetUserProfileQueryHandler(IUserRepository repository) : IRequestHandler<GetUserProfileQuery, ErrorOr<UserDto>>
     {
         private readonly IUserRepository repository = repository;
 
-        public async Task<ErrorOr<User>> Handle(GetUserProfileQuery request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<UserDto>> Handle(GetUserProfileQuery request, CancellationToken cancellationToken)
         {
-            return await repository.GetUserProfile(request.TokenId, cancellationToken);
+            var userResult = await repository.GetUserProfile(request.TokenId, cancellationToken);
+            return userResult.Match<ErrorOr<UserDto>>(
+                user => new UserDto { Id = user.Id, Email = user.Email, PasswordHash = user.PasswordHash },
+                error => error
+            );
         }
     }
 }

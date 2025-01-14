@@ -74,32 +74,38 @@ namespace Infrastructure.Repositories
             catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
 
-        public async Task<ErrorOr<IEnumerable<Product>>> GetAllProductsByShoppingCartIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<ErrorOr<IEnumerable<ShoppingCartProduct>>> GetAllProductsByShoppingCartIdAsync(Guid id, CancellationToken cancellationToken)
         {
             try
             {
                 var shoppingCart = await context.ShoppingCarts
+                    .Include(e => e.ShoppingCartProducts)
                     .Include(e => e.Products)
                     .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
-                return shoppingCart?.Products ?? RepositoryErrors.NotFound.ToErrorOr<IEnumerable<Product>>();
+                return shoppingCart?.ShoppingCartProducts ?? RepositoryErrors.NotFound.ToErrorOr<IEnumerable<ShoppingCartProduct>>();
             }
             catch (OperationCanceledException) { return RepositoryErrors.Cancelled; }
             catch (Exception ex) { return RepositoryErrors.Unknown(ex); }
         }
 
-        public async Task<ErrorOr<Updated>> AddProductToShoppingCartAsync(Guid shoppingCartId, Guid productId, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Updated>> AddProductToShoppingCartAsync(Guid shoppingCartId, Guid productId, uint quantity, CancellationToken cancellationToken)
         {
             try
             {
                 var shoppingCart = await context.ShoppingCarts
-                    .Include(e => e.Products)
+                    .Include(e => e.ShoppingCartProducts)
                     .FirstOrDefaultAsync(e => e.Id == shoppingCartId, cancellationToken);
                 var product = await context.Products.FirstOrDefaultAsync(e => e.Id == productId, cancellationToken);
                 if (product is not null && shoppingCart is not null) 
                 {
-                    if (shoppingCart.Products.FirstOrDefault(p => p.Id == product.Id) is null)
+                    if (shoppingCart.ShoppingCartProducts.FirstOrDefault(sp => sp.ProductId == product.Id) is null)
                     {
-                        shoppingCart.Products.Add(product);
+                        shoppingCart.ShoppingCartProducts.Add(new ShoppingCartProduct
+                        {
+                            ShoppingCartId = shoppingCartId,
+                            ProductId = productId,
+                            Quantity = quantity,
+                        });
                         context.Update(shoppingCart);
                         await context.SaveChangesAsync(cancellationToken);
                     }
@@ -116,12 +122,12 @@ namespace Infrastructure.Repositories
             try
             {
                 var shoppingCart = await context.ShoppingCarts
-                    .Include(e => e.Products)
+                    .Include(e => e.ShoppingCartProducts)
                     .FirstOrDefaultAsync(e => e.Id == shoppingCartId, cancellationToken);
-                var product = await context.Products.FirstOrDefaultAsync(e => e.Id == productId, cancellationToken);
-                if (product is not null && shoppingCart is not null)
+                var shoppingCartProduct = shoppingCart?.ShoppingCartProducts.FirstOrDefault(e => e.ProductId == productId);
+                if (shoppingCartProduct is not null)
                 {
-                    if (shoppingCart.Products.Remove(product))
+                    if (shoppingCart!.ShoppingCartProducts.Remove(shoppingCartProduct))
                     {
                         context.Update(shoppingCart);
                         await context.SaveChangesAsync(cancellationToken);

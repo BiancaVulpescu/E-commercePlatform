@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Use_Cases.Queries
 {
-    public class GetAllShoppingCartsByProductIdQuery : IRequest<ErrorOr<IEnumerable<ShoppingCartDtoMinimal>>>
+    public class GetAllShoppingCartsByProductIdQuery : IRequest<ErrorOr<IEnumerable<ShoppingCartProductDtoSC>>>
     {
         public Guid Id { get; set; }
     }

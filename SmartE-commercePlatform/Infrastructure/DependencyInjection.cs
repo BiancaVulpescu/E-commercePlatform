@@ -21,6 +21,7 @@ namespace Infrastructure
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IWishlistRepository, WishlistRepository>();
             services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
             return services;
         }
 

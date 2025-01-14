@@ -7,6 +7,9 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { HttpClientModule } from '@angular/common/http';
 import { SearchBoxComponent } from '../search-box/search-box.component';
 import { CategoryService } from '../../services/category.service';
+import { ShoppingCartService } from '../../services/shopping-cart.service';
+import { WishlistService } from '../../services/wishlist.service';
+
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -37,7 +40,9 @@ export class ProductListComponent implements OnInit {
     private productService: ProductService,
     private categoryService: CategoryService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private shoppingCartService: ShoppingCartService,
+    private wishlistService: WishlistService
   ) {}
 
   ngOnInit(): void {
@@ -92,6 +97,27 @@ export class ProductListComponent implements OnInit {
       }
     });
   }
+
+  addToCart(productId: string): void {
+    this.shoppingCartService.addProductToCart(productId, 1).subscribe({
+      next: () => {
+        console.log('Product added to cart');
+      },
+      error: (error) => {
+        console.error('Error adding product to cart:', error);
+      }
+    });
+  }
+  addToWishlist(productId: string): void {
+    this.wishlistService.addProductToWishlist(productId).subscribe({
+      next: () => {
+        console.log('Product added to wishlist');
+      },
+      error: (error) => {
+        console.error('Error adding product to wishlist:', error);
+      }
+    });
+  }
   searchProducts(title: string): void {
     this.productService.searchProducts(title).subscribe({
       next: (response) => {
@@ -124,11 +150,11 @@ export class ProductListComponent implements OnInit {
   }
 
   navigateToWishlist() {
-    // Implement navigation to wishlist page
+    this.router.navigate(['/wishlist']);
   }
 
   navigateToCart() {
-    // Implement navigation to cart page
+    this.router.navigate(['/shopping-cart']);
   }
 
   navigateToUpdate(productId: string) {

@@ -80,6 +80,8 @@
               <button (click)="navigateToUpdate(product.id!); $event.stopPropagation();">
                 <img src="edit.png" alt="Edit">
               </button>
+              <button (click)="addToCart(product.id!); $event.stopPropagation();">Add to Cart</button>
+              <button (click)="addToWishlist(product.id!); $event.stopPropagation();">Add to Wishlist</button>
             </div>
           </div>
         </div>

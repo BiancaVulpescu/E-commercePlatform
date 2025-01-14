@@ -1,0 +1,33 @@
+<div class="order-page-container">
+    <div class="order-page">
+      <div class="top-nav-bar-container">
+        <div class="top-nav-bar">
+          <div class="page-title">
+            <img src="smart-logo.png" alt="Order" class="logo-icon">
+          </div>
+          <div class="nav-buttons-container">
+            <button class="nav-button" (click)="navigateToProductList()">
+              <span class="nav-text">Back to Products</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="order-details" *ngIf="order">
+        <h2>Order Details</h2>
+        <p><strong>City:</strong> {{ order.city }}</p>
+        <p><strong>Address:</strong> {{ order.address }}</p>
+        <p><strong>Status:</strong> {{ order.status }}</p>
+  
+        <h3>Products</h3>
+        <div *ngFor="let product of order.products" class="product-item">
+            <div class="product-image">
+                <img src="shopping-cart.png" alt="{{product.title}}">
+              </div>
+          <div class="product-info">
+            <p class="product-title"><strong>Title:</strong> {{ product.title }}</p>
+            <p class="product-price"><strong>Price:</strong> {{ product.price | currency }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

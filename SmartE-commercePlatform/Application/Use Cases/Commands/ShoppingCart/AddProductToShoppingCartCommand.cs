@@ -7,5 +7,6 @@ namespace Application.Use_Cases.Commands
     {
         public Guid ShoppingCartId { get; set; }
         public Guid ProductId { get; set; }
+        public uint Quantity { get; set; }
     }
 }
