@@ -51,11 +51,11 @@
             <button class="filter-button category-button" (click)="isCategoryPopupVisible = !isCategoryPopupVisible">See Categories</button>
             <div *ngIf="isCategoryPopupVisible" class="category-dropdown">
               <ul>
-                <li *ngFor="let category of categories" (click)="loadSubcategories(category.id)">
+                <li *ngFor="let category of categories" (mouseenter)="loadSubcategories(category.id)" (click)="navigateToCategory(category.id)">
                   {{ category.title }}
                   <div *ngIf="selectedCategoryId === category.id" class="subcategory-dropdown">
                     <ul>
-                      <li *ngFor="let subcategory of subcategories" (click)="navigateToCategory(subcategory.id)" class="subcategory-dropdown-item">
+                      <li *ngFor="let subcategory of subcategories" (click)="navigateToCategory(subcategory.id); $event.stopPropagation()" class="subcategory-dropdown-item">
                         {{ subcategory.title }}
                       </li>
                     </ul>

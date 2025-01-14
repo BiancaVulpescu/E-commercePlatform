@@ -50,7 +50,7 @@ export class ProductListComponent implements OnInit {
         next: (response) => {
           this.products = response;
           this.totalCount = response.length;
-          console.log(this.products);
+          // console.log(this.products);
         },
         error: (error) => {
           console.error(error);
@@ -62,7 +62,7 @@ export class ProductListComponent implements OnInit {
     this.categoryService.getParentCategories().subscribe({
       next: (categories) => {
         this.categories = categories;
-        console.log('Categories:', categories);
+        // console.log('Categories:', categories);
       },
       error: (error) => {
         if (error.status === 400 && error.error[0].code === 'Repository.NotFound') {
@@ -81,7 +81,7 @@ export class ProductListComponent implements OnInit {
       next: (subcategories) => {
         this.subcategories = subcategories;
         this.subcategoriesMessage = '';
-        console.log('Subcategories:', subcategories);
+        // console.log('Subcategories:', subcategories);
       },
       error: (error) => {
         if (error.status === 400 && error.error[0].code === 'Repository.NotFound') {
@@ -97,7 +97,7 @@ export class ProductListComponent implements OnInit {
       next: (response) => {
         this.products = response;
         this.totalCount = response.length;
-        console.log(this.products);
+        // console.log(this.products);
       },
       error: (error) => {
         console.error(error);
@@ -116,7 +116,7 @@ export class ProductListComponent implements OnInit {
   }
 
   navigateToCreateCategory() {
-    // Implement navigation to create category page
+    this.router.navigate(['categories/create']);
   }
 
   navigateToProfile() {
@@ -139,7 +139,7 @@ export class ProductListComponent implements OnInit {
     this.router.navigate(['products/detail', productId]);
   }
   navigateToCategory(categoryId: string): void {
-    console.log('ajunge aici', categoryId);
+    // console.log('ajunge aici', categoryId);
     this.selectedSubcategoryId = categoryId;
     this.router.navigate(['/products/categories/by-category', categoryId]);
   }
@@ -166,7 +166,7 @@ export class ProductListComponent implements OnInit {
     this.isCreateOptionsVisible = !this.isCreateOptionsVisible;
   }
   onSearchResults(results: Product[]):void {
-    console.log('Search results:', results);
+    // console.log('Search results:', results);
     this.products = results;
     this.totalCount = results.length;
   }

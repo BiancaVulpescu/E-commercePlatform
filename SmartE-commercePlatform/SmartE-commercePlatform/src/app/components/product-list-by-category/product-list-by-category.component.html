@@ -1,23 +1,83 @@
 <div class="product-list-by-category-container">
   <div class="product-list-by-category">
-    <div *ngIf="products.length > 0">
-      <ul>
-        <li *ngFor="let product of products">
-          <div class="product-card">
-            <h2>{{ product.title }}</h2>
-            <p>{{ product.description }}</p>
-            <p>Price: {{ product.price | currency }}</p>
+    <div class="top-nav-bar-container">
+      <div class="top-nav-bar">
+        <div class="page-title">
+          <img src="smart-logo.png" alt="Products" class="logo-icon">
+        </div>
+        <div class="search-box-container">
+        <app-search-box (searchResults)="onSearchResults($event)" (productSelected)="onProductSelected($event)"></app-search-box>
           </div>
-        </li>
-      </ul>
-      <div class="pagination-controls">
-        <button (click)="previousPage()" [disabled]="page === 1">Previous</button>
-        <span>Page {{ page }}</span>
-        <button (click)="nextPage()" [disabled]="page * pageSize >= totalCount">Next</button>
+        <div class="nav-buttons-container">
+          <button class="nav-button" (click)="navigateToProfile()">
+            <img src="profile.png" alt="Profile" class="nav-icon">
+            <span class="nav-text">Profile</span>
+          </button>
+          <button class="nav-button" (click)="navigateToWishlist()">
+            <img src="wishlist.png" alt="Wishlist" class="nav-icon">
+            <span class="nav-text">Wishlist</span>
+          </button>
+          <button class="nav-button" (click)="navigateToCart()">
+            <img src="shopping-cart.png" alt="Cart" class="nav-icon">
+            <span class="nav-text">Cart</span>
+          </button>
+          <div class="create-button-container">
+              <button class="nav-button" (click)="toggleCreateOptions()">
+                  <img src="create.png" alt="Create" class="create-icon">
+                  <span class="nav-text">Create</span>
+              </button>
+              <div *ngIf="isCreateOptionsVisible" class="create-options">
+                  <button class="create-option" (click)="navigateToCreateProduct()">Create New Product</button>
+                  <button class="create-option" (click)="navigateToCreateCategory()">Create New Category</button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+    
+    <div class="product-list-container">
+      <div class="product-list">
+        <div class="category-dropdown-container" >
+          <button class="filter-button category-button" (click)="isCategoryPopupVisible = !isCategoryPopupVisible">See Categories</button>
+          <div *ngIf="isCategoryPopupVisible" class="category-dropdown">
+            <ul>
+              <li *ngFor="let category of categories" (mouseenter)="loadSubcategories(category.id)" (click)="navigateToCategory(category.id)">
+                {{ category.title }}
+                <div *ngIf="selectedCategoryId === category.id" class="subcategory-dropdown">
+                  <ul>
+                    <li *ngFor="let subcategory of subcategories" (click)="navigateToCategory(subcategory.id); $event.stopPropagation()" class="subcategory-dropdown-item">
+                      {{ subcategory.title }}
+                    </li>
+                  </ul>
+                  <div *ngIf="subcategoriesMessage" class="subcategory-message">
+                    <p>{{ subcategoriesMessage }}</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- <button class="filter-button" (click)="toggleFilterPopup()">Filters</button> -->
+        <div class="product-card" *ngFor="let product of products" (click)="navigateToDetail(product.id!)">
+          <div class="product-image">
+            <img src="shopping-cart.png" alt="{{product.title}}">
+          </div>
+          <div class="product-info">
+            <div class="product-title">{{product.title}}</div>
+            <div class="product-price">{{product.price | currency}}</div>
+          </div>
+          <div class="product-actions">
+            <button (click)="navigateToUpdate(product.id!); $event.stopPropagation();">
+              <img src="edit.png" alt="Edit">
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-    <div *ngIf="products.length === 0">
-      <p>No products found for this category.</p>
+    <div class="pagination-controls">
+      <button (click)="previousPage()" [disabled]="page === 1">Previous</button>
+      <span>Page {{page}}</span>
+      <button (click)="nextPage()">Next</button>
     </div>
   </div>
 </div>

@@ -15,4 +15,7 @@ export class CategoryService {
   getChildrenCategories(parentId: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiURL}/subcategories/${parentId}`);
   }
+  createCategory(category: {title: string; parentCategoryId? :string }): Observable<any>{
+    return this.http.post<any>(this.apiURL, category);
+  }
 }

@@ -1,0 +1,58 @@
+<div class="category-create-container">
+    <div class="back-link">
+        <a (click)="navigateToProductList()">
+          <img src="white-left-arrow.png" alt="Back to Products" class="back-arrow">
+        </a>
+    </div>
+    <div class="category-create-wrapper">
+        <div class="category-create">
+            <div class="page-title">
+                Create New Category
+            </div>
+            <form [formGroup]="categoryForm" (ngSubmit)="createCategory()">
+                <div class="form-group">
+                    <label for="category"> 
+                        <div class="category-wrapper" >
+                          <div *ngIf="selectedCategory" class="label-category">
+                            <p>Selected Category: {{ selectedCategory.title }}</p>
+                            <div class="erase-button" (click)="eraseSelectedCategory()">X</div>  
+                        </div>
+                        </div>
+            
+                    </label>
+                    <button type="button" class="margin-top-5" (click)="openCategoryPopup()">Choose Parent Category (optional)</button>
+                    <div>
+                        <small class="error-message">*If you don't choose any category then you will create a new parent category</small>
+                    </div>
+                    
+                </div>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input id="title" formControlName="title" />
+                    <div *ngIf="categoryForm.get('title')?.invalid && (categoryForm.get('title')?.dirty || categoryForm.get('title')?.touched)">
+                        <small class="error-message" *ngIf="categoryForm.get('title')?.errors?.['required']">Title is required.</small>
+                    </div>
+                </div>
+                <!-- <div *ngIf="errorMessage" class="error-message">
+                    {{ errorMessage }}
+                  </div> -->
+                <button type="submit" [disabled]="categoryForm.invalid">Create Category</button>
+            </form>
+            <div *ngIf="isCategoryPopupVisible" class="category-popup">
+                <div class="category-popup-content">
+                  <div class="pop-up-header">
+                    <div class="title-pop-up-header">Choose a Category</div>
+                    <div class="close-button-wrapper">
+                      <div class="close-button" (click)="closeCategoryPopup()">X</div>
+                    </div>
+                  </div>
+                  <ul>
+                    <li *ngFor="let category of categories" (mouseenter)="loadSubcategories(category.id)" (click)="selectCategory(category)">
+                      {{ category.title }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+        </div>
+    </div>
+  </div>

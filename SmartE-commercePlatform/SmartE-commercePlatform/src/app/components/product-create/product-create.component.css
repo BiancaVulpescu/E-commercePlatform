@@ -4,6 +4,7 @@
   background-color: #202124;
 }
 .product-create{
+  width: 80%;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -11,6 +12,99 @@
   border-radius: 8px;
   max-width:100%;
   padding-bottom: 100px;
+}
+.product-create-wrapper{
+  display:flex;
+  justify-content:center;
+}
+.category-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #202124;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  color:white;
+  font: 16px 'Kanit', sans-serif;
+  min-width: 500px;
+  max-height: 400px; 
+  overflow-y: auto;
+}
+.pop-up-header{
+  display:flex;
+  flex-direction:row;
+  justify-content: space-between;
+  align-items:center;
+  font: 20px 'Kanit', sans-serif;
+}
+.title-pop-up-header{
+  display:flex;
+  justify-content: center;
+  align-items:center;
+}
+.category-popup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.close-button-wrapper{
+  display:flex;
+  align-items:center;
+}
+.close-button {
+  /* align-self: flex-end; */
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  width: max-content;
+  height:max-content;
+  font-size: 15px;
+  padding: 7px;
+}
+
+.close-button:hover {
+  background-color: #0056b3;
+}
+
+.category-popup ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-popup li {
+  padding: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.category-popup li:hover {
+  background-color: #0056b3;
+}
+
+.subcategory-list {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.subcategory-list ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.subcategory-list li {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.subcategory-list li:hover {
+  background-color: #1a497a;
 }
 form {
   display:flex;
@@ -59,6 +153,9 @@ label {
 }
 .padding-5{
   padding:5px;
+  display:flex;
+  flex-direction: row;
+  align-items:center;
 }
 input {
   width: 100%;
@@ -223,6 +320,25 @@ button:disabled {
 
 .subcategory-list li:hover {
   background-color: #1a497a;
+}
+.erase-button {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  height: fit-content;
+  display:flex;
+  padding-left: 5px;
+  padding-right: 5px;
+  justify-content:center;
+  align-items:center;
+  font: 16px 'Kanit', sans-serif;
+  margin-left: 10px;
+}
+
+.erase-button:hover {
+  background-color: #007bff;
 }
 
 @media (max-width: 600px) {

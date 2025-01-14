@@ -34,6 +34,7 @@ export class ProductCreateComponent implements OnInit {
       title: ['', [Validators.required, Validators.maxLength(100)]],
       description: ['', [Validators.required, Validators.maxLength(200)]],
       price: ['', [Validators.required, , Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+      categoryID: [null, Validators.required]
     });
   }
 
@@ -80,14 +81,17 @@ export class ProductCreateComponent implements OnInit {
 
   selectCategory(category: any): void {
     this.selectedCategory = category;
-    this.productForm.patchValue({ category: category.id });
+    console.log('ajunge aici la select', category.id);
+    this.productForm.patchValue({ categoryID: category.id });
+    console.log(this.productForm.value)
     this.closeCategoryPopup();
   }
 
   createProduct(): void {
     if (this.productForm.valid) {
       const newProduct: Product = this.productForm.value;
-      newProduct.categoryID = this.selectedCategory.id;
+      // newProduct.categoryID = this.selectedCategory.id;
+      console.log(newProduct.categoryID);
       this.productService.createProduct(newProduct).subscribe(() => {
         this.router.navigate(['/products']);
       });
@@ -98,5 +102,10 @@ export class ProductCreateComponent implements OnInit {
   }
   navigateToPricePrediction(): void {
     this.router.navigate(['/product-price-prediction']);
+  }
+  eraseSelectedCategory(): void {
+    this.selectedCategory = null;
+    console.log('ajunge aici la erase');
+    this.productForm.patchValue({ categoryID: null });
   }
 }
