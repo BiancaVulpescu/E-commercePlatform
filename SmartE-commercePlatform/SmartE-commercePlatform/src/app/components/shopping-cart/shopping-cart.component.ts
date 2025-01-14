@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+
 @Component({
   selector: 'app-shopping-cart',
   standalone: true,
@@ -14,6 +15,8 @@ import { filter } from 'rxjs/operators';
 })
 export class ShoppingCartComponent implements OnInit {
   shoppingCartProducts: ShoppingCartProduct[] = [];
+  city: string = '';
+  address: string = '';
 
   constructor(private shoppingCartService: ShoppingCartService, private router: Router) {
     this.router.events.pipe(
@@ -43,6 +46,10 @@ export class ShoppingCartComponent implements OnInit {
     this.shoppingCartService.updateProductQuantity(productId, quantity).subscribe({
       next: () => {
         console.log('Product quantity updated');
+        const product = this.shoppingCartProducts.find(item => item.productId === productId);
+        if (product) {
+          product.quantity = quantity;
+        }
       },
       error: (error) => {
         console.error('Error updating product quantity:', error);
@@ -54,13 +61,46 @@ export class ShoppingCartComponent implements OnInit {
     this.shoppingCartService.removeProductFromCart(productId).subscribe({
       next: () => {
         console.log('Product removed from cart');
-        this.loadShoppingCart();
+        this.shoppingCartProducts = this.shoppingCartProducts.filter(item => item.productId !== productId);
       },
       error: (error) => {
         console.error('Error removing product from cart:', error);
       }
     });
   }
+
+  placeOrder(): void {
+    const order = {
+      city: this.city,
+      address: this.address,
+      status: 'pending'
+    };
+
+    this.shoppingCartService.createOrder(order).subscribe({
+      next: (orderId) => {
+        console.log('Order placed', orderId);
+        const products = this.shoppingCartProducts
+          .filter(item => item.product.id !== undefined)
+          .map(item => ({
+            productId: item.product.id!,
+            quantity: item.quantity
+          }));
+        this.shoppingCartService.addProductsToOrder(orderId, products).subscribe({
+          next: () => {
+            console.log('Products added to order');
+            this.router.navigate(['/orders', orderId]);
+          },
+          error: (error) => {
+            console.error('Error adding products to order:', error);
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Error placing order:', error);
+      }
+    });
+  }
+
   navigateToProductList(): void {
     this.router.navigate(['/products']);
   }

@@ -12,6 +12,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
+import { OrderComponent } from './components/order/order.component';
 export const appRoutes: Routes = [
     {path:'', redirectTo: '/register', pathMatch: 'full'},
     {path:'products', component: ProductListComponent},
@@ -25,5 +26,6 @@ export const appRoutes: Routes = [
     { path: 'profile', component: ProfileComponent },
     { path: 'edit-profile', component: EditProfileComponent },
     {path: 'shopping-cart', component: ShoppingCartComponent},
-    {path: 'wishlist', component: WishlistComponent}
+    {path: 'wishlist', component: WishlistComponent},
+    {path: 'orders/:orderId', component: OrderComponent}
 ];

@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { ShoppingCartProduct } from '../models/shopping-cart-product.model';
 import { AuthService } from './authentication.service';
-import {switchMap} from 'rxjs/operators';
+import {switchMap, concatMap} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
 export class ShoppingCartService {
   private apiUrl = 'http://localhost:5109/api/v1/ShoppingCarts'; // Update this to your correct shopping cart API URL
   private authApiUrl = 'http://localhost:5109/api/Auth';
+  private orderApiUrl = 'http://localhost:5109/api/v1/Orders';
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   private getAuthHeaders(): HttpHeaders {
@@ -69,5 +70,23 @@ export class ShoppingCartService {
       })
     );
   }
+  createOrder(order: { city: string; address: string; status: string }): Observable<string> {
+    const tokenId = this.authService.getRefreshTokenId();
+    if (!tokenId) {
+      throw new Error('Refresh token is missing');
+    }
+    const headers = this.getAuthHeaders();
+    const orderWithToken = { ...order, tokenId };
+    return this.http.post<string>(`${this.orderApiUrl}`, orderWithToken, { headers });
+  }
 
+  addProductsToOrder(orderId: string, products: { productId: string; quantity: number }[]): Observable<any> {
+    const headers = this.getAuthHeaders();
+    console.log('Adding products to order:', products);
+    return from(products).pipe(
+      concatMap(product =>
+        this.http.put(`${this.orderApiUrl}/${orderId}/products/${product.productId}?quantity=${product.quantity}`, {}, { headers })
+      )
+    );
+  }
 }
