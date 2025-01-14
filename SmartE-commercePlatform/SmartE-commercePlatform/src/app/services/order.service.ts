@@ -28,4 +28,8 @@ export class OrderService {
     const headers = this.getAuthHeaders();
     return this.http.get<Order>(`${this.apiUrl}/${orderId}`, { headers });
   }
+  getOrdersByUserId(userId: string): Observable<Order[]> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<Order[]>(`${this.apiUrl}/profile/${userId}`, { headers });
+  }
 }

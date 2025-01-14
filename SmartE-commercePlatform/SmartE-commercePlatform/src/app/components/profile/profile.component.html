@@ -16,7 +16,16 @@
     </div>
     <div class="orders">
       <h2>My Orders</h2>
-      <!-- Orders list will be implemented later -->
+      <div *ngIf="orders.length > 0">
+        <div *ngFor="let order of orders" class="order-item" (click)="viewOrder(order.id)">
+          <p><strong>City:</strong> {{ order.city }}</p>
+          <p><strong>Address:</strong> {{ order.address }}</p>
+          <p><strong>Status:</strong> {{ order.status }}</p>
+        </div>
+      </div>
+      <div *ngIf="orders.length === 0">
+        <p>You have no orders.</p>
+      </div>
     </div>
   </div>
 </div>

@@ -74,6 +74,32 @@ button:hover {
   margin-bottom: 20px;
   color: #fff;
 }
+h2 {
+  font-family: 'Kanit', sans-serif;
+  font-size: 30px;
+  font-weight: 400;
+  color: #007bff;
+}
+
+.order-item {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 10px;
+}
+
+.order-item:hover {
+  background-color: #364052;
+}
+
+p {
+  margin: 5px 0;
+  color:white;
+}
 
 @media (max-width: 600px) {
   .page-title {
