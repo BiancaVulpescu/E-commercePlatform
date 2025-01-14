@@ -62,6 +62,7 @@ export class ShoppingCartComponent implements OnInit {
       next: () => {
         console.log('Product removed from cart');
         this.shoppingCartProducts = this.shoppingCartProducts.filter(item => item.productId !== productId);
+        this.loadShoppingCart();
       },
       error: (error) => {
         console.error('Error removing product from cart:', error);

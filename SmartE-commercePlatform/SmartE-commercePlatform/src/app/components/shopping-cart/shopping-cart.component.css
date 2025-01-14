@@ -9,6 +9,11 @@
     padding-top: 5px;
     box-sizing: border-box;
   }
+
+  p{
+    color: white;
+    margin-left: 20px;;
+  }
   
   .page-title {
     display: flex;
