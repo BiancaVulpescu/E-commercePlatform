@@ -32,9 +32,9 @@ export class UserService {
       throw new Error('Refresh token is missing');
     }
 
-    console.log('Making request to:', `${this.apiUrl}/profile`);
-    console.log('Request headers:', headers);
-    console.log('Request tokenId:', tokenId);
+    // console.log('Making request to:', `${this.apiUrl}/profile`);
+    // console.log('Request headers:', headers);
+    // console.log('Request tokenId:', tokenId);
 
     return this.http.post<UserProfile>(`${this.apiUrl}/profile`, { tokenId }, { headers });
   }

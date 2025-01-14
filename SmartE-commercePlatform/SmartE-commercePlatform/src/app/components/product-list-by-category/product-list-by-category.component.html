@@ -3,7 +3,7 @@
     <div class="top-nav-bar-container">
       <div class="top-nav-bar">
         <div class="page-title">
-          <img src="smart-logo.png" alt="Products" class="logo-icon">
+          <img src="smart-logo.png" alt="Products" class="logo-icon" (click)="navigateToProductList()">
         </div>
         <div class="search-box-container">
         <app-search-box (searchResults)="onSearchResults($event)" (productSelected)="onProductSelected($event)"></app-search-box>

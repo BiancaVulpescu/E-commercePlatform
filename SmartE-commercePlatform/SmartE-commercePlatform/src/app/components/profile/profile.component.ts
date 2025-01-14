@@ -6,10 +6,11 @@ import { AuthService } from '../../services/authentication.service';
 import { Order } from '../../models/order.model';
 import { OrderService } from '../../services/order.service';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HttpClientModule],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
@@ -21,7 +22,7 @@ export class ProfileComponent implements OnInit {
   };
   orders: Order[] = [];
 
-  constructor(private router: Router, private userService: UserService, private orderService: OrderService) {}
+  constructor(private router: Router, private userService: UserService, private orderService: OrderService, private authService : AuthService) {}
 
   ngOnInit(): void {
     this.loadUserProfile();
@@ -49,5 +50,9 @@ export class ProfileComponent implements OnInit {
   }
   navigateToProductList(): void {
     this.router.navigate(['/products']);
+  }
+  logout() : void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

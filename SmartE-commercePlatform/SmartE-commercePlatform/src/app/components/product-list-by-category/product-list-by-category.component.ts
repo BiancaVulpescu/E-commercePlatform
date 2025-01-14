@@ -105,12 +105,16 @@ export class ProductListByCategoryComponent implements OnInit {
   navigateToProfile() {
     this.router.navigate(['/profile']);
   }
+  navigateToProductList() {
+    this.router.navigate(['/products']);
+  }
+
   navigateToWishlist() {
-    // Implement navigation to wishlist page
+    this.router.navigate(['/wishlist']);
   }
 
   navigateToCart() {
-    // Implement navigation to cart page
+    this.router.navigate(['/shopping-cart']);
   }
   navigateToCreateProduct() {
     this.router.navigate(['products/create']);
