@@ -20,7 +20,6 @@ export class AuthService {
       this.accessToken = localStorage.getItem('accessToken');
       this._refreshToken = localStorage.getItem('refreshToken');
       this._refreshTokenId = localStorage.getItem('refreshTokenId');
-      console.log('Tokens loaded:', this.accessToken);
     }
   }
 
@@ -32,14 +31,12 @@ export class AuthService {
     this.accessToken = token;
     if (typeof window !== 'undefined' && window.localStorage) {
       localStorage.setItem('accessToken', token);
-    console.log('Access token saved to localStorage:', token);
     }
   }
 
   getRefreshToken(): string | null {
     if (typeof window !== 'undefined' && window.localStorage) {
       const token = localStorage.getItem('refreshToken');
-      console.log('getRefreshToken:', token);
       return token;
     }
     return null;
@@ -47,7 +44,6 @@ export class AuthService {
   getRefreshTokenId(): string | null {
     if (typeof window !== 'undefined' && window.localStorage) {
       const token = localStorage.getItem('refreshTokenId');
-      console.log('getRefreshTokenId:', token);
       return token;
     }
     return null;

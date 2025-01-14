@@ -3,7 +3,34 @@
   background-color: #202124;
   min-height: 100vh;
 }
+.nav-buttons-container {
+  margin-right: 50px;
+  display: flex;
+  gap: 10px;
+}
 
+.nav-button {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Kanit', sans-serif;
+  font-size: 16px;
+}
+.top-nav-bar-container{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.nav-button:hover {
+  background-color: #0056b3;
+}
 .profile-page {
   margin: 0 auto;
   padding-top: 5px;

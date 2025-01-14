@@ -47,4 +47,7 @@ export class ProfileComponent implements OnInit {
   navigateToEditProfile() {
     this.router.navigate(['/edit-profile']);
   }
+  navigateToProductList(): void {
+    this.router.navigate(['/products']);
+  }
 }

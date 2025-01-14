@@ -88,6 +88,7 @@ export class ShoppingCartComponent implements OnInit {
         this.shoppingCartService.addProductsToOrder(orderId, products).subscribe({
           next: () => {
             console.log('Products added to order');
+            // this.shoppingCartService.removeProductFromCart()
             this.router.navigate(['/orders', orderId]);
           },
           error: (error) => {
