@@ -13,13 +13,15 @@ namespace SmartE_commercePlatform.UnitTests.OrderTests.CommandTests
 {
     public class CreateOrderCommandHandlerTests
     {
-        private readonly IOrderRepository repository;
+        private readonly IOrderRepository orderRepository;
         private readonly IMapper mapper;
+        private readonly IUserRepository userRepository;
 
         public CreateOrderCommandHandlerTests()
         {
-            repository = Substitute.For<IOrderRepository>();
+            orderRepository = Substitute.For<IOrderRepository>();
             mapper = Substitute.For<IMapper>();
+            userRepository = Substitute.For<IUserRepository>();
         }
         [Fact]
         public async Task Given_CreateOrderCommandHandler_When_HandleIsCalled_Then_OrderShouldBeCreatedAndReturnGuid()
@@ -27,13 +29,18 @@ namespace SmartE_commercePlatform.UnitTests.OrderTests.CommandTests
             //Arrange 
             var command = new CreateOrderCommand
             {
+
+                TokenId = Guid.NewGuid(),
+                City = "New York",
+                Address = "123 Example St",
+                Status = "Pending"
             };
 
             var order = GenerateOrder(command);
             GenerateOrderDto(order);
 
-            repository.AddAsync(order).Returns(order.Id);
-            var handler = new CreateOrderCommandHandler(repository, mapper);
+            orderRepository.AddAsync(order).Returns(order.Id);
+            var handler = new CreateOrderCommandHandler(orderRepository, mapper, userRepository);
 
             //Act
             var result = await handler.Handle(command, CancellationToken.None);
@@ -49,14 +56,18 @@ namespace SmartE_commercePlatform.UnitTests.OrderTests.CommandTests
             //Arrange 
             var command = new CreateOrderCommand
             {
+                TokenId = Guid.NewGuid(),
+                City = "New York",
+                Address = "123 Example St",
+                Status = "Pending"
             };
 
             var order = GenerateOrder(command);
             SetupMapCommandToOrder(order);
             GenerateOrderDto(order);
 
-            repository.AddAsync(order).Returns(RepositoryErrors.NotFound);
-            var handler = new CreateOrderCommandHandler(repository, mapper);
+            orderRepository.AddAsync(order).Returns(RepositoryErrors.NotFound);
+            var handler = new CreateOrderCommandHandler(orderRepository, mapper, userRepository);
 
             //Act
             var result = await handler.Handle(command, CancellationToken.None);
@@ -75,6 +86,11 @@ namespace SmartE_commercePlatform.UnitTests.OrderTests.CommandTests
         {
             var order = new Order
             {
+                Id = Guid.NewGuid(),
+                UserId = Guid.Empty,
+                City = "New York",
+                Address = "123 Example St",
+                Status = "Pending"
             };
             return order;
         }
@@ -82,7 +98,11 @@ namespace SmartE_commercePlatform.UnitTests.OrderTests.CommandTests
         {
             mapper.Map<OrderDto>(order).Returns(new OrderDto
             {
-                Id = order.Id,
+                Id = Guid.NewGuid(),
+                UserId = Guid.Empty,
+                City = "New York",
+                Address = "123 Example St",
+                Status = "Pending"
             });
         }
     }

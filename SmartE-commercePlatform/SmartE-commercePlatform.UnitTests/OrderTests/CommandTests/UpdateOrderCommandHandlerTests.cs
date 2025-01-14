@@ -33,6 +33,9 @@ namespace SmartE_commercePlatform.UnitTests.OrderTests.CommandTests
             var command = new UpdateOrderCommand
             {
                 Id = Guid.NewGuid(),
+                City = "New York",
+                Address = "123 Example St",
+                Status = "Pending"
             };
 
             var order = GenerateOrder(command);
@@ -56,6 +59,9 @@ namespace SmartE_commercePlatform.UnitTests.OrderTests.CommandTests
             var command = new UpdateOrderCommand
             {
                 Id = Guid.NewGuid(),
+                City = "New York",
+                Address = "123 Example St",
+                Status = "Pending"
             };
 
             var order = GenerateOrder(command);
@@ -80,7 +86,11 @@ namespace SmartE_commercePlatform.UnitTests.OrderTests.CommandTests
         {
             var order = new Order
             {
-                Id = command.Id,
+                Id = Guid.NewGuid(),
+                UserId = Guid.Empty,
+                City = "New York",
+                Address = "123 Example St",
+                Status = "Pending"
             };
             return order;
         }

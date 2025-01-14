@@ -54,7 +54,10 @@ namespace SmartE_commercePlatform.UnitTests.OrderTests.QueryTests
             mapper.Map<OrderDto>(order).Returns(
                 new OrderDto
                 {
-                    Id = order.Id,
+                    Id = Guid.NewGuid(),
+                    City = "New York",
+                    Address = "123 Example St",
+                    Status = "Pending"
                 });
         }
     }
