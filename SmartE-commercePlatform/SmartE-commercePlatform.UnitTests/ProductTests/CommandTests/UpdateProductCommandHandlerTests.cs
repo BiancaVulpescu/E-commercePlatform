@@ -4,15 +4,20 @@ using Application.Use_Cases.Commands;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Repositories;
+using ErrorOr;
 using FluentAssertions;
-using MediatR;
+using Infrastructure.Errors;
 using NSubstitute;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SmartE_commercePlatform.UnitTests
+namespace SmartE_commercePlatform.UnitTests.ProductTests.CommandTests
 {
     public class UpdateProductCommandHandlerTests
     {
-
         private readonly IProductRepository repository;
         private readonly IMapper mapper;
 
@@ -22,23 +27,22 @@ namespace SmartE_commercePlatform.UnitTests
             mapper = Substitute.For<IMapper>();
         }
         [Fact]
-        public async void Given_UpdateProductCommandHandler_When_HandleIsCalled_Then_ProductShouldBeUpdatedAndShouldReturnNoContentAkaUnitValue()
+        public async Task Given_CreateProductCommandHandler_When_HandleIsCalled_Then_ProductShouldBeCreatedAndReturnGuid()
         {
             //Arrange 
             var command = new UpdateProductCommand
             {
                 Id = Guid.NewGuid(),
                 Title = "Product 1",
-                Category = "category1",
                 Description = "description1",
                 Price = 100,
-                IsNegotiable = true
+                CategoryID = null,
             };
 
             var product = GenerateProduct(command);
+            SetupMapCommandToProduct(product);
             GenerateProductDto(product);
-
-            repository.GetByIdAsync(command.Id).Returns(product);
+            repository.UpdateAsync(product).Returns(Result.Updated);
             var handler = new UpdateProductCommandHandler(repository, mapper);
 
             //Act
@@ -46,61 +50,38 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.IsOk.Should().BeTrue();
-            result.Unwrap().Should().Be(Unit.Value);
-            await repository.Received(1).UpdateAsync(product);
+            result.IsError.Should().BeFalse();
+            result.Value.Should().Be(Result.Updated);
         }
-
         [Fact]
-        public async void Given_UpdateProductCommandHandlerWithExceptionThrownWithinTheFunction_When_HandleIsCalled_Then_ResultShouldBeFailureMessage()
+        public async Task Given_RepositoryError_When_HandleIsCalled_Then_ErrorShouldBeReturned()
         {
             //Arrange 
             var command = new UpdateProductCommand
             {
                 Id = Guid.NewGuid(),
                 Title = "Product 1",
-                Category = "category1",
                 Description = "description1",
                 Price = 100,
-                IsNegotiable = true
+                CategoryID = null,
             };
 
             var product = GenerateProduct(command);
+            SetupMapCommandToProduct(product);
             GenerateProductDto(product);
-
-            repository.UpdateAsync(product).Returns(Task.FromException<Unit>(new Exception("Exception thrown")));
+            repository.UpdateAsync(product).Returns(RepositoryErrors.Unknown(new Exception()));
             var handler = new UpdateProductCommandHandler(repository, mapper);
 
             //Act
             var result = await handler.Handle(command, CancellationToken.None);
 
-            //Assert
+            // Assert 
             result.Should().NotBeNull();
-            result.IsOk.Should().BeFalse();
-            result.UnwrapErr().Description.Should().Be("Exception thrown");
+            result.IsError.Should().BeTrue();
         }
-        [Fact]
-        public async void Given_NullCommand_When_HandleIsCalled_Then_Given_NullCommand_When_HandleIsCalled_Then_ShouldThrowTheRequestIsNullFailure()
+        private void SetupMapCommandToProduct(Product product)
         {
-            //Arrange 
-            var command = new UpdateProductCommand
-            {
-                Id = Guid.NewGuid(),
-                Title = "Product 1",
-                Category = "category1",
-                Description = "description1",
-                Price = 100,
-                IsNegotiable = true
-            };
-            mapper.Map<Product>(command).Returns((Product?)null);
-            var handler = new UpdateProductCommandHandler(repository, mapper);
-
-            //Act 
-            var result = await handler.Handle(command, CancellationToken.None);
-            //Assert
-            result.Should().NotBeNull();
-            result.IsOk.Should().BeFalse();
-            result.UnwrapErr().Description.Should().Be("The request is null");
+            mapper.Map<Product>(Arg.Any<UpdateProductCommand>()).Returns(product);
         }
 
         private static Product GenerateProduct(UpdateProductCommand command)
@@ -109,25 +90,21 @@ namespace SmartE_commercePlatform.UnitTests
             {
                 Id = command.Id,
                 Title = command.Title,
-                Category = command.Category,
                 Description = command.Description,
                 Price = command.Price,
-                IsNegotiable = command.IsNegotiable
+                CategoryId = command.CategoryID,
             };
             return product;
         }
         private void GenerateProductDto(Product product)
         {
-            mapper.Map<Product>(Arg.Any<UpdateProductCommand>()).Returns(product);
-
             mapper.Map<ProductDto>(product).Returns(new ProductDto
             {
-                Id = Guid.NewGuid(),
+                Id = product.Id,
                 Title = product.Title,
-                Category = product.Category,
+                Category = null,
                 Description = product.Description,
                 Price = product.Price,
-                IsNegotiable = product.IsNegotiable
             });
         }
     }

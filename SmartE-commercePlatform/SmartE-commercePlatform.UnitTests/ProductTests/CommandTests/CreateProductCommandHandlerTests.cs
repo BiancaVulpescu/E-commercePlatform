@@ -6,8 +6,10 @@ using Domain.Entities;
 using Domain.Repositories;
 using NSubstitute;
 using FluentAssertions;
+using ErrorOr;
+using Infrastructure.Errors;
 
-namespace SmartE_commercePlatform.UnitTests
+namespace SmartE_commercePlatform.UnitTests.ProductTests.CommandTests
 {
     public class CreateProductCommandHandlerTests
     {
@@ -20,16 +22,15 @@ namespace SmartE_commercePlatform.UnitTests
             mapper = Substitute.For<IMapper>();
         }
         [Fact]
-        public async void Given_CreateProductCommandHandler_When_HandleIsCalled_Then_ProductShouldBeCreatedAndReturnGuid()
+        public async Task Given_CreateProductCommandHandler_When_HandleIsCalled_Then_ProductShouldBeCreatedAndReturnGuid()
         {
             //Arrange 
             var command = new CreateProductCommand
             {
                 Title = "Product 1",
-                Category = "category1",
                 Description = "description1",
                 Price = 100,
-                IsNegotiable = true
+                CategoryID = null,
             };
 
             var product = GenerateProduct(command);
@@ -43,27 +44,26 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.IsOk.Should().BeTrue();
-            result.Unwrap().Should().Be(product.Id);
+            result.IsError.Should().BeFalse();
+            result.Value.Should().Be(product.Id);
         }
-
         [Fact]
-        public async void Given_CreateProductCommandHandlerWithExceptionThrownWithinTheFunction_When_HandleIsCalled_Then_ResultShouldBeFailureMessage()
+        public async Task Given_RepositoryError_When_HandleIsCalled_Then_ErrorShouldBeReturned()
         {
             //Arrange 
             var command = new CreateProductCommand
             {
                 Title = "Product 1",
-                Category = "category1",
                 Description = "description1",
                 Price = 100,
-                IsNegotiable = true
+                CategoryID = null,
             };
 
             var product = GenerateProduct(command);
+            SetupMapCommandToProduct(product);
             GenerateProductDto(product);
 
-            repository.AddAsync(product).Returns(Task.FromException<Guid>(new Exception("Exception thrown")));
+            repository.AddAsync(product).Returns(RepositoryErrors.NotFound);
             var handler = new CreateProductCommandHandler(repository, mapper);
 
             //Act
@@ -71,31 +71,12 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.IsOk.Should().BeFalse();
-            result.UnwrapErr().Description.Should().Be("Exception thrown");
+            result.IsError.Should().BeTrue();
         }
-        //
-        [Fact]
-        public async void Given_NullCommand_When_HandleIsCalled_Then_ShouldThrowTheProductIsNullFailure()
-        {
-            //Arrange 
-            var command = new CreateProductCommand
-            {
-                Title = "Product 1",
-                Category = "category1",
-                Description = "description1",
-                Price = 100,
-                IsNegotiable = true
-            };
-            mapper.Map<Product>(command).Returns((Product?)null);
-            var handler = new CreateProductCommandHandler(repository, mapper);
 
-            //Act 
-            var result = await handler.Handle(command, CancellationToken.None);
-            //Assert
-            result.Should().NotBeNull();
-            result.IsOk.Should().BeFalse();
-            result.UnwrapErr().Description.Should().Be("The product is null");
+        private void SetupMapCommandToProduct(Product product)
+        {
+            mapper.Map<Product>(Arg.Any<CreateProductCommand>()).Returns(product);
         }
 
         private static Product GenerateProduct(CreateProductCommand command)
@@ -103,25 +84,21 @@ namespace SmartE_commercePlatform.UnitTests
             var product = new Product
             {
                 Title = command.Title,
-                Category = command.Category,
                 Description = command.Description,
                 Price = command.Price,
-                IsNegotiable = command.IsNegotiable
+                CategoryId = command.CategoryID,
             };
             return product;
         }
         private void GenerateProductDto(Product product)
         {
-            mapper.Map<Product>(Arg.Any<CreateProductCommand>()).Returns(product);
-
             mapper.Map<ProductDto>(product).Returns(new ProductDto
             {
-                Id = Guid.NewGuid(),
+                Id = product.Id,
                 Title = product.Title,
-                Category = product.Category,
+                Category = null,
                 Description = product.Description,
                 Price = product.Price,
-                IsNegotiable = product.IsNegotiable
             });
         }
     }

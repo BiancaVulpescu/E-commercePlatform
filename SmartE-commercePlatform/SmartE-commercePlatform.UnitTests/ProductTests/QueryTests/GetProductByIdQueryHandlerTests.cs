@@ -7,7 +7,7 @@ using Domain.Repositories;
 using FluentAssertions;
 using NSubstitute;
 
-namespace SmartE_commercePlatform.UnitTests
+namespace SmartE_commercePlatform.UnitTests.ProductTests.QueryTests
 {
     public class GetProductByIdQueryHandlerTests
     {
@@ -39,33 +39,31 @@ namespace SmartE_commercePlatform.UnitTests
 
             // Assert 
             result.Should().NotBeNull();
-            result.Unwrap().Id.ToString().Should().Be(query.Id.ToString());
+            result.Value.Id.Should().Be(query.Id);
         }
         private static Product GenerateProduct(Guid guid)
         {
-            return new Product
+            return new()
             {
                 Id = guid,
                 Title = "Product 1",
-                Category = "category1",
+                Category = null,
                 Description = "description1",
                 Price = 100,
-                IsNegotiable = true
             };
         }
 
         private void GenerateProductDto(Product product)
         {
-            mapper.Map<ProductDto>(product).Returns(new ProductDto
-            {
-                Id = product.Id,
-                Title = product.Title,
-                Category = product.Category,
-                Description = product.Description,
-                Price = product.Price,
-                IsNegotiable = product.IsNegotiable
-            });
-
+            mapper.Map<ProductDto>(product).Returns(
+                new ProductDto
+                {
+                    Id = product.Id,
+                    Title = product.Title,
+                    Category = null,
+                    Description = product.Description,
+                    Price = product.Price,
+                });
         }
     }
 }
